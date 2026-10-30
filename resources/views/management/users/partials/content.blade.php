@@ -1,24 +1,13 @@
 @php
     $usersList = (isset($users) && $users instanceof \Illuminate\Support\Collection) 
         ? $users 
-        : \App\Models\User::with(['roles', 'permissions'])->latest()->get();
+        : \App\Models\User::latest()->get();
 
-    $rolesList = (isset($roles) && $roles instanceof \Illuminate\Support\Collection) 
-        ? $roles 
-        : \Spatie\Permission\Models\Role::orderBy('name')->get();
-
-    $permissionsList = (isset($permissions) && $permissions instanceof \Illuminate\Support\Collection)
-        ? $permissions
-        : \Spatie\Permission\Models\Permission::orderBy('name')->get();
-
-    $groupsList = $permissionsList->groupBy(fn($p) => explode('.', $p->name)[0]);
-
-    $activeUserStats = (isset($userStats) && is_array($userStats) && isset($userStats['active_users'])) 
-        ? $userStats 
+    $activeUserStats = (isset($stats) && is_array($stats) && isset($stats['total_users'])) 
+        ? $stats 
         : [
             'total_users'    => \App\Models\User::count(),
             'active_users'   => \App\Models\User::whereNotNull('email_verified_at')->count(),
-            'total_roles'    => $rolesList->count(),
             'new_this_month' => \App\Models\User::whereMonth('created_at', now()->month)
                                     ->whereYear('created_at', now()->year)
                                     ->count(),
@@ -26,7 +15,7 @@
 @endphp
 
 <style>
-/* ── Password Strength Widget (Identik dengan Register) ── */
+/* ── Password Strength Widget ── */
 .pwd-req-container {
     margin-top: 10px;
     margin-bottom: 12px;
@@ -137,7 +126,7 @@
     <header class="head">
         <div class="head__lead">
             <div>
-                <p class="head__eyebrow">Manajemen Akses</p>
+                <p class="head__eyebrow">Manajemen Sistem</p>
                 <h1 class="head__title">Daftar <em>Pengguna</em></h1>
             </div>
         </div>
@@ -189,16 +178,6 @@
         </div>
         <div class="stat">
             <div class="stat__label">
-                <span class="stat__ico" style="color:var(--sky);background:color-mix(in srgb,var(--sky) var(--soft),transparent)"><svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-                <span>Total Role</span>
-            </div>
-            <div class="stat__value">
-                <span>{{ $activeUserStats['total_roles'] ?? 0 }}</span>
-                <span class="badge badge--plain">Peran</span>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="stat__label">
                 <span class="stat__ico" style="color:var(--mint);background:color-mix(in srgb,var(--mint) var(--soft),transparent)"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg></span>
                 <span>Baru Bulan Ini</span>
             </div>
@@ -211,21 +190,10 @@
 
     {{-- Filter & Search --}}
     <form method="GET" action="{{ route('management.users.index') }}" class="toolbar" style="margin-bottom:18px;">
-        <div class="search" style="max-width:320px;flex:1;">
+        <div class="search" style="max-width:360px;flex:1;">
             <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input type="text" name="search" placeholder="Cari nama, email, atau telepon..." value="{{ request('search') }}" />
         </div>
-        <div class="seg" role="radiogroup">
-            <button type="submit" name="role" value="all" class="seg__btn {{ request('role','all')==='all'?'is-active':'' }}">Semua Role</button>
-            @foreach($rolesList as $r)
-                <button type="submit" name="role" value="{{ $r->name }}" class="seg__btn {{ request('role')===$r->name?'is-active':'' }}">{{ ucfirst($r->name) }}</button>
-            @endforeach
-        </div>
-        <div class="toolbar__spacer"></div>
-        <a href="#/roles" class="btn btn--sm btn--ghost">
-            <svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Kelola Role</span>
-        </a>
     </form>
 
     {{-- User Table --}}
@@ -242,8 +210,6 @@
                 <thead>
                     <tr>
                         <th>PENGGUNA</th>
-                        <th>ROLE (PERAN)</th>
-                        <th>HAK AKSES LANGSUNG</th>
                         <th>KONTAK</th>
                         <th>BERGABUNG</th>
                         <th class="r">AKSI</th>
@@ -251,37 +217,15 @@
                 </thead>
                 <tbody>
                     @forelse($usersList as $user)
-                        @php
-                            $userRole = $user->roles->first()?->name ?? '';
-                            $userDirectPerms = json_encode($user->permissions->pluck('name')->toArray());
-                        @endphp
                         <tr>
                             <td>
                                 <div class="cell-person">
-                                    <span class="av av--md av--{{ $userRole === 'admin' ? 'teal' : 'sky' }}">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
+                                    <span class="av av--md av--teal">{{ strtoupper(substr($user->name, 0, 2)) }}</span>
                                     <div>
                                         <b>{{ $user->name }}</b>
                                         <small>{{ $user->email }}</small>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                @forelse($user->roles as $role)
-                                    <span class="tchip tchip--{{ $role->name === 'admin' ? 'teal' : 'sky' }}">
-                                        {{ ucfirst($role->name) }}
-                                    </span>
-                                @empty
-                                    <span class="tchip tchip--neutral" style="opacity:0.6;">Tanpa Role</span>
-                                @endforelse
-                            </td>
-                            <td>
-                                @if($user->permissions->count() > 0)
-                                    <span class="badge badge--plain" style="font-size:11px;">
-                                        +{{ $user->permissions->count() }} Permission Khusus
-                                    </span>
-                                @else
-                                    <small style="color:var(--muted);font-size:12px;">Ikuti Role</small>
-                                @endif
                             </td>
                             <td>
                                 <span style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;">{{ $user->phone ?? '-' }}</span>
@@ -291,9 +235,9 @@
                             </td>
                             <td class="r">
                                 <div style="display:inline-flex;gap:6px;">
-                                    <button type="button" class="btn btn--xs btn--ghost" onclick="openEditUserWithPerms({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ $user->email }}', '{{ $user->phone }}', '{{ $userRole }}', {{ $userDirectPerms }})">
+                                    <button type="button" class="btn btn--xs btn--ghost" onclick="openEditUserModal({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ $user->email }}', '{{ $user->phone }}')">
                                         <svg class="ico" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                        <span>Edit & Akses</span>
+                                        <span>Edit</span>
                                     </button>
                                     @if($user->id !== auth()->id())
                                         <form method="POST" action="{{ route('management.users.destroy', $user) }}" onsubmit="return confirm('Hapus pengguna {{ addslashes($user->name) }}?')">
@@ -307,7 +251,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--muted);">Tidak ada pengguna ditemukan.</td></tr>
+                        <tr><td colspan="4" style="text-align:center;padding:32px;color:var(--muted);">Tidak ada pengguna ditemukan.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -316,7 +260,7 @@
 </div>
 
 {{-- Modal Tambah User --}}
-<dialog id="modal-add-user" style="border:none;border-radius:12px;padding:0;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);background:var(--bg-card, #fff);color:inherit;">
+<dialog id="modal-add-user" style="border:none;border-radius:12px;padding:0;max-width:500px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);background:var(--bg-card, #fff);color:inherit;">
     <div style="padding:24px;max-height:85vh;overflow-y:auto;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
             <h3 style="margin:0;font-size:17px;font-weight:600;">Tambah Pengguna Baru</h3>
@@ -329,7 +273,7 @@
             <div style="display:flex;flex-direction:column;gap:14px;">
                 <label class="field">
                     <span class="field__label">Nama Lengkap</span>
-                    <input type="text" name="name" placeholder="contoh: dr. Hendra Pratama, Sp.PD" required />
+                    <input type="text" name="name" placeholder="contoh: dr. Hendra Pratama" required />
                 </label>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                     <label class="field">
@@ -341,15 +285,6 @@
                         <input type="tel" name="phone" placeholder="081234567890" />
                     </label>
                 </div>
-                <label class="field">
-                    <span class="field__label">Assign Role (Peran)</span>
-                    <select name="role" required>
-                        <option value="">— Pilih Role —</option>
-                        @foreach($rolesList as $r)
-                            <option value="{{ $r->name }}">{{ ucfirst($r->name) }}</option>
-                        @endforeach
-                    </select>
-                </label>
 
                 <!-- Password Field with Strength Bar -->
                 <div>
@@ -405,28 +340,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Direct Permissions (Optional) -->
-                <details style="border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--surface-2, rgba(0,0,0,0.02));">
-                    <summary style="cursor:pointer;font-weight:600;font-size:13px;color:var(--text);">
-                        Assign Permission Tambahan Langsung (Opsional)
-                    </summary>
-                    <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-                        @foreach($groupsList as $group => $perms)
-                            <div>
-                                <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--primary);margin-bottom:6px;">{{ ucfirst($group) }}</div>
-                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                                    @foreach($perms as $p)
-                                        <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:monospace;cursor:pointer;">
-                                            <input type="checkbox" name="permissions[]" value="{{ $p->name }}" style="accent-color:var(--primary);">
-                                            <span>{{ $p->name }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </details>
             </div>
 
             <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;border-top:1px solid var(--line);padding-top:16px;">
@@ -438,10 +351,10 @@
 </dialog>
 
 {{-- Modal Edit User --}}
-<dialog id="modal-edit-user" style="border:none;border-radius:12px;padding:0;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);background:var(--bg-card, #fff);color:inherit;">
+<dialog id="modal-edit-user" style="border:none;border-radius:12px;padding:0;max-width:500px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);background:var(--bg-card, #fff);color:inherit;">
     <div style="padding:24px;max-height:85vh;overflow-y:auto;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h3 style="margin:0;font-size:17px;font-weight:600;">Edit Data Pengguna & Hak Akses</h3>
+            <h3 style="margin:0;font-size:17px;font-weight:600;">Edit Data Pengguna</h3>
             <button type="button" onclick="document.getElementById('modal-edit-user').close()" style="background:none;border:none;cursor:pointer;color:var(--muted);">
                 <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
@@ -463,14 +376,6 @@
                         <input type="tel" name="phone" id="edit-phone" />
                     </label>
                 </div>
-                <label class="field">
-                    <span class="field__label">Assign / Ganti Role (Peran)</span>
-                    <select name="role" id="edit-role" required>
-                        @foreach($rolesList as $r)
-                            <option value="{{ $r->name }}">{{ ucfirst($r->name) }}</option>
-                        @endforeach
-                    </select>
-                </label>
 
                 <!-- Optional New Password with Strength Meter -->
                 <div>
@@ -526,28 +431,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Direct Permissions (Optional) -->
-                <details style="border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--surface-2, rgba(0,0,0,0.02));">
-                    <summary style="cursor:pointer;font-weight:600;font-size:13px;color:var(--text);">
-                        Assign / Unassign Permission Tambahan Langsung
-                    </summary>
-                    <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
-                        @foreach($groupsList as $group => $perms)
-                            <div>
-                                <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;color:var(--primary);margin-bottom:6px;">{{ ucfirst($group) }}</div>
-                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                                    @foreach($perms as $p)
-                                        <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:monospace;cursor:pointer;">
-                                            <input type="checkbox" name="permissions[]" value="{{ $p->name }}" id="user-perm-{{ str_replace('.', '-', $p->name) }}" class="user-edit-perm-check" style="accent-color:var(--primary);">
-                                            <span>{{ $p->name }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </details>
             </div>
 
             <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;border-top:1px solid var(--line);padding-top:16px;">
@@ -568,17 +451,12 @@ window.openAddUserModal = function() {
     }
 };
 
-window.openEditUserWithPerms = function(id, name, email, phone, role, directPerms) {
+window.openEditUserModal = function(id, name, email, phone) {
     var form = document.getElementById('form-edit-user');
     form.action = '/management/users/' + id;
     document.getElementById('edit-name').value  = name;
     document.getElementById('edit-email').value = email;
     document.getElementById('edit-phone').value = phone || '';
-
-    var sel = document.getElementById('edit-role');
-    for (var i = 0; i < sel.options.length; i++) {
-        sel.options[i].selected = sel.options[i].value === role;
-    }
 
     // Reset password field & meter
     var pwdInput = document.getElementById('edit-user-password');
@@ -586,19 +464,6 @@ window.openEditUserWithPerms = function(id, name, email, phone, role, directPerm
         pwdInput.value = '';
         var meterBox = document.getElementById('edit-pwd-meter-box');
         if (meterBox) meterBox.style.display = 'none';
-    }
-
-    // Reset direct permissions checkboxes
-    document.querySelectorAll('.user-edit-perm-check').forEach(function(cb) {
-        cb.checked = false;
-    });
-
-    // Check user's assigned direct permissions
-    if (Array.isArray(directPerms)) {
-        directPerms.forEach(function(permName) {
-            var el = document.getElementById('user-perm-' + permName.replace(/\./g, '-'));
-            if (el) el.checked = true;
-        });
     }
 
     var dialog = document.getElementById('modal-edit-user');

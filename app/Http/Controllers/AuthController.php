@@ -90,8 +90,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->assignRole('user');
-
         Auth::login($user);
         $request->session()->regenerate();
 

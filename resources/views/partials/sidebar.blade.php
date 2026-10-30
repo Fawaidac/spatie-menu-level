@@ -92,14 +92,6 @@
                         <span class="nav__subdot"></span>
                         <span>User</span>
                     </a>
-                    <a class="nav__subitem" href="#/roles" data-route="roles" id="nav-mgmt-roles">
-                        <span class="nav__subdot"></span>
-                        <span>Level</span>
-                    </a>
-                    <a class="nav__subitem" href="#/role-permissions" data-route="role-permissions" id="nav-mgmt-role-permissions">
-                        <span class="nav__subdot"></span>
-                        <span>Menu</span>
-                    </a>
                 </div>
             </div>
         </div>

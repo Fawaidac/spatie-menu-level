@@ -185,16 +185,6 @@
                 <section class="view" data-view="users" hidden>
                     @include('management.users.partials.content')
                 </section>
-
-                {{-- 9. Management: Roles --}}
-                <section class="view" data-view="roles" hidden>
-                    @include('management.roles.partials.content')
-                </section>
-
-                {{-- 10. Management: Role Permissions --}}
-                <section class="view" data-view="role-permissions" hidden>
-                    @include('management.role-permissions.partials.content')
-                </section>
             </main>
         </div>
     </div>
@@ -220,10 +210,6 @@
             if (!window.location.hash || window.location.hash === '#' || window.location.hash === '#/') {
                 if (rawPath === 'management/users') {
                     window.location.hash = '#/users';
-                } else if (rawPath === 'management/roles') {
-                    window.location.hash = '#/roles';
-                } else if (rawPath === 'management/role-permissions') {
-                    window.location.hash = '#/role-permissions';
                 }
             }
         })();
@@ -245,9 +231,7 @@
                     if (window.TEND_MC) {
                         var curr = (location.hash || '').replace(/^#\/?/, '').split('/')[0];
                         window.TEND_MC(btn, [
-                            { label: 'Daftar Pengguna', icon: 'users', checked: curr === 'users', onSelect: function () { location.hash = '#/users'; } },
-                            { label: 'Peran & Role', icon: 'users', checked: curr === 'roles', onSelect: function () { location.hash = '#/roles'; } },
-                            { label: 'Role & Permission', icon: 'gear', checked: curr === 'role-permissions', onSelect: function () { location.hash = '#/role-permissions'; } }
+                            { label: 'Daftar Pengguna', icon: 'users', checked: curr === 'users', onSelect: function () { location.hash = '#/users'; } }
                         ], { align: 'end' });
                     } else {
                         location.hash = '#/users';

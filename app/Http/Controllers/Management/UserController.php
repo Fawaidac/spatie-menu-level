@@ -7,18 +7,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\PermissionRegistrar;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $roleFilter = $request->get('role');
 
-        $query = User::with(['roles', 'permissions'])->latest();
+        $query = User::latest();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -28,41 +24,30 @@ class UserController extends Controller
             });
         }
 
-        if ($roleFilter && $roleFilter !== 'all') {
-            $query->whereHas('roles', fn($q) => $q->where('name', $roleFilter));
-        }
-
         $users = $query->get();
-        $roles = Role::orderBy('name')->get();
-        $permissions = Permission::orderBy('name')->get();
 
-        $userStats = [
+        $stats = [
             'total_users'    => User::count(),
             'active_users'   => User::whereNotNull('email_verified_at')->count(),
-            'total_roles'    => $roles->count(),
             'new_this_month' => User::whereMonth('created_at', now()->month)
                                     ->whereYear('created_at', now()->year)
                                     ->count(),
         ];
 
-        return view('management.users.index', compact('users', 'roles', 'permissions', 'userStats'));
+        return view('management.users.index', compact('users', 'stats'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|unique:users,email',
-            'phone'         => 'nullable|string|max:20',
-            'role'          => 'required|exists:roles,name',
-            'permissions'   => 'nullable|array',
-            'permissions.*' => 'exists:permissions,name',
-            'password'      => ['required', Password::min(8)],
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'phone'    => 'nullable|string|max:20',
+            'password' => ['required', Password::min(8)],
         ], [
             'name.required'     => 'Nama wajib diisi.',
             'email.required'    => 'Email wajib diisi.',
             'email.unique'      => 'Email sudah digunakan.',
-            'role.required'     => 'Role wajib dipilih.',
             'password.required' => 'Password wajib diisi.',
         ]);
 
@@ -74,32 +59,20 @@ class UserController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        $user->syncRoles($request->role);
-
-        if ($request->has('permissions')) {
-            $user->syncPermissions($request->permissions ?? []);
-        }
-
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
         return redirect()->to(route('management.users.index') . '#/users')
-            ->with('success', "Pengguna {$user->name} berhasil ditambahkan dengan role {$request->role}.");
+            ->with('success', "Pengguna {$user->name} berhasil ditambahkan.");
     }
 
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name'          => 'required|string|max:255',
-            'email'         => "required|email|unique:users,email,{$user->id}",
-            'phone'         => 'nullable|string|max:20',
-            'role'          => 'required|exists:roles,name',
-            'permissions'   => 'nullable|array',
-            'permissions.*' => 'exists:permissions,name',
+            'name'  => 'required|string|max:255',
+            'email' => "required|email|unique:users,email,{$user->id}",
+            'phone' => 'nullable|string|max:20',
         ], [
             'name.required'  => 'Nama wajib diisi.',
             'email.required' => 'Email wajib diisi.',
             'email.unique'   => 'Email sudah digunakan.',
-            'role.required'  => 'Role wajib dipilih.',
         ]);
 
         $user->update([
@@ -112,11 +85,6 @@ class UserController extends Controller
             $request->validate(['password' => Password::min(8)]);
             $user->update(['password' => Hash::make($request->password)]);
         }
-
-        $user->syncRoles($request->role);
-        $user->syncPermissions($request->permissions ?? []);
-
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         return redirect()->to(route('management.users.index') . '#/users')
             ->with('success', "Data pengguna {$user->name} berhasil diperbarui.");
@@ -131,8 +99,6 @@ class UserController extends Controller
 
         $name = $user->name;
         $user->delete();
-
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         return redirect()->to(route('management.users.index') . '#/users')
             ->with('success', "Pengguna {$name} berhasil dihapus.");

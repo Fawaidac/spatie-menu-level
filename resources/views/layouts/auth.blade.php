@@ -1017,8 +1017,8 @@
                                     <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                                 </div>
                                 <div class="auth-feature-text">
-                                    <b>Akses Terproteksi & Spatie Role</b>
-                                    <span>Hak akses granular untuk Dokter, Perawat, Loket, hingga Farmasi.</span>
+                                    <b>Akses Terproteksi & Autentikasi Aman</b>
+                                    <span>Hak akses terkelola untuk Dokter, Perawat, Loket, hingga Farmasi.</span>
                                 </div>
                             </div>
 
@@ -1084,7 +1084,7 @@
         </main>
 
         <footer class="auth-footer">
-            Tend Health Clinic CRM · Dibangun dengan nuansa PaleVioletRed & Fleksibilitas Spatie Role
+            Tend Health Clinic CRM · Dibangun dengan nuansa PaleVioletRed & Sistem Autentikasi Aman
         </footer>
     </div>
 

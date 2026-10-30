@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Akun Admin — role: admin (all permissions)
+        // Akun Admin
         $admin = User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
             [
@@ -23,9 +23,8 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
-        $admin->syncRoles('admin');
 
-        // Akun User biasa — role: user (tanpa permission)
+        // Akun User biasa
         $user = User::firstOrCreate(
             ['email' => 'user@gmail.com'],
             [
@@ -35,10 +34,9 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
-        $user->syncRoles('user');
 
         $this->command->info('✓ Users berhasil di-seed.');
-        $this->command->info('  admin@gmail.com  → role: admin');
-        $this->command->info('  user@gmail.com   → role: user');
+        $this->command->info('  admin@gmail.com / password');
+        $this->command->info('  user@gmail.com  / password');
     }
 }
