@@ -1,0 +1,362 @@
+/*
+ * Tend Dashboard — Brand Override
+ * Tema: PaleVioletRed #DB7093 (Soft)
+ *
+ * Override CSS variables dari tema hijau ke pink soft.
+ * Sidebar menggunakan gradient vertikal.
+ */
+
+/* ── Soft PaleVioletRed Override ─────────────────────────────────── */
+:root {
+    --color-brand:        #DB7093;
+    --color-brand-light:  #fdeef4;
+
+    /* ── Background & Surface (lebih soft/netral) ── */
+    --bg:         #fdf6f8;          /* background utama — blush sangat muda */
+    --glow-a:     #f5e2e9;          /* glow kiri */
+    --glow-b:     #ede8f5;          /* glow kanan (lavender) */
+    --surface:    #fffafb;          /* card surface */
+    --surface-2:  #faf2f5;          /* surface sekunder */
+    --raised:     #ffffff;
+    --well:       #c4527a12;        /* well/inset */
+    --line:       #c4527a16;        /* border tipis */
+    --line-2:     #c4527a28;        /* border sedang */
+
+    /* ── Shadow ── */
+    --shadow:     0 1px 2px #8b22520a, 0 14px 34px -22px #8b225230;
+    --shadow-pop: 0 24px 60px -18px #8b225240, 0 2px 6px #8b225212;
+
+    /* ── Typography ── */
+    --text:       #3a1224;          /* teks utama */
+    --muted:      #7a4a5e;          /* teks muted */
+    --faint:      #b08898;          /* teks faint */
+    --ink:        #3a1224;
+
+    /* ── Primary Action ── */
+    --primary:    #c4527a;          /* primary button — mid rose */
+    --on-primary: #fff0f5;
+
+    /* ── Sidebar — pakai CSS variable, gradient applied via .side override ── */
+    --side:       #8b2252;          /* fallback jika gradient tidak support */
+    --on-side:    #fce8f0;          /* teks sidebar */
+    --side-dim:   #fce8f0aa;        /* teks sidebar (dim) */
+    --side-pill:  rgba(255,255,255,0.18); /* pill aktif — frosted */
+    --on-side-pill: #ffffff;        /* teks pill aktif */
+
+    /* ── Accent Colors ── */
+    --teal:       #c4527a;          /* brand — rose mid */
+    --mint:       #db7093;          /* brand light — PaleVioletRed */
+    --sky:        #7c94dc;
+    --lilac:      #c472d8;
+    --apricot:    #e9953f;
+    --coral:      #de5539;
+    --sand:       #b79a55;
+
+    /* ── Status (jangan diubah) ── */
+    --good:       #1d8656;
+    --warn:       #b8700f;
+    --bad:        #cf4429;
+    --wa:         #1fa855;
+    --tick:       #2b9fe0;
+}
+
+/* ── Sidebar Gradient Override ───────────────────────────────────── */
+.side {
+    background: linear-gradient(
+        180deg,
+        #8b2252 0%,
+        #a83665 14%,
+        #c4527a 55%,
+        #db7093 100%
+    ) !important;
+    border-right: 1px solid rgba(219, 112, 147, 0.25) !important;
+}
+
+/* Pill aktif sidebar — frosted glass di atas gradient */
+.nav__pill {
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 14px;
+}
+
+/* Item aktif teks putih */
+.nav__item[aria-current=page] {
+    color: #ffffff !important;
+}
+
+/* Hover state lebih lembut */
+.nav__item:hover {
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ── Dark Mode — Charcoal Proper ─────────────────────────────────── */
+:root[data-theme=dark] {
+    /* Background — hitam keabuan sejuk, bukan merah/ungu */
+    --bg:         #0f0f11;          /* background utama — near black */
+    --glow-a:     #db709318;        /* glow rose tipis kiri */
+    --glow-b:     #7c94dc10;        /* glow biru tipis kanan */
+    --surface:    #161618;          /* card surface — charcoal */
+    --surface-2:  #1c1c1f;          /* surface sekunder */
+    --raised:     #232327;          /* raised element — sedikit lebih terang */
+    --well:       #ffffff08;
+    --line:       #ffffff12;        /* border — putih lembut */
+    --line-2:     #ffffff20;
+
+    /* Shadow */
+    --shadow:     0 1px 0 #ffffff08 inset, 0 18px 40px -26px #000000cc;
+    --shadow-pop: 0 24px 60px -18px #000000bf, 0 0 0 1px #ffffff10;
+
+    /* Typography */
+    --text:       #f0eef1;          /* putih lembut, tidak terlalu neon */
+    --muted:      #a89aaa;          /* abu keunguan */
+    --faint:      #6a6070;
+    --ink:        #f0eef1;
+
+    /* Primary */
+    --primary:    #db7093;          /* tetap PaleVioletRed */
+    --on-primary: #1a0010;
+
+    /* Sidebar */
+    --side:       #5a1a30;          /* fallback gradient */
+    --on-side:    #fce8f0;
+    --side-dim:   #fce8f0aa;
+    --side-pill:  rgba(255,255,255,0.16);
+    --on-side-pill: #ffffff;
+
+    /* Accent */
+    --teal:       #db7093;
+    --mint:       #e891aa;
+    --sky:        #74b3f0;
+    --lilac:      #a996ee;
+    --apricot:    #f2aa5f;
+    --coral:      #f07a5f;
+    --sand:       #d0b878;
+
+    /* Status */
+    --good:       #5fd09a;
+    --warn:       #f0b45a;
+    --bad:        #f2836a;
+    --wa:         #3fd17a;
+    --tick:       #53bdeb;
+}
+
+/* Dark mode sidebar — gradient tetap ada, lebih gelap elegan */
+:root[data-theme=dark] .side {
+    background: linear-gradient(
+        180deg,
+        #4a1040 0%,
+        #6e1f52 20%,
+        #932d68 60%,
+        #b84880 100%
+    ) !important;
+}
+
+/* Pastikan app selalu tampil seketika */
+html.js .app,
+html.js.is-ready .app {
+    visibility: visible !important;
+}
+
+/* ── Management User Sidebar Navigation ──────────────────────────── */
+.nav__mgmt-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav__parent {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--on-side);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: background 0.18s ease;
+}
+
+.nav__parent:hover {
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+.nav__chevron {
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    opacity: 0.75;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nav__parent.is-expanded .nav__chevron {
+    transform: rotate(180deg);
+}
+
+/* Accordion Smooth Grid Animation */
+.nav__submenu-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nav__submenu-wrapper.is-open {
+    grid-template-rows: 1fr;
+}
+
+.nav__submenu {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 0 0 4px 14px;
+    padding-left: 10px;
+    border-left: 1.5px solid rgba(255, 255, 255, 0.22);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nav__submenu-wrapper.is-open .nav__submenu {
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+.nav__subitem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 550;
+    color: var(--side-dim);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.nav__subitem:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav__subitem.is-active {
+    color: #ffffff !important;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.nav__subdot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.nav__subitem:hover .nav__subdot {
+    background: #ffffff;
+}
+
+.nav__subitem.is-active .nav__subdot {
+    background: #ffffff;
+    transform: scale(1.35);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* ── Management Page & Tables ────────────────────────────────────── */
+.mgmt-page {
+    animation: fadeIn 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-row:hover {
+    background: var(--surface-2);
+}
+
+.seg__btn.is-active {
+    background: var(--raised);
+    color: var(--text) !important;
+    box-shadow: 0 2px 8px rgba(58, 18, 36, 0.1);
+}
+
+:root[data-theme=dark] .seg__btn.is-active {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Utility ─────────────────────────────────────────────────────── */
+.text-center { text-align: center; }
+
+/* ── Mobile & Tablet Layout Fix ──────────────────────────────────── */
+@media (max-width: 760px) {
+    /* Hilangkan management dari floating bottom bar agar tidak merusak layout */
+    .nav__mgmt-group,
+    .nav__label--mgmt,
+    [data-group="mgmt"] {
+        display: none !important;
+    }
+
+    /* Tombol akses cepat manajemen di top header mobile */
+    .top__mgmt-btn {
+        display: inline-grid !important;
+    }
+}
+
+@media (min-width: 761px) {
+    .top__mgmt-btn {
+        display: none !important;
+    }
+}
+
+/* Tablet: sidebar 76px icon-only */
+@media (max-width: 1180px) and (min-width: 761px) {
+    .nav__label--mgmt {
+        display: none !important;
+    }
+    .nav__parent span,
+    .nav__chevron {
+        display: none !important;
+    }
+    .nav__parent {
+        justify-content: center !important;
+        padding: 0 !important;
+        height: 48px !important;
+    }
+    .nav__submenu {
+        margin: 0 !important;
+        padding: 0 !important;
+        border-left: none !important;
+        align-items: center !important;
+    }
+    .nav__subitem {
+        justify-content: center !important;
+        padding: 0 !important;
+        width: 44px !important;
+        height: 38px !important;
+        margin: 2px auto !important;
+    }
+    .nav__subitem span:not(.nav__subdot) {
+        display: none !important;
+    }
+    .nav__subdot {
+        width: 8px !important;
+        height: 8px !important;
+    }
+}
+

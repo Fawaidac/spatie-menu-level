@@ -1,0 +1,9 @@
+<header class="head">
+    <div class="head__lead">
+      
+      <div class="head__text"><p class="head__eyebrow" style="">Thursday, October 29 · Northside Family Clinic</p><h1 class="head__title" tabindex="-1" aria-label="Good afternoon, Nadia" data-split="Good afternoon, Nadia"><span class="word" aria-hidden="true"><span class="ch" style="">G</span><span class="ch" style="">o</span><span class="ch" style="">o</span><span class="ch" style="">d</span></span> <span class="word" aria-hidden="true"><span class="ch" style="">a</span><span class="ch" style="">f</span><span class="ch" style="">t</span><span class="ch" style="">e</span><span class="ch" style="">r</span><span class="ch" style="">n</span><span class="ch" style="">o</span><span class="ch" style="">o</span><span class="ch" style="">n</span><span class="ch" style="">,</span></span> <span class="word" aria-hidden="true"><span class="ch" style="">N</span><span class="ch" style="">a</span><span class="ch" style="">d</span><span class="ch" style="">i</span><span class="ch" style="">a</span></span></h1></div>
+    </div>
+    <div class="head__actions"><button type="button" class="btn btn--ghost magnetic" data-act="new-appt" style=""><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"></path></svg>New appointment</button>
+      <button type="button" class="btn btn--wa magnetic" data-act="remind-all" data-k="remindBtn" style=""><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.6 18.8z"></path><path d="M9.5 9c.3 2.3 2.2 4.4 5.2 5.5l1-1.4-1.6-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-1.6z"></path></svg><span data-k="remindLabel">Remind tomorrow · 47</span></button></div>
+    @include('dashboard.partials.stats')
+  </header>
