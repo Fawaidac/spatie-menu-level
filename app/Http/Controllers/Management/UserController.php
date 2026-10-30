@@ -19,19 +19,19 @@ class UserController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('phone', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
             });
         }
 
         $users = $query->get();
 
         $stats = [
-            'total_users'    => User::count(),
-            'active_users'   => User::whereNotNull('email_verified_at')->count(),
+            'total_users' => User::count(),
+            'active_users' => User::whereNotNull('email_verified_at')->count(),
             'new_this_month' => User::whereMonth('created_at', now()->month)
-                                    ->whereYear('created_at', now()->year)
-                                    ->count(),
+                ->whereYear('created_at', now()->year)
+                ->count(),
         ];
 
         return view('management.users.index', compact('users', 'stats'));
@@ -39,44 +39,51 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
-            'phone'    => 'nullable|string|max:20',
-            'password' => ['required', Password::min(8)],
-        ], [
-            'name.required'     => 'Nama wajib diisi.',
-            'email.required'    => 'Email wajib diisi.',
-            'email.unique'      => 'Email sudah digunakan.',
-            'password.required' => 'Password wajib diisi.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'phone' => 'nullable|string|max:20',
+                'password' => ['required', Password::min(8)],
+            ],
+            [
+                'name.required' => 'Nama wajib diisi.',
+                'email.required' => 'Email wajib diisi.',
+                'email.unique' => 'Email sudah digunakan.',
+                'password.required' => 'Password wajib diisi.',
+            ],
+        );
 
         $user = User::create([
-            'name'              => $request->name,
-            'email'             => $request->email,
-            'phone'             => $request->phone,
-            'password'          => Hash::make($request->password),
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
             'email_verified_at' => now(),
         ]);
 
-        return redirect()->to(route('management.users.index') . '#/users')
+        return redirect()
+            ->to(route('management.users.index') . '#/users')
             ->with('success', "Pengguna {$user->name} berhasil ditambahkan.");
     }
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => "required|email|unique:users,email,{$user->id}",
-            'phone' => 'nullable|string|max:20',
-        ], [
-            'name.required'  => 'Nama wajib diisi.',
-            'email.required' => 'Email wajib diisi.',
-            'email.unique'   => 'Email sudah digunakan.',
-        ]);
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => "required|email|unique:users,email,{$user->id}",
+                'phone' => 'nullable|string|max:20',
+            ],
+            [
+                'name.required' => 'Nama wajib diisi.',
+                'email.required' => 'Email wajib diisi.',
+                'email.unique' => 'Email sudah digunakan.',
+            ],
+        );
 
         $user->update([
-            'name'  => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
         ]);
@@ -86,21 +93,24 @@ class UserController extends Controller
             $user->update(['password' => Hash::make($request->password)]);
         }
 
-        return redirect()->to(route('management.users.index') . '#/users')
+        return redirect()
+            ->to(route('management.users.index') . '#/users')
             ->with('success', "Data pengguna {$user->name} berhasil diperbarui.");
     }
 
     public function destroy(User $user)
     {
         if ($user->id === auth()->id()) {
-            return redirect()->to(route('management.users.index') . '#/users')
+            return redirect()
+                ->to(route('management.users.index') . '#/users')
                 ->withErrors(['error' => 'Tidak dapat menghapus akun sendiri.']);
         }
 
         $name = $user->name;
         $user->delete();
 
-        return redirect()->to(route('management.users.index') . '#/users')
+        return redirect()
+            ->to(route('management.users.index') . '#/users')
             ->with('success', "Pengguna {$name} berhasil dihapus.");
     }
 }
