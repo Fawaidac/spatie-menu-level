@@ -4,21 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>@yield('title', 'Autentikasi') · Tend Clinic OS</title>
+    <title>
+        @yield ('title', 'Autentikasi')
+        · Tend Clinic OS
+    </title>
     <meta name="description" content="Tend Clinic OS — Sistem Manajemen Rumah Sakit & CRM WhatsApp Pasien." />
     <meta name="theme-color" content="#fdf0f4" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    />
 
     <!-- Tend CSS & App Brand Overrides -->
     <link rel="stylesheet" crossorigin href="{{ asset('tend/assets/today-rY2azoiN.css') }}" />
     <link rel="stylesheet" crossorigin href="{{ asset('tend/assets/settings-BZ16vYlf.css') }}" />
-    @vite(['resources/css/app.css'])
+    @vite (['resources/css/app.css'])
 
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="48x48" />
@@ -29,9 +35,8 @@
         (function (d) {
             try {
                 var t = JSON.parse(localStorage.getItem('tend:theme') || '"light"');
-                d.dataset.theme = t === 'system'
-                    ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-                    : t;
+                d.dataset.theme =
+                    t === 'system' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : t;
             } catch (e) {
                 d.dataset.theme = 'light';
             }
@@ -964,8 +969,8 @@
             <a href="{{ route('dashboard.index') }}" class="auth-brand" title="Menuju Dashboard">
                 <span class="auth-brand__mark" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
-                        <path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2Z"/>
-                        <path d="M8.5 12.5h2l1-2 1.6 4 1-2h1.4"/>
+                        <path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2Z" />
+                        <path d="M8.5 12.5h2l1-2 1.6 4 1-2h1.4" />
                     </svg>
                 </span>
                 <span class="auth-brand__title">tend<span>.</span><small>Northside Clinic</small></span>
@@ -973,12 +978,15 @@
 
             <div class="auth-header__actions">
                 <button type="button" class="auth-theme-toggle" id="btn-theme-auth" aria-label="Ganti Tema">
-                    <svg id="theme-ico-sun" viewBox="0 0 24 24" style="display: none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                    <svg id="theme-ico-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="theme-ico-sun" viewBox="0 0 24 24" style="display: none;">
+                        <circle cx="12" cy="12" r="5" />
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                    </svg>
+                    <svg id="theme-ico-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
                 </button>
                 <a href="{{ route('dashboard.index') }}" class="auth-header-btn">
                     <span>Dashboard Demo</span>
-                    <svg class="ico" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg class="ico" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 </a>
             </div>
         </header>
@@ -994,17 +1002,16 @@
                             <span>Tend Clinic OS & WhatsApp CRM</span>
                         </div>
 
-                        <h2 class="auth-showcase__title">
-                            Kelola Pasien & Klinik Lebih Cerdas.
-                        </h2>
-                        <p class="auth-showcase__desc">
-                            Satu platform terintegrasi: jadwal dokter, rekam medis cepat, serta pengingat dan konfirmasi otomatis melalui WhatsApp resmi.
-                        </p>
+                        <h2 class="auth-showcase__title">Kelola Pasien & Klinik Lebih Cerdas.</h2>
+                        <p class="auth-showcase__desc">Satu platform terintegrasi: jadwal dokter, rekam medis cepat, serta pengingat dan konfirmasi otomatis melalui WhatsApp resmi.</p>
 
                         <div class="auth-features">
                             <div class="auth-feature-item">
                                 <div class="auth-feature-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.6 18.8z"/><path d="M9.5 9c.3 2.3 2.2 4.4 5.2 5.5l1-1.4-1.6-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-1.6z"/></svg>
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.6 18.8z" />
+                                        <path d="M9.5 9c.3 2.3 2.2 4.4 5.2 5.5l1-1.4-1.6-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-1.6z" />
+                                    </svg>
                                 </div>
                                 <div class="auth-feature-text">
                                     <b>WhatsApp CRM Otomatis</b>
@@ -1014,7 +1021,7 @@
 
                             <div class="auth-feature-item">
                                 <div class="auth-feature-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
                                 </div>
                                 <div class="auth-feature-text">
                                     <b>Akses Terproteksi & Autentikasi Aman</b>
@@ -1024,7 +1031,7 @@
 
                             <div class="auth-feature-item">
                                 <div class="auth-feature-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+                                    <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6" /></svg>
                                 </div>
                                 <div class="auth-feature-text">
                                     <b>Alur Pasien Real-Time</b>
@@ -1037,13 +1044,14 @@
                         <div class="auth-wa-bubble">
                             <div class="auth-wa-bubble__header">
                                 <span class="auth-wa-bubble__tag">
-                                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10 10 10 0 0 1-10-10 10 10 0 0 1 10-10z"/></svg>
+                                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10 10 10 0 0 1-10-10 10 10 0 0 1 10-10z" /></svg>
                                     WhatsApp Reminder · Otomatis
                                 </span>
-                                <small style="font-size: 0.72rem; color: rgba(255,255,255,0.7);">09:15 WIB</small>
+                                <small style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.7)">09:15 WIB</small>
                             </div>
                             <div class="auth-wa-bubble__msg">
-                                "Halo Ibu Ana, jadwal konsultasi Anda dengan dr. Hendra Spesialis Penyakit Dalam telah dijadwalkan besok pukul 09.30 WIB. Balas <b>1</b> untuk Konfirmasi Hadir."
+                                "Halo Ibu Ana, jadwal konsultasi Anda dengan dr. Hendra Spesialis Penyakit Dalam telah
+                                dijadwalkan besok pukul 09.30 WIB. Balas <b>1</b> untuk Konfirmasi Hadir."
                             </div>
                         </div>
                     </div>
@@ -1057,28 +1065,43 @@
                 <!-- Right Form Panel -->
                 <div class="auth-form-card">
                     <!-- Session alerts -->
-                    @if(session('success'))
+                    @if (session('success'))
                         <div class="auth-alert auth-alert--success">
-                            <svg class="ico" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;"><polyline points="20 6 9 17 4 12"/></svg>
+                            <svg class="ico" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;"><polyline points="20 6 9 17 4 12" /></svg>
                             <span>{{ session('success') }}</span>
                         </div>
                     @endif
 
-                    @if(session('info'))
-                        <div class="auth-alert" style="background: color-mix(in srgb, var(--sky) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sky) 30%, transparent); color: var(--sky);">
-                            <svg class="ico" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    @if (session('info'))
+                        <div
+                            class="auth-alert"
+                            style="
+                                background: color-mix(in srgb, var(--sky) 12%, transparent);
+                                border: 1px solid color-mix(in srgb, var(--sky) 30%, transparent);
+                                color: var(--sky);
+                            "
+                        >
+                            <svg class="ico" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
                             <span>{{ session('info') }}</span>
                         </div>
                     @endif
 
-                    @if($errors->any())
+                    @if ($errors->any())
                         <div class="auth-alert auth-alert--error">
-                            <svg class="ico" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            <svg class="ico" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2;">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
                             <span>{{ $errors->first() }}</span>
                         </div>
                     @endif
 
-                    @yield('content')
+                    @yield ('content')
                 </div>
             </div>
         </main>
@@ -1117,6 +1140,6 @@
             }
         })();
     </script>
-    @stack('scripts')
+    @stack ('scripts')
 </body>
 </html>

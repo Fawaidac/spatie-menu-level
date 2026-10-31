@@ -1,80 +1,1308 @@
 <section class="card r-heat" id="r-heat" aria-labelledby="r-heat-t" style="">
-    <header class="card__head"><h2 class="card__title" id="r-heat-t">Busiest hours</h2>
-      <div class="card__tools"><button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand=""><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></button></div>
+    <header class="card__head">
+        <h2 class="card__title" id="r-heat-t">Busiest hours</h2>
+        <div class="card__tools">
+            <button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand="">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg>
+            </button>
+        </div>
     </header>
     <p class="card__sub" data-k="heatSub">Appointments by weekday and hour, last 12 weeks</p>
-        <div class="r-heat__wrap" data-k="heatWrap">
-          <table class="r-heat__table" data-k="heatTable">
-            <caption class="sr">Appointments by weekday and hour, last 12 weeks. Use the arrow keys to move between cells.</caption>
-            <thead><tr><td></td><th scope="col" aria-label="8 AM">8a</th><th scope="col" aria-label="9 AM">9a</th><th scope="col" aria-label="10 AM">10a</th><th scope="col" aria-label="11 AM">11a</th><th scope="col" aria-label="12 PM">12p</th><th scope="col" aria-label="1 PM">1p</th><th scope="col" aria-label="2 PM">2p</th><th scope="col" aria-label="3 PM">3p</th><th scope="col" aria-label="4 PM">4p</th></tr></thead>
-            <tbody><tr><th scope="row" aria-label="Monday">Mon</th><td data-d="0" data-h="0" tabindex="0" data-v="90"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7639;"></span><span class="sr" data-v="">90 appointments</span></td><td data-d="0" data-h="1" tabindex="-1" data-v="117"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9571;"></span><span class="sr" data-v="">117 appointments</span></td><td data-d="0" data-h="2" tabindex="-1" data-v="106"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8784; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px);"></span><span class="sr" data-v="">106 appointments</span></td><td data-d="0" data-h="3" tabindex="-1" data-v="100"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8351; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9999, 0.9999);"></span><span class="sr" data-v="">100 appointments</span></td><td data-d="0" data-h="4" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9981, 0.9981);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="0" data-h="5" tabindex="-1" data-v="113"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9081; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9912, 0.9912);"></span><span class="sr" data-v="">113 appointments</span></td><td data-d="0" data-h="6" tabindex="-1" data-v="105"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.813; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9733, 0.9733);"></span><span class="sr" data-v="">105 appointments</span></td><td data-d="0" data-h="7" tabindex="-1" data-v="111"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7683; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9362, 0.9362);"></span><span class="sr" data-v="">111 appointments</span></td><td data-d="0" data-h="8" tabindex="-1" data-v="90"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.5149; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8696, 0.8696);"></span><span class="sr" data-v="">90 appointments</span></td></tr><tr><th scope="row" aria-label="Tuesday">Tue</th><td data-d="1" data-h="0" tabindex="-1" data-v="82"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7067;"></span><span class="sr" data-v="">82 appointments</span></td><td data-d="1" data-h="1" tabindex="-1" data-v="120"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9785;"></span><span class="sr" data-v="">120 appointments</span></td><td data-d="1" data-h="2" tabindex="-1" data-v="119"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9714; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px);"></span><span class="sr" data-v="">119 appointments</span></td><td data-d="1" data-h="3" tabindex="-1" data-v="109"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.899; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9996, 0.9996);"></span><span class="sr" data-v="">109 appointments</span></td><td data-d="1" data-h="4" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9972, 0.9972);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="1" data-h="5" tabindex="-1" data-v="119"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9447; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);"></span><span class="sr" data-v="">119 appointments</span></td><td data-d="1" data-h="6" tabindex="-1" data-v="109"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8303; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9691, 0.9691);"></span><span class="sr" data-v="">109 appointments</span></td><td data-d="1" data-h="7" tabindex="-1" data-v="110"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7468; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9293, 0.9293);"></span><span class="sr" data-v="">110 appointments</span></td><td data-d="1" data-h="8" tabindex="-1" data-v="94"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.5138; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8594, 0.8594);"></span><span class="sr" data-v="">94 appointments</span></td></tr><tr><th scope="row" aria-label="Wednesday">Wed</th><td data-d="2" data-h="0" tabindex="-1" data-v="76"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.6637; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px);"></span><span class="sr" data-v="">76 appointments</span></td><td data-d="2" data-h="1" tabindex="-1" data-v="118"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9642; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px);"></span><span class="sr" data-v="">118 appointments</span></td><td data-d="2" data-h="2" tabindex="-1" data-v="122"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9924; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9999, 0.9999);"></span><span class="sr" data-v="">122 appointments</span></td><td data-d="2" data-h="3" tabindex="-1" data-v="107"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8829; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9988, 0.9988);"></span><span class="sr" data-v="">107 appointments</span></td><td data-d="2" data-h="4" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9947, 0.9947);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="2" data-h="5" tabindex="-1" data-v="109"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8632; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9837, 0.9837);"></span><span class="sr" data-v="">109 appointments</span></td><td data-d="2" data-h="6" tabindex="-1" data-v="103"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7705; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9597, 0.9597);"></span><span class="sr" data-v="">103 appointments</span></td><td data-d="2" data-h="7" tabindex="-1" data-v="116"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7466; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9144, 0.9144);"></span><span class="sr" data-v="">116 appointments</span></td><td data-d="2" data-h="8" tabindex="-1" data-v="88"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.445; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8375, 0.8375);"></span><span class="sr" data-v="">88 appointments</span></td></tr><tr><th scope="row" aria-label="Thursday">Thu</th><td data-d="3" data-h="0" tabindex="-1" data-v="72"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.6349; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9999, 0.9999);"></span><span class="sr" data-v="">72 appointments</span></td><td data-d="3" data-h="1" tabindex="-1" data-v="121"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9848; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9996, 0.9996);"></span><span class="sr" data-v="">121 appointments</span></td><td data-d="3" data-h="2" tabindex="-1" data-v="110"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9043; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9988, 0.9988);"></span><span class="sr" data-v="">110 appointments</span></td><td data-d="3" data-h="3" tabindex="-1" data-v="108"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.884; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9961, 0.9961);"></span><span class="sr" data-v="">108 appointments</span></td><td data-d="3" data-h="4" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="3" data-h="5" tabindex="-1" data-v="123" class="is-peak"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9332; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9733, 0.9733);"></span><span class="sr" data-v="">123 appointments</span></td><td data-d="3" data-h="6" tabindex="-1" data-v="115"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8076; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9427, 0.9427);"></span><span class="sr" data-v="">115 appointments</span></td><td data-d="3" data-h="7" tabindex="-1" data-v="115"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.6808; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8888, 0.8888);"></span><span class="sr" data-v="">115 appointments</span></td><td data-d="3" data-h="8" tabindex="-1" data-v="89"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.3808; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8013, 0.8013);"></span><span class="sr" data-v="">89 appointments</span></td></tr><tr><th scope="row" aria-label="Friday">Fri</th><td data-d="4" data-h="0" tabindex="-1" data-v="70"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.6179; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9981, 0.9981);"></span><span class="sr" data-v="">70 appointments</span></td><td data-d="4" data-h="1" tabindex="-1" data-v="99"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8226; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9972, 0.9972);"></span><span class="sr" data-v="">99 appointments</span></td><td data-d="4" data-h="2" tabindex="-1" data-v="104"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8528; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9947, 0.9947);"></span><span class="sr" data-v="">104 appointments</span></td><td data-d="4" data-h="3" tabindex="-1" data-v="103"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.8334; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);"></span><span class="sr" data-v="">103 appointments</span></td><td data-d="4" data-h="4" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9771, 0.9771);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="4" data-h="5" tabindex="-1" data-v="105"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7718; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9544, 0.9544);"></span><span class="sr" data-v="">105 appointments</span></td><td data-d="4" data-h="6" tabindex="-1" data-v="111"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7185; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9144, 0.9144);"></span><span class="sr" data-v="">111 appointments</span></td><td data-d="4" data-h="7" tabindex="-1" data-v="115"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.586; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8486, 0.8486);"></span><span class="sr" data-v="">115 appointments</span></td><td data-d="4" data-h="8" tabindex="-1" data-v="82"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.2588; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.7465, 0.7465);"></span><span class="sr" data-v="">82 appointments</span></td></tr><tr><th scope="row" aria-label="Saturday">Sat</th><td data-d="5" data-h="0" tabindex="-1" data-v="54"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.4952; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9912, 0.9912);"></span><span class="sr" data-v="">54 appointments</span></td><td data-d="5" data-h="1" tabindex="-1" data-v="74"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.6316; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);"></span><span class="sr" data-v="">74 appointments</span></td><td data-d="5" data-h="2" tabindex="-1" data-v="66"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.5681; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9837, 0.9837);"></span><span class="sr" data-v="">66 appointments</span></td><td data-d="5" data-h="3" tabindex="-1" data-v="68"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.566; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9733, 0.9733);"></span><span class="sr" data-v="">68 appointments</span></td><td data-d="5" data-h="4" tabindex="-1" data-v="61"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0.4929; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9544, 0.9544);"></span><span class="sr" data-v="">61 appointments</span></td><td data-d="5" data-h="5" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9221, 0.9221);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="5" data-h="6" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.8696, 0.8696);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="5" data-h="7" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.7883, 0.7883);"></span><span class="sr" data-v="">0 appointments</span></td><td data-d="5" data-h="8" tabindex="-1" data-v="0" class="is-zero"><span class="r-heat__fill" aria-hidden="true" style="opacity: 0; translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.6673, 0.6673);"></span><span class="sr" data-v="">0 appointments</span></td></tr></tbody>
-          </table>
-          <div class="chart__tip r-heat__tip" aria-hidden="true"></div>
+    <div class="r-heat__wrap" data-k="heatWrap">
+        <table class="r-heat__table" data-k="heatTable">
+            <caption class="sr">
+                Appointments by weekday and hour, last 12 weeks. Use the arrow keys to move between cells.
+            </caption>
+            <thead>
+                <tr>
+                    <td></td>
+                    <th scope="col" aria-label="8 AM">8a</th>
+                    <th scope="col" aria-label="9 AM">9a</th>
+                    <th scope="col" aria-label="10 AM">10a</th>
+                    <th scope="col" aria-label="11 AM">11a</th>
+                    <th scope="col" aria-label="12 PM">12p</th>
+                    <th scope="col" aria-label="1 PM">1p</th>
+                    <th scope="col" aria-label="2 PM">2p</th>
+                    <th scope="col" aria-label="3 PM">3p</th>
+                    <th scope="col" aria-label="4 PM">4p</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" aria-label="Monday">Mon</th>
+                    <td data-d="0" data-h="0" tabindex="0" data-v="90">
+                        <span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7639"></span
+                        ><span class="sr" data-v="">90 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="1" tabindex="-1" data-v="117">
+                        <span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9571"></span
+                        ><span class="sr" data-v="">117 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="2" tabindex="-1" data-v="106">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8784;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">106 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="3" tabindex="-1" data-v="100">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8351;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9999, 0.9999);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">100 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="4" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9981, 0.9981);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="5" tabindex="-1" data-v="113">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9081;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9912, 0.9912);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">113 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="6" tabindex="-1" data-v="105">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.813;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9733, 0.9733);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">105 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="7" tabindex="-1" data-v="111">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.7683;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9362, 0.9362);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">111 appointments</span>
+                    </td>
+                    <td data-d="0" data-h="8" tabindex="-1" data-v="90">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.5149;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8696, 0.8696);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">90 appointments</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" aria-label="Tuesday">Tue</th>
+                    <td data-d="1" data-h="0" tabindex="-1" data-v="82">
+                        <span class="r-heat__fill" aria-hidden="true" style="opacity: 0.7067"></span
+                        ><span class="sr" data-v="">82 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="1" tabindex="-1" data-v="120">
+                        <span class="r-heat__fill" aria-hidden="true" style="opacity: 0.9785"></span
+                        ><span class="sr" data-v="">120 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="2" tabindex="-1" data-v="119">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9714;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">119 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="3" tabindex="-1" data-v="109">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.899;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9996, 0.9996);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">109 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="4" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9972, 0.9972);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="5" tabindex="-1" data-v="119">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9447;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">119 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="6" tabindex="-1" data-v="109">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8303;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9691, 0.9691);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">109 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="7" tabindex="-1" data-v="110">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.7468;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9293, 0.9293);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">110 appointments</span>
+                    </td>
+                    <td data-d="1" data-h="8" tabindex="-1" data-v="94">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.5138;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8594, 0.8594);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">94 appointments</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" aria-label="Wednesday">Wed</th>
+                    <td data-d="2" data-h="0" tabindex="-1" data-v="76">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.6637;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">76 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="1" tabindex="-1" data-v="118">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9642;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">118 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="2" tabindex="-1" data-v="122">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9924;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9999, 0.9999);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">122 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="3" tabindex="-1" data-v="107">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8829;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9988, 0.9988);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">107 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="4" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9947, 0.9947);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="5" tabindex="-1" data-v="109">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8632;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9837, 0.9837);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">109 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="6" tabindex="-1" data-v="103">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.7705;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9597, 0.9597);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">103 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="7" tabindex="-1" data-v="116">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.7466;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9144, 0.9144);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">116 appointments</span>
+                    </td>
+                    <td data-d="2" data-h="8" tabindex="-1" data-v="88">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.445;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8375, 0.8375);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">88 appointments</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" aria-label="Thursday">Thu</th>
+                    <td data-d="3" data-h="0" tabindex="-1" data-v="72">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.6349;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9999, 0.9999);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">72 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="1" tabindex="-1" data-v="121">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9848;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9996, 0.9996);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">121 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="2" tabindex="-1" data-v="110">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9043;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9988, 0.9988);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">110 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="3" tabindex="-1" data-v="108">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.884;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9961, 0.9961);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">108 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="4" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="5" tabindex="-1" data-v="123" class="is-peak">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.9332;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9733, 0.9733);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">123 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="6" tabindex="-1" data-v="115">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8076;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9427, 0.9427);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">115 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="7" tabindex="-1" data-v="115">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.6808;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8888, 0.8888);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">115 appointments</span>
+                    </td>
+                    <td data-d="3" data-h="8" tabindex="-1" data-v="89">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.3808;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8013, 0.8013);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">89 appointments</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" aria-label="Friday">Fri</th>
+                    <td data-d="4" data-h="0" tabindex="-1" data-v="70">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.6179;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9981, 0.9981);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">70 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="1" tabindex="-1" data-v="99">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8226;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9972, 0.9972);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">99 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="2" tabindex="-1" data-v="104">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8528;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9947, 0.9947);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">104 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="3" tabindex="-1" data-v="103">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.8334;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">103 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="4" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9771, 0.9771);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="5" tabindex="-1" data-v="105">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.7718;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9544, 0.9544);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">105 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="6" tabindex="-1" data-v="111">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.7185;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9144, 0.9144);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">111 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="7" tabindex="-1" data-v="115">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.586;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8486, 0.8486);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">115 appointments</span>
+                    </td>
+                    <td data-d="4" data-h="8" tabindex="-1" data-v="82">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.2588;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.7465, 0.7465);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">82 appointments</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" aria-label="Saturday">Sat</th>
+                    <td data-d="5" data-h="0" tabindex="-1" data-v="54">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.4952;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9912, 0.9912);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">54 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="1" tabindex="-1" data-v="74">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.6316;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.989, 0.989);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">74 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="2" tabindex="-1" data-v="66">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.5681;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9837, 0.9837);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">66 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="3" tabindex="-1" data-v="68">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.566;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9733, 0.9733);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">68 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="4" tabindex="-1" data-v="61">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0.4929;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9544, 0.9544);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">61 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="5" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.9221, 0.9221);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="6" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.8696, 0.8696);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="7" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.7883, 0.7883);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                    <td data-d="5" data-h="8" tabindex="-1" data-v="0" class="is-zero">
+                        <span
+                            class="r-heat__fill"
+                            aria-hidden="true"
+                            style="
+                                opacity: 0;
+                                translate: none;
+                                rotate: none;
+                                scale: none;
+                                transform: translate3d(0px, 0px, 0px) scale(0.6673, 0.6673);
+                            "
+                        ></span
+                        ><span class="sr" data-v="">0 appointments</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="chart__tip r-heat__tip" aria-hidden="true"></div>
+    </div>
+    <div class="r-heat__foot">
+        <p class="r-heat__peak" data-k="heatPeak"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <path d="M12 7.5V12l3 2"></path>
+        </svg><span>Busiest: <b>Thursday 1 PM</b> · 123 appointments</span></p>
+        <span class="r-scale" aria-hidden="true"
+            >Fewer<i style="--o: 0.12"></i><i style="--o: 0.34"></i><i style="--o: 0.56"></i><i style="--o: 0.78"></i
+            ><i style="--o: 1"></i>More</span
+        >
+    </div>
+</section>
+<section
+    class="card r-src"
+    id="r-src"
+    aria-labelledby="r-src-t"
+    style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1"
+>
+    <header class="card__head">
+        <h2 class="card__title" id="r-src-t">How patients book</h2>
+        <div class="card__tools">
+            <button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand="">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg>
+            </button>
         </div>
-        <div class="r-heat__foot"><p class="r-heat__peak" data-k="heatPeak"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg><span>Busiest: <b>Thursday 1 PM</b> · 123 appointments</span></p><span class="r-scale" aria-hidden="true">Fewer<i style="--o:0.12"></i><i style="--o:0.34"></i><i style="--o:0.56"></i><i style="--o:0.78"></i><i style="--o:1"></i>More</span></div>
-  </section>
-<section class="card r-src" id="r-src" aria-labelledby="r-src-t" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1;">
-    <header class="card__head"><h2 class="card__title" id="r-src-t">How patients book</h2>
-      <div class="card__tools"><button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand=""><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></button></div>
     </header>
-    <div class="r-fig"><b class="num" data-k="srcShare" data-v="0.4148510449088484">40%</b><span class="card__sub" data-k="srcSub">of 4,498 appointments were booked on WhatsApp, last 12 weeks</span></div><ul class="r-src__list" data-k="srcList"><li class="r-src__row is-wa" data-src="whatsapp" aria-label="WhatsApp: 1866 appointments (41%)" style="">
-      <span class="r-src__ico" aria-hidden="true"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.6 18.8z"></path><path d="M9.5 9c.3 2.3 2.2 4.4 5.2 5.5l1-1.4-1.6-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-1.6z"></path></svg></span>
-      <div class="r-src__main"><div class="r-src__line"><b>WhatsApp</b><span class="num"><b data-sv="" data-v="1866">1,802</b> <small data-sp="">41%</small></span></div>
-      <span class="meter" aria-hidden="true"><span class="meter__fill meter__fill--wa" data-sf="" data-fill="1" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9915, 1);"></span></span></div></li><li class="r-src__row" data-src="phone" aria-label="Phone: 1309 appointments (29%)" style="">
-      <span class="r-src__ico" aria-hidden="true"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"></path></svg></span>
-      <div class="r-src__main"><div class="r-src__line"><b>Phone</b><span class="num"><b data-sv="" data-v="1309">1,225</b> <small data-sp="">29%</small></span></div>
-      <span class="meter" aria-hidden="true"><span class="meter__fill" data-sf="" data-fill="0.7015005359056806" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.6849, 1);"></span></span></div></li><li class="r-src__row" data-src="web" aria-label="Website: 665 appointments (15%)" style="">
-      <span class="r-src__ico" aria-hidden="true"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.5 12h17M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5S9.7 5.9 12 3.5z"></path></svg></span>
-      <div class="r-src__main"><div class="r-src__line"><b>Website</b><span class="num"><b data-sv="" data-v="665">592</b> <small data-sp="">15%</small></span></div>
-      <span class="meter" aria-hidden="true"><span class="meter__fill" data-sf="" data-fill="0.35637727759914256" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.3373, 1);"></span></span></div></li><li class="r-src__row" data-src="walk-in" aria-label="Walk-in: 658 appointments (15%)" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1;">
-      <span class="r-src__ico" aria-hidden="true"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="13" cy="4.5" r="1.8"></circle><path d="m9 21 2.5-6.5L14 16v5M8 11.5l2.5-3.5h3l2.5 3.5 2 1M11.5 14.5l1-4"></path></svg></span>
-      <div class="r-src__main"><div class="r-src__line"><b>Walk-in</b><span class="num"><b data-sv="" data-v="658">542</b> <small data-sp="">15%</small></span></div>
-      <span class="meter" aria-hidden="true"><span class="meter__fill" data-sf="" data-fill="0.35262593783494106" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.3154, 1);"></span></span></div></li></ul>
-  </section>
-<section class="card r-clin" id="r-clin" aria-labelledby="r-clin-t" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0008px, 0px); opacity: 1;">
-    <header class="card__head"><h2 class="card__title" id="r-clin-t">Clinicians</h2>
-      <div class="card__tools"><button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand=""><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></button></div>
+    <div class="r-fig">
+        <b class="num" data-k="srcShare" data-v="0.4148510449088484">40%</b
+        ><span class="card__sub" data-k="srcSub">of 4,498 appointments were booked on WhatsApp, last 12 weeks</span>
+    </div>
+    <ul class="r-src__list" data-k="srcList">
+        <li class="r-src__row is-wa" data-src="whatsapp" aria-label="WhatsApp: 1866 appointments (41%)" style="">
+            <span class="r-src__ico" aria-hidden="true"
+                ><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.6 18.8z"></path>
+                    <path d="M9.5 9c.3 2.3 2.2 4.4 5.2 5.5l1-1.4-1.6-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-1.6z"></path>
+                </svg
+            ></span>
+            <div class="r-src__main">
+                <div class="r-src__line">
+                    <b>WhatsApp</b
+                    ><span class="num"><b data-sv="" data-v="1866">1,802</b> <small data-sp="">41%</small></span>
+                </div>
+                <span class="meter" aria-hidden="true"
+                    ><span
+                        class="meter__fill meter__fill--wa"
+                        data-sf=""
+                        data-fill="1"
+                        style="
+                            translate: none;
+                            rotate: none;
+                            scale: none;
+                            transform: translate3d(0px, 0px, 0px) scale(0.9915, 1);
+                        "
+                    ></span
+                ></span>
+            </div>
+        </li>
+        <li class="r-src__row" data-src="phone" aria-label="Phone: 1309 appointments (29%)" style="">
+            <span class="r-src__ico" aria-hidden="true"
+                ><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"></path></svg
+            ></span>
+            <div class="r-src__main">
+                <div class="r-src__line">
+                    <b>Phone</b
+                    ><span class="num"><b data-sv="" data-v="1309">1,225</b> <small data-sp="">29%</small></span>
+                </div>
+                <span class="meter" aria-hidden="true"
+                    ><span
+                        class="meter__fill"
+                        data-sf=""
+                        data-fill="0.7015005359056806"
+                        style="
+                            translate: none;
+                            rotate: none;
+                            scale: none;
+                            transform: translate3d(0px, 0px, 0px) scale(0.6849, 1);
+                        "
+                    ></span
+                ></span>
+            </div>
+        </li>
+        <li class="r-src__row" data-src="web" aria-label="Website: 665 appointments (15%)" style="">
+            <span class="r-src__ico" aria-hidden="true"
+                ><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="8.5"></circle>
+                    <path d="M3.5 12h17M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5c-2.3-2.4-3.4-5.2-3.4-8.5S9.7 5.9 12 3.5z"></path>
+                </svg
+            ></span>
+            <div class="r-src__main">
+                <div class="r-src__line">
+                    <b>Website</b
+                    ><span class="num"><b data-sv="" data-v="665">592</b> <small data-sp="">15%</small></span>
+                </div>
+                <span class="meter" aria-hidden="true"
+                    ><span
+                        class="meter__fill"
+                        data-sf=""
+                        data-fill="0.35637727759914256"
+                        style="
+                            translate: none;
+                            rotate: none;
+                            scale: none;
+                            transform: translate3d(0px, 0px, 0px) scale(0.3373, 1);
+                        "
+                    ></span
+                ></span>
+            </div>
+        </li>
+        <li
+            class="r-src__row"
+            data-src="walk-in"
+            aria-label="Walk-in: 658 appointments (15%)"
+            style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1"
+        >
+            <span class="r-src__ico" aria-hidden="true"
+                ><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="13" cy="4.5" r="1.8"></circle>
+                    <path d="m9 21 2.5-6.5L14 16v5M8 11.5l2.5-3.5h3l2.5 3.5 2 1M11.5 14.5l1-4"></path>
+                </svg
+            ></span>
+            <div class="r-src__main">
+                <div class="r-src__line">
+                    <b>Walk-in</b
+                    ><span class="num"><b data-sv="" data-v="658">542</b> <small data-sp="">15%</small></span>
+                </div>
+                <span class="meter" aria-hidden="true"
+                    ><span
+                        class="meter__fill"
+                        data-sf=""
+                        data-fill="0.35262593783494106"
+                        style="
+                            translate: none;
+                            rotate: none;
+                            scale: none;
+                            transform: translate3d(0px, 0px, 0px) scale(0.3154, 1);
+                        "
+                    ></span
+                ></span>
+            </div>
+        </li>
+    </ul>
+</section>
+<section
+    class="card r-clin"
+    id="r-clin"
+    aria-labelledby="r-clin-t"
+    style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0008px, 0px); opacity: 1"
+>
+    <header class="card__head">
+        <h2 class="card__title" id="r-clin-t">Clinicians</h2>
+        <div class="card__tools">
+            <button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand="">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg>
+            </button>
+        </div>
     </header>
-    <div class="table-wrap r-clin__wrap"><table class="table r-clin__table">
-          <caption class="sr">Visits, booked capacity, no-show rate and average start delay per clinician, last 12 weeks.</caption>
-          <thead><tr><th scope="col">Clinician</th><th scope="col" class="r">Visits</th><th scope="col">Booked capacity</th><th scope="col" class="r">No-show</th><th scope="col" class="r">Avg start delay</th></tr></thead>
-          <tbody data-k="clinBody"><tr data-key="s-berg" data-clin="s-berg" style="">
-      <th scope="row"><span class="cell-person"><span class="av av--md av--mint " title="Hanna Berg" aria-hidden="true">HB</span><span><b>Hanna Berg</b><small>Practice nurse</small></span></span></th>
-      <td class="r num" data-label="Visits"><b data-cv="1238">1,238</b></td>
-      <td data-label="Booked capacity"><span class="r-cap"><span class="meter" aria-hidden="true"><span class="meter__fill" data-cf="0.6276091081593927" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.5807, 1);"></span></span><span class="num">63%</span></span></td>
-      <td class="r num" data-label="No-show"><span class="r-ns-cell">5.9%</span></td>
-      <td class="r num" data-label="Avg start delay">4 min</td>
-    </tr><tr data-key="s-okafor" data-clin="s-okafor" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1;">
-      <th scope="row"><span class="cell-person"><span class="av av--md av--sky " title="Dr. Daniel Okafor" aria-hidden="true">DO</span><span><b>Dr. Daniel Okafor</b><small>Pediatrics</small></span></span></th>
-      <td class="r num" data-label="Visits"><b data-cv="797">797</b></td>
-      <td data-label="Booked capacity"><span class="r-cap"><span class="meter" aria-hidden="true"><span class="meter__fill" data-cf="0.599304237824162" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.5301, 1);"></span></span><span class="num">60%</span></span></td>
-      <td class="r num" data-label="No-show"><span class="r-ns-cell">7.5%</span></td>
-      <td class="r num" data-label="Avg start delay">4 min</td>
-    </tr><tr data-key="s-rahman" data-clin="s-rahman" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0031px, 0px); opacity: 0.9997;">
-      <th scope="row"><span class="cell-person"><span class="av av--md av--teal " title="Dr. Aisha Rahman" aria-hidden="true">AR</span><span><b>Dr. Aisha Rahman</b><small>General practice</small></span></span></th>
-      <td class="r num" data-label="Visits"><b data-cv="790">790</b></td>
-      <td data-label="Booked capacity"><span class="r-cap"><span class="meter" aria-hidden="true"><span class="meter__fill" data-cf="0.5498102466793169" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.4558, 1);"></span></span><span class="num">55%</span></span></td>
-      <td class="r num" data-label="No-show"><span class="r-ns-cell">7.4%</span></td>
-      <td class="r num" data-label="Avg start delay">4 min</td>
-    </tr><tr data-key="s-silva" data-clin="s-silva" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.025px, 0px); opacity: 0.9975;">
-      <th scope="row"><span class="cell-person"><span class="av av--md av--apricot " title="Dr. Tomás Silva" aria-hidden="true">TS</span><span><b>Dr. Tomás Silva</b><small>Cardiology</small></span></span></th>
-      <td class="r num" data-label="Visits"><b data-cv="726">726</b></td>
-      <td data-label="Booked capacity"><span class="r-cap"><span class="meter" aria-hidden="true"><span class="meter__fill" data-cf="0.5609110169491526" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.4239, 1);"></span></span><span class="num">56%</span></span></td>
-      <td class="r num" data-label="No-show"><span class="r-ns-cell">8.4%</span></td>
-      <td class="r num" data-label="Avg start delay">4 min</td>
-    </tr><tr data-key="s-lin" data-clin="s-lin" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0979px, 0px); opacity: 0.9902;">
-      <th scope="row"><span class="cell-person"><span class="av av--md av--lilac " title="Dr. Mei Lin" aria-hidden="true">ML</span><span><b>Dr. Mei Lin</b><small>Dermatology</small></span></span></th>
-      <td class="r num" data-label="Visits"><b data-cv="606">606</b></td>
-      <td data-label="Booked capacity"><span class="r-cap"><span class="meter" aria-hidden="true"><span class="meter__fill" data-cf="0.5504943502824858" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.3639, 1);"></span></span><span class="num">55%</span></span></td>
-      <td class="r num" data-label="No-show"><span class="r-ns-cell">6.5%</span></td>
-      <td class="r num" data-label="Avg start delay">4 min</td>
-    </tr></tbody></table></div>
-  </section>
-<section class="card r-inb" id="r-inb" aria-labelledby="r-inb-t" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0119px, 0px); opacity: 0.9997;">
-    <header class="card__head"><h2 class="card__title" id="r-inb-t">Inbox health</h2>
-      <div class="card__tools"><button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand=""><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg></button></div>
+    <div class="table-wrap r-clin__wrap">
+        <table class="table r-clin__table">
+            <caption class="sr">
+                Visits, booked capacity, no-show rate and average start delay per clinician, last 12 weeks.
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col">Clinician</th>
+                    <th scope="col" class="r">Visits</th>
+                    <th scope="col">Booked capacity</th>
+                    <th scope="col" class="r">No-show</th>
+                    <th scope="col" class="r">Avg start delay</th>
+                </tr>
+            </thead>
+            <tbody data-k="clinBody">
+                <tr data-key="s-berg" data-clin="s-berg" style="">
+                    <th scope="row">
+                        <span class="cell-person"
+                            ><span class="av av--md av--mint" title="Hanna Berg" aria-hidden="true">HB</span
+                            ><span><b>Hanna Berg</b><small>Practice nurse</small></span></span
+                        >
+                    </th>
+                    <td class="r num" data-label="Visits"><b data-cv="1238">1,238</b></td>
+                    <td data-label="Booked capacity">
+                        <span class="r-cap"
+                            ><span class="meter" aria-hidden="true"
+                                ><span
+                                    class="meter__fill"
+                                    data-cf="0.6276091081593927"
+                                    style="
+                                        translate: none;
+                                        rotate: none;
+                                        scale: none;
+                                        transform: translate3d(0px, 0px, 0px) scale(0.5807, 1);
+                                    "
+                                ></span></span
+                            ><span class="num">63%</span></span
+                        >
+                    </td>
+                    <td class="r num" data-label="No-show"><span class="r-ns-cell">5.9%</span></td>
+                    <td class="r num" data-label="Avg start delay">4 min</td>
+                </tr>
+                <tr
+                    data-key="s-okafor"
+                    data-clin="s-okafor"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px);
+                        opacity: 1;
+                    "
+                >
+                    <th scope="row">
+                        <span class="cell-person"
+                            ><span class="av av--md av--sky" title="Dr. Daniel Okafor" aria-hidden="true">DO</span
+                            ><span><b>Dr. Daniel Okafor</b><small>Pediatrics</small></span></span
+                        >
+                    </th>
+                    <td class="r num" data-label="Visits"><b data-cv="797">797</b></td>
+                    <td data-label="Booked capacity">
+                        <span class="r-cap"
+                            ><span class="meter" aria-hidden="true"
+                                ><span
+                                    class="meter__fill"
+                                    data-cf="0.599304237824162"
+                                    style="
+                                        translate: none;
+                                        rotate: none;
+                                        scale: none;
+                                        transform: translate3d(0px, 0px, 0px) scale(0.5301, 1);
+                                    "
+                                ></span></span
+                            ><span class="num">60%</span></span
+                        >
+                    </td>
+                    <td class="r num" data-label="No-show"><span class="r-ns-cell">7.5%</span></td>
+                    <td class="r num" data-label="Avg start delay">4 min</td>
+                </tr>
+                <tr
+                    data-key="s-rahman"
+                    data-clin="s-rahman"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0.0031px, 0px);
+                        opacity: 0.9997;
+                    "
+                >
+                    <th scope="row">
+                        <span class="cell-person"
+                            ><span class="av av--md av--teal" title="Dr. Aisha Rahman" aria-hidden="true">AR</span
+                            ><span><b>Dr. Aisha Rahman</b><small>General practice</small></span></span
+                        >
+                    </th>
+                    <td class="r num" data-label="Visits"><b data-cv="790">790</b></td>
+                    <td data-label="Booked capacity">
+                        <span class="r-cap"
+                            ><span class="meter" aria-hidden="true"
+                                ><span
+                                    class="meter__fill"
+                                    data-cf="0.5498102466793169"
+                                    style="
+                                        translate: none;
+                                        rotate: none;
+                                        scale: none;
+                                        transform: translate3d(0px, 0px, 0px) scale(0.4558, 1);
+                                    "
+                                ></span></span
+                            ><span class="num">55%</span></span
+                        >
+                    </td>
+                    <td class="r num" data-label="No-show"><span class="r-ns-cell">7.4%</span></td>
+                    <td class="r num" data-label="Avg start delay">4 min</td>
+                </tr>
+                <tr
+                    data-key="s-silva"
+                    data-clin="s-silva"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0.025px, 0px);
+                        opacity: 0.9975;
+                    "
+                >
+                    <th scope="row">
+                        <span class="cell-person"
+                            ><span class="av av--md av--apricot" title="Dr. Tomás Silva" aria-hidden="true">TS</span
+                            ><span><b>Dr. Tomás Silva</b><small>Cardiology</small></span></span
+                        >
+                    </th>
+                    <td class="r num" data-label="Visits"><b data-cv="726">726</b></td>
+                    <td data-label="Booked capacity">
+                        <span class="r-cap"
+                            ><span class="meter" aria-hidden="true"
+                                ><span
+                                    class="meter__fill"
+                                    data-cf="0.5609110169491526"
+                                    style="
+                                        translate: none;
+                                        rotate: none;
+                                        scale: none;
+                                        transform: translate3d(0px, 0px, 0px) scale(0.4239, 1);
+                                    "
+                                ></span></span
+                            ><span class="num">56%</span></span
+                        >
+                    </td>
+                    <td class="r num" data-label="No-show"><span class="r-ns-cell">8.4%</span></td>
+                    <td class="r num" data-label="Avg start delay">4 min</td>
+                </tr>
+                <tr
+                    data-key="s-lin"
+                    data-clin="s-lin"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0.0979px, 0px);
+                        opacity: 0.9902;
+                    "
+                >
+                    <th scope="row">
+                        <span class="cell-person"
+                            ><span class="av av--md av--lilac" title="Dr. Mei Lin" aria-hidden="true">ML</span
+                            ><span><b>Dr. Mei Lin</b><small>Dermatology</small></span></span
+                        >
+                    </th>
+                    <td class="r num" data-label="Visits"><b data-cv="606">606</b></td>
+                    <td data-label="Booked capacity">
+                        <span class="r-cap"
+                            ><span class="meter" aria-hidden="true"
+                                ><span
+                                    class="meter__fill"
+                                    data-cf="0.5504943502824858"
+                                    style="
+                                        translate: none;
+                                        rotate: none;
+                                        scale: none;
+                                        transform: translate3d(0px, 0px, 0px) scale(0.3639, 1);
+                                    "
+                                ></span></span
+                            ><span class="num">55%</span></span
+                        >
+                    </td>
+                    <td class="r num" data-label="No-show"><span class="r-ns-cell">6.5%</span></td>
+                    <td class="r num" data-label="Avg start delay">4 min</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section
+    class="card r-inb"
+    id="r-inb"
+    aria-labelledby="r-inb-t"
+    style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0119px, 0px); opacity: 0.9997"
+>
+    <header class="card__head">
+        <h2 class="card__title" id="r-inb-t">Inbox health</h2>
+        <div class="card__tools">
+            <button type="button" class="ibtn card__expand" aria-label="Expand" title="Expand" data-expand="">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8.5 7H17v8.5"></path></svg>
+            </button>
+        </div>
     </header>
-    <div class="r-fig"><b class="num" data-k="inbReply" data-v="8">7 min</b><span class="card__sub">median first reply on WhatsApp</span></div>
-        <div class="r-inb__status"><div class="r-stack" data-k="inbStack" role="img" aria-label="9 open, 2 waiting on the patient, 3 resolved" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.7439, 1); transform-origin: 0px 50%;"><span class="r-stack__seg r-stack__seg--open" style="flex-grow:9"></span><span class="r-stack__seg r-stack__seg--pending" style="flex-grow:2"></span><span class="r-stack__seg r-stack__seg--resolved" style="flex-grow:3"></span></div><div class="legend" data-k="inbLegend"><span><i class="r-stack__seg--open"></i>Open <b class="num">9</b></span><span><i class="r-stack__seg--pending"></i>Waiting on patient <b class="num">2</b></span><span><i class="r-stack__seg--resolved"></i>Resolved <b class="num">3</b></span></div></div>
-        <h3 class="r-mini">Conversations by label</h3><ul class="r-inb__labels" data-k="inbLabels"><li class="r-inb__label" aria-label="Booking: 6 conversations" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1;"><span class="lbl lbl--booking">Booking</span><span class="meter" aria-hidden="true"><span class="meter__fill r-fill--booking" data-lf="1" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.9734, 1);"></span></span><b class="num">6</b></li><li class="r-inb__label" aria-label="Results: 3 conversations" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0014px, 0px); opacity: 0.9998;"><span class="lbl lbl--results">Results</span><span class="meter" aria-hidden="true"><span class="meter__fill r-fill--results" data-lf="0.5" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.4764, 1);"></span></span><b class="num">3</b></li><li class="r-inb__label" aria-label="Question: 2 conversations" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0098px, 0px); opacity: 0.9988;"><span class="lbl lbl--question">Question</span><span class="meter" aria-hidden="true"><span class="meter__fill r-fill--question" data-lf="0.3333333333333333" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.3073, 1);"></span></span><b class="num">2</b></li><li class="r-inb__label" aria-label="Reschedule: 1 conversation" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.0366px, 0px); opacity: 0.9954;"><span class="lbl lbl--reschedule">Reschedule</span><span class="meter" aria-hidden="true"><span class="meter__fill r-fill--reschedule" data-lf="0.16666666666666666" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.1463, 1);"></span></span><b class="num">1</b></li><li class="r-inb__label" aria-label="Billing: 1 conversation" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.098px, 0px); opacity: 0.9877;"><span class="lbl lbl--billing">Billing</span><span class="meter" aria-hidden="true"><span class="meter__fill r-fill--billing" data-lf="0.16666666666666666" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.1362, 1);"></span></span><b class="num">1</b></li><li class="r-inb__label" aria-label="Urgent: 1 conversation" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0.2162px, 0px); opacity: 0.973;"><span class="lbl lbl--urgent">Urgent</span><span class="meter" aria-hidden="true"><span class="meter__fill r-fill--urgent" data-lf="0.16666666666666666" style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px) scale(0.1228, 1);"></span></span><b class="num">1</b></li></ul>
-  </section>
+    <div class="r-fig">
+        <b class="num" data-k="inbReply" data-v="8">7 min</b
+        ><span class="card__sub">median first reply on WhatsApp</span>
+    </div>
+    <div class="r-inb__status">
+        <div
+            class="r-stack"
+            data-k="inbStack"
+            role="img"
+            aria-label="9 open, 2 waiting on the patient, 3 resolved"
+            style="
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate3d(0px, 0px, 0px) scale(0.7439, 1);
+                transform-origin: 0px 50%;
+            "
+        >
+            <span class="r-stack__seg r-stack__seg--open" style="flex-grow: 9"></span
+            ><span class="r-stack__seg r-stack__seg--pending" style="flex-grow: 2"></span
+            ><span class="r-stack__seg r-stack__seg--resolved" style="flex-grow: 3"></span>
+        </div>
+        <div class="legend" data-k="inbLegend">
+            <span><i class="r-stack__seg--open"></i>Open <b class="num">9</b></span
+            ><span><i class="r-stack__seg--pending"></i>Waiting on patient <b class="num">2</b></span
+            ><span><i class="r-stack__seg--resolved"></i>Resolved <b class="num">3</b></span>
+        </div>
+    </div>
+    <h3 class="r-mini">Conversations by label</h3>
+    <ul class="r-inb__labels" data-k="inbLabels">
+        <li
+            class="r-inb__label"
+            aria-label="Booking: 6 conversations"
+            style="translate: none; rotate: none; scale: none; transform: translate3d(0px, 0px, 0px); opacity: 1"
+        >
+            <span class="lbl lbl--booking">Booking</span
+            ><span class="meter" aria-hidden="true"
+                ><span
+                    class="meter__fill r-fill--booking"
+                    data-lf="1"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px) scale(0.9734, 1);
+                    "
+                ></span></span
+            ><b class="num">6</b>
+        </li>
+        <li
+            class="r-inb__label"
+            aria-label="Results: 3 conversations"
+            style="
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate3d(0px, 0.0014px, 0px);
+                opacity: 0.9998;
+            "
+        >
+            <span class="lbl lbl--results">Results</span
+            ><span class="meter" aria-hidden="true"
+                ><span
+                    class="meter__fill r-fill--results"
+                    data-lf="0.5"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px) scale(0.4764, 1);
+                    "
+                ></span></span
+            ><b class="num">3</b>
+        </li>
+        <li
+            class="r-inb__label"
+            aria-label="Question: 2 conversations"
+            style="
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate3d(0px, 0.0098px, 0px);
+                opacity: 0.9988;
+            "
+        >
+            <span class="lbl lbl--question">Question</span
+            ><span class="meter" aria-hidden="true"
+                ><span
+                    class="meter__fill r-fill--question"
+                    data-lf="0.3333333333333333"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px) scale(0.3073, 1);
+                    "
+                ></span></span
+            ><b class="num">2</b>
+        </li>
+        <li
+            class="r-inb__label"
+            aria-label="Reschedule: 1 conversation"
+            style="
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate3d(0px, 0.0366px, 0px);
+                opacity: 0.9954;
+            "
+        >
+            <span class="lbl lbl--reschedule">Reschedule</span
+            ><span class="meter" aria-hidden="true"
+                ><span
+                    class="meter__fill r-fill--reschedule"
+                    data-lf="0.16666666666666666"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px) scale(0.1463, 1);
+                    "
+                ></span></span
+            ><b class="num">1</b>
+        </li>
+        <li
+            class="r-inb__label"
+            aria-label="Billing: 1 conversation"
+            style="
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate3d(0px, 0.098px, 0px);
+                opacity: 0.9877;
+            "
+        >
+            <span class="lbl lbl--billing">Billing</span
+            ><span class="meter" aria-hidden="true"
+                ><span
+                    class="meter__fill r-fill--billing"
+                    data-lf="0.16666666666666666"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px) scale(0.1362, 1);
+                    "
+                ></span></span
+            ><b class="num">1</b>
+        </li>
+        <li
+            class="r-inb__label"
+            aria-label="Urgent: 1 conversation"
+            style="
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate3d(0px, 0.2162px, 0px);
+                opacity: 0.973;
+            "
+        >
+            <span class="lbl lbl--urgent">Urgent</span
+            ><span class="meter" aria-hidden="true"
+                ><span
+                    class="meter__fill r-fill--urgent"
+                    data-lf="0.16666666666666666"
+                    style="
+                        translate: none;
+                        rotate: none;
+                        scale: none;
+                        transform: translate3d(0px, 0px, 0px) scale(0.1228, 1);
+                    "
+                ></span></span
+            ><b class="num">1</b>
+        </li>
+    </ul>
+</section>

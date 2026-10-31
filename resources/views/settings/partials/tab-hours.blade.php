@@ -1,6 +1,9 @@
 <div class="s-panel" id="s-panel-hours" role="tabpanel" tabindex="-1" hidden="">
     <header class="s-head">
-        <div><h2 class="s-head__title">Clinic Operating Hours</h2><p class="card__sub">Used for online booking, reminders, and auto-replies outside office hours.</p></div>
+        <div>
+            <h2 class="s-head__title">Clinic Operating Hours</h2>
+            <p class="card__sub">Used for online booking, reminders, and auto-replies outside office hours.</p>
+        </div>
     </header>
     <div class="s-cards">
         <section class="card s-card">
