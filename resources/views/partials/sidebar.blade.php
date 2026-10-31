@@ -262,6 +262,19 @@
             @endforeach
         @endif
     </nav>
+    <style>
+        /* Submenu slide animation */
+        .nav__submenu-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.34s ease-out, opacity 0.34s ease-out;
+            opacity: 0;
+        }
+        .nav__submenu-wrapper.is-open {
+            max-height: 1000px; /* large enough for content */
+            opacity: 1;
+        }
+    </style>
 
     <div class="side__foot">
         <a class="wa-status" id="wa-status" href="{{ url('/settings/whatsapp') }}"></a>

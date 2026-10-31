@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>Tend — RSUD dr. Soebandi</title>
+    <title>Satu Sehat — RSUD dr. Soebandi</title>
     <meta name="description" content="Tend is a clinic CRM dashboard with WhatsApp built in." />
     <meta name="theme-color" content="#fdf0f4" />
 
@@ -35,6 +35,19 @@
     </script>
 
     <!-- Global Tend Shell CSS -->
+    <link rel="stylesheet" href="{{ asset('tend/assets/index-C_0VME2I.css') }}" />
+    <style>
+        /* Section entrance animation */
+        section.card {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        section.card.animate {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('tend/assets/index-C_0VME2I.css') }}" />
 
     <!-- Page CSS Stylesheets (scoped by [data-view]) -->
@@ -351,5 +364,12 @@
     <script type="module" crossorigin src="{{ asset('tend/assets/index-DwjwKIcQ.js') }}"></script>
 
     @stack ('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('section.card').forEach(function (sec) {
+                sec.classList.add('animate');
+            });
+        });
+    </script>
 </body>
 </html>

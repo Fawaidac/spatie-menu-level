@@ -365,3 +365,10 @@ html.js.is-ready .app {
     }
 }
 
+
+
+/* Animasi masuk untuk section konten utama */
+section.card,
+.view.is-active {
+    animation: fadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
