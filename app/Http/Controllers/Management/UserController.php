@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $search = $request->get('search');
 
-        $query = User::latest();
+        $query = User::with('level')->latest();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -25,6 +25,7 @@ class UserController extends Controller
         }
 
         $users = $query->get();
+        $levels = \App\Models\Level::orderBy('nama')->get();
 
         $stats = [
             'total_users' => User::count(),
@@ -34,7 +35,7 @@ class UserController extends Controller
                 ->count(),
         ];
 
-        return view('management.users.index', compact('users', 'stats'));
+        return view('management.users.index', compact('users', 'stats', 'levels'));
     }
 
     public function store(Request $request)
@@ -44,6 +45,7 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'nullable|string|max:20',
+                'level_id' => 'nullable|exists:levels,id',
                 'password' => ['required', Password::min(8)],
             ],
             [
@@ -58,6 +60,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'level_id' => $request->level_id,
             'password' => Hash::make($request->password),
             'email_verified_at' => now(),
         ]);
@@ -74,6 +77,7 @@ class UserController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => "required|email|unique:users,email,{$user->id}",
                 'phone' => 'nullable|string|max:20',
+                'level_id' => 'nullable|exists:levels,id',
             ],
             [
                 'name.required' => 'Nama wajib diisi.',
@@ -86,7 +90,12 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'level_id' => $request->level_id,
         ]);
+
+        if ($user->level_id) {
+            \App\Models\Level::forgetAccess($user->level_id);
+        }
 
         if ($request->filled('password')) {
             $request->validate(['password' => Password::min(8)]);

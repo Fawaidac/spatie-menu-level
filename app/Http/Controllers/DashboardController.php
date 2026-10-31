@@ -313,6 +313,14 @@ class DashboardController extends Controller
             ],
         ];
 
+        $satusehatLogs = \App\Models\SatusehatLog::orderBy('tanggal', 'desc')->get();
+        $satusehatSummary = [
+            'total_encounter' => $satusehatLogs->sum('encounter'),
+            'total_diagnosa' => $satusehatLogs->sum('diagnosa'),
+            'last_sync' => $satusehatLogs->first()?->tanggal?->format('d M Y') ?? date('d M Y'),
+            'days_count' => $satusehatLogs->count(),
+        ];
+
         return view('dashboard.index', compact(
             'clinic',
             'stats',
@@ -321,7 +329,9 @@ class DashboardController extends Controller
             'reminders',
             'recalls',
             'clinicians',
-            'activity'
+            'activity',
+            'satusehatLogs',
+            'satusehatSummary'
         ));
     }
 }

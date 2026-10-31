@@ -11,6 +11,12 @@ class MenuService
 {
     public function create(array $data, ?Menu $parent = null): Menu
     {
+        if ($parent && $parent->parent_id !== null) {
+            throw ValidationException::withMessages([
+                'parent_id' => 'Struktur menu dibatasi maksimal 2 tingkat (Menu Utama dan Sub-Menu).',
+            ]);
+        }
+
         return DB::transaction(function () use ($data, $parent) {
             if ($parent) {
                 $parent->update(['url' => '#']); // punya anak, jadi url wajib '#'
@@ -21,7 +27,7 @@ class MenuService
                 'parent_id' => $parent?->id,
                 'kode_menu' => $this->generateKode($parent),
                 'nama' => $data['nama'],
-                'url' => $data['url'] ?: '#',
+                'url' => !empty($data['url']) ? $data['url'] : '#',
                 'icon' => $data['icon'] ?? null,
                 'urutan' => Menu::where('parent_id', $parent?->id)->max('urutan') + 1,
             ]);

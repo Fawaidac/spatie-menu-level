@@ -80,9 +80,14 @@
     border-radius: 14px;
 }
 
-/* Item aktif teks putih */
+/* Item aktif — frosted glass background & teks putih */
+.nav__item.is-active,
 .nav__item[aria-current=page] {
     color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.20) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 14px;
 }
 
 /* Hover state lebih lembut */

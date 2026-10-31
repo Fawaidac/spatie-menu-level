@@ -23,8 +23,12 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Root (/) → redirect ke halaman login
-Route::get('/', fn() => redirect()->route('login'));
+// Root (/) → redirect ke dashboard jika sudah login, ke login jika belum
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('dashboard.index')
+        : redirect()->route('login');
+});
 
 // ─── Protected Routes (harus login) ─────────────────────────────────────────
 Route::middleware('auth')->group(function () {
@@ -63,6 +67,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/whatsapp', [SettingController::class, 'whatsapp'])->name('whatsapp');
         });
 
+    // ─── Setting Level & Menu & API Key ──────────────────────────────────────────
+    Route::prefix('setting')->name('setting.')->group(function () {
+        Route::resource('level', \App\Http\Controllers\Setting\LevelController::class);
+        Route::resource('menu', \App\Http\Controllers\Setting\MenuController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('/user', fn() => redirect()->route('management.users.index'))->name('user.index');
+        Route::get('/api-key', [\App\Http\Controllers\Setting\ApiKeyController::class, 'index'])->name('api-key.index');
+        Route::post('/api-key', [\App\Http\Controllers\Setting\ApiKeyController::class, 'update'])->name('api-key.update');
+    });
+
     // ─── Management User ─────────────────────────────────────────────────────────
     Route::prefix('management')->name('management.')->group(function () {
         Route::get('/users',           [\App\Http\Controllers\Management\UserController::class, 'index'])->name('users.index');
@@ -70,4 +83,33 @@ Route::middleware('auth')->group(function () {
         Route::put('/users/{user}',    [\App\Http\Controllers\Management\UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [\App\Http\Controllers\Management\UserController::class, 'destroy'])->name('users.destroy');
     });
+
+    // ─── Satu Sehat REST API ──────────────────────────────────────────────────────
+    Route::prefix('satusehat')->name('satusehat.')->group(function () {
+        Route::get('/token', [\App\Http\Controllers\Satusehat\TokenController::class, 'index'])->name('token.index');
+        Route::post('/token/generate', [\App\Http\Controllers\Satusehat\TokenController::class, 'generate'])->name('token.generate');
+    });
+
+    // ─── Dynamic Menu Fallback ───────────────────────────────────────────────────
+    // Otomatis menampilkan halaman placeholder untuk menu dinamis dari database
+    // yang belum memiliki controller/view khusus (seperti /testing, dsb)
+    Route::get('/{any}', function ($any) {
+        $cleanPath = trim($any, '/');
+
+        $menu = \App\Models\Menu::where(function ($q) use ($cleanPath, $any) {
+            $q->where('url', $cleanPath)
+              ->orWhere('url', '/' . $cleanPath)
+              ->orWhere('url', $any);
+        })->first();
+
+        if ($menu) {
+            if (!auth()->user()->canMenu($menu->kode_menu, 'view')) {
+                abort(403, 'Anda tidak memiliki hak akses untuk melihat menu ini.');
+            }
+
+            return view('dynamic.placeholder', compact('menu'));
+        }
+
+        abort(404);
+    })->where('any', '.*')->name('dynamic.page');
 });

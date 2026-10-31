@@ -1,7 +1,11 @@
 @php
     $usersList = (isset($users) && $users instanceof \Illuminate\Support\Collection) 
         ? $users 
-        : \App\Models\User::latest()->get();
+        : \App\Models\User::with('level')->latest()->get();
+
+    $levelsList = (isset($levels) && $levels instanceof \Illuminate\Support\Collection)
+        ? $levels
+        : \App\Models\Level::orderBy('nama')->get();
 
     $activeUserStats = (isset($stats) && is_array($stats) && isset($stats['total_users'])) 
         ? $stats 
@@ -210,6 +214,7 @@
                 <thead>
                     <tr>
                         <th>PENGGUNA</th>
+                        <th>LEVEL</th>
                         <th>KONTAK</th>
                         <th>BERGABUNG</th>
                         <th class="r">AKSI</th>
@@ -228,6 +233,15 @@
                                 </div>
                             </td>
                             <td>
+                                @if($user->level)
+                                    <span class="badge {{ $user->level->nama === 'admin' ? 'badge--primary' : 'badge--plain' }}" style="font-weight:700; text-transform:capitalize;">
+                                        {{ $user->level->nama }}
+                                    </span>
+                                @else
+                                    <span style="color:var(--muted); font-size:12px;">—</span>
+                                @endif
+                            </td>
+                            <td>
                                 <span style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;">{{ $user->phone ?? '-' }}</span>
                             </td>
                             <td>
@@ -235,7 +249,7 @@
                             </td>
                             <td class="r">
                                 <div style="display:inline-flex;gap:6px;">
-                                    <button type="button" class="btn btn--xs btn--ghost" onclick="openEditUserModal({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ $user->email }}', '{{ $user->phone }}')">
+                                    <button type="button" class="btn btn--xs btn--ghost" onclick="openEditUserModal({{ $user->id }}, '{{ addslashes($user->name) }}', '{{ $user->email }}', '{{ $user->phone }}', '{{ $user->level_id }}')">
                                         <svg class="ico" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         <span>Edit</span>
                                     </button>
@@ -285,6 +299,16 @@
                         <input type="tel" name="phone" placeholder="081234567890" />
                     </label>
                 </div>
+
+                <label class="field">
+                    <span class="field__label">Level Akses</span>
+                    <select name="level_id" style="width:100%;height:38px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:13.5px;">
+                        <option value="">-- Tanpa Level --</option>
+                        @foreach($levelsList as $lvl)
+                            <option value="{{ $lvl->id }}">{{ ucfirst($lvl->nama) }}</option>
+                        @endforeach
+                    </select>
+                </label>
 
                 <!-- Password Field with Strength Bar -->
                 <div>
@@ -377,6 +401,16 @@
                     </label>
                 </div>
 
+                <label class="field">
+                    <span class="field__label">Level Akses</span>
+                    <select name="level_id" id="edit-level-id" style="width:100%;height:38px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:13.5px;">
+                        <option value="">-- Tanpa Level --</option>
+                        @foreach($levelsList as $lvl)
+                            <option value="{{ $lvl->id }}">{{ ucfirst($lvl->nama) }}</option>
+                        @endforeach
+                    </select>
+                </label>
+
                 <!-- Optional New Password with Strength Meter -->
                 <div>
                     <label class="field">
@@ -451,12 +485,16 @@ window.openAddUserModal = function() {
     }
 };
 
-window.openEditUserModal = function(id, name, email, phone) {
+window.openEditUserModal = function(id, name, email, phone, levelId) {
     var form = document.getElementById('form-edit-user');
     form.action = '/management/users/' + id;
     document.getElementById('edit-name').value  = name;
     document.getElementById('edit-email').value = email;
     document.getElementById('edit-phone').value = phone || '';
+    var lvlSelect = document.getElementById('edit-level-id');
+    if (lvlSelect) {
+        lvlSelect.value = levelId || '';
+    }
 
     // Reset password field & meter
     var pwdInput = document.getElementById('edit-user-password');
