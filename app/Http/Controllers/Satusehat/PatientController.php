@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Satusehat;
 
 use Illuminate\Http\Request;
 
-class PatientController extends Controller
+class PatientController extends \App\Http\Controllers\Controller
 {
     /**
      * Tampilkan daftar pasien RSUD dengan filter & tabel terstruktur.
@@ -131,7 +131,7 @@ class PatientController extends Controller
             ],
         ];
 
-        return view('patients.index', compact('stats', 'categories', 'patients'));
+        return view('satusehat.patient.index', compact('stats', 'categories', 'patients'));
     }
 
     public function create() { return view('patients.create'); }

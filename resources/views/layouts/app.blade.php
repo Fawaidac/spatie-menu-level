@@ -119,7 +119,7 @@
         <div style="padding: 4px 0">
             @if (auth()->user() && (auth()->user()->canMenu('G4', 'view') || auth()->user()->level?->nama === 'admin'))
                 <a
-                    href="{{ route('settings.index') }}"
+                    href="{{ url('settings') }}"
                     class="menu__item"
                     style="
                         display: flex;

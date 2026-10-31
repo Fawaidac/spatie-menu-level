@@ -3,12 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InboxController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\CampaignController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,38 +26,6 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     // ─── Dashboard (Today) ───────────────────────────────────────────────────────
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
-    // ─── Pesan Masuk (Inbox) ─────────────────────────────────────────────────────
-    Route::get('/inbox', [InboxController::class, 'index'])->name('inbox.index');
-
-    // ─── Pasien ──────────────────────────────────────────────────────────────────
-    Route::resource('patients', PatientController::class)->names([
-        'index' => 'patients.index',
-        'create' => 'patients.create',
-        'store' => 'patients.store',
-        'show' => 'patients.show',
-        'edit' => 'patients.edit',
-        'update' => 'patients.update',
-        'destroy' => 'patients.destroy',
-    ]);
-
-    // ─── Jadwal ──────────────────────────────────────────────────────────────────
-    Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
-
-    // ─── Kampanye ────────────────────────────────────────────────────────────────
-    Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
-
-    // ─── Laporan ─────────────────────────────────────────────────────────────────
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-
-    // ─── Pengaturan ──────────────────────────────────────────────────────────────
-    Route::prefix('settings')
-        ->name('settings.')
-        ->group(function () {
-            Route::get('/', [SettingController::class, 'index'])->name('index');
-            Route::post('/', [SettingController::class, 'update'])->name('update');
-            Route::get('/whatsapp', [SettingController::class, 'whatsapp'])->name('whatsapp');
-        });
 
     // ─── Setting Level & Menu & API Key ──────────────────────────────────────────
     Route::prefix('setting')
@@ -107,9 +69,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('encounter')
         ->name('encounter.')
         ->group(function () {
-            Route::get('/rawat-jalan', [\App\Http\Controllers\Encounter\EncounterController::class, 'rawatJalan'])->name('rawat-jalan');
-            Route::get('/igd',         [\App\Http\Controllers\Encounter\EncounterController::class, 'igd'])->name('igd');
-            Route::get('/rawat-inap',  [\App\Http\Controllers\Encounter\EncounterController::class, 'rawatInap'])->name('rawat-inap');
+            Route::get('/rawat-jalan', [
+                \App\Http\Controllers\Encounter\EncounterController::class,
+                'rawatJalan',
+            ])->name('rawat-jalan');
+            Route::get('/igd', [\App\Http\Controllers\Encounter\EncounterController::class, 'igd'])->name('igd');
+            Route::get('/rawat-inap', [\App\Http\Controllers\Encounter\EncounterController::class, 'rawatInap'])->name(
+                'rawat-inap',
+            );
         });
 
     // ─── Satu Sehat REST API ──────────────────────────────────────────────────────
@@ -122,13 +89,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/token/generate', [\App\Http\Controllers\Satusehat\TokenController::class, 'generate'])->name(
                 'token.generate',
             );
-            Route::get('/patient', [PatientController::class, 'index'])->name('patient.index');
+            Route::get('/patient', [\App\Http\Controllers\Satusehat\PatientController::class, 'index'])->name(
+                'patient.index',
+            );
             Route::get('/organization', [\App\Http\Controllers\Satusehat\OrganizationController::class, 'index'])->name(
                 'organization.index',
             );
-            Route::post('/organization/sync', [\App\Http\Controllers\Satusehat\OrganizationController::class, 'sync'])->name(
-                'organization.sync',
-            );
+            Route::post('/organization/sync', [
+                \App\Http\Controllers\Satusehat\OrganizationController::class,
+                'sync',
+            ])->name('organization.sync');
             Route::get('/location', [\App\Http\Controllers\Satusehat\LocationController::class, 'index'])->name(
                 'location.index',
             );
