@@ -15,16 +15,16 @@ class OrganizationController extends Controller
     public function index()
     {
         $apiKey = ApiKey::first();
-        $orgId = $apiKey?->organization_id ? str_replace('ORG-', '', $apiKey->organization_id) : '1000293847';
+        $orgId = '100026073';
 
         $organization = [
             'id' => $orgId,
             'active' => true,
-            'name' => 'RSUD dr. Soebandi Jember',
-            'legal_name' => 'Rumah Sakit Umum Daerah dr. Soebandi',
+            'name' => 'RS Umum Daerah Dr. Soebandi Jember',
+            'legal_name' => 'RS Umum Daerah Dr. Soebandi Jember',
             'alias' => ['RSUD dr. Soebandi', 'RS Soebandi Jember', 'RSUD Soebandi'],
-            'type_code' => 'prov',
-            'type_display' => 'Healthcare Provider',
+            'type_code' => '104',
+            'type_display' => 'Rumah Sakit',
             'classification' => 'Rumah Sakit Umum Daerah Kelas B Pendidikan',
             'part_of' => 'Dinas Kesehatan Kabupaten Jember',
             'part_of_ref' => 'Organization/1000001',
@@ -45,17 +45,17 @@ class OrganizationController extends Controller
                 'village_name' => 'Patrang',
             ],
             'telecom' => [
-                'phone' => '+62331487441',
-                'phone_display' => '(0331) 487441',
-                'email' => 'rsud_soebandi@jemberkab.go.id',
+                'phone' => '0331-487441',
+                'phone_display' => '0331-487441',
+                'email' => 'rsd.soebandi@jemberkab.go.id',
                 'website' => 'https://rsuddrsoebandi.jemberkab.go.id',
             ],
             'contact' => [
                 'purpose_code' => 'ADMIN',
-                'purpose_display' => 'Administrative / IT SIMRS Integrasi',
-                'name' => 'Admin Integrasi Satu Sehat',
-                'phone' => '+62331487441',
-                'email' => 'admin.satusehat@rsudsoebandi.id',
+                'purpose_display' => 'Administrative',
+                'name' => 'Admin Satu Sehat',
+                'phone' => '0331-487441',
+                'email' => 'rsd.soebandi@jemberkab.go.id',
             ],
             'synced_at' => session('satusehat_org_synced_at', now()->subMinutes(8)->format('d M Y, H:i \W\I\B')),
         ];
@@ -228,6 +228,72 @@ class OrganizationController extends Controller
             ],
         ];
 
+        $fhirJson = [
+            'active' => true,
+            'address' => [
+                [
+                    'city' => 'Kab. Jember',
+                    'country' => 'ID',
+                    'district' => 'Patrang',
+                    'extension' => [
+                        [
+                            'extension' => [
+                                ['url' => 'province', 'valueCode' => '35'],
+                                ['url' => 'city', 'valueCode' => '3509'],
+                                ['url' => 'district', 'valueCode' => '350920'],
+                                ['url' => 'village', 'valueCode' => '3509201007'],
+                            ],
+                            'url' => 'https://fhir.kemkes.go.id/r4/StructureDefinition/administrativeCode',
+                        ],
+                    ],
+                    'line' => ['Jl. Dokter Soebandi No.124'],
+                    'state' => 'Jawa Timur',
+                    'use' => 'work',
+                ],
+            ],
+            'contact' => [
+                [
+                    'purpose' => [
+                        'coding' => [
+                            [
+                                'code' => 'ADMIN',
+                                'system' => 'http://terminology.hl7.org/CodeSystem/contactentity-type',
+                            ],
+                        ],
+                    ],
+                    'telecom' => [
+                        ['system' => 'phone', 'use' => 'work', 'value' => '0331-487441'],
+                        ['system' => 'email', 'use' => 'work', 'value' => 'rsd.soebandi@jemberkab.go.id'],
+                    ],
+                ],
+            ],
+            'id' => '100026073',
+            'identifier' => [
+                ['system' => 'https://fhir.kemkes.go.id/id/org-number', 'value' => '1000260739'],
+                ['use' => 'usual', 'value' => '28046'],
+                ['use' => 'official', 'value' => '3509010'],
+                ['use' => 'official', 'value' => '1000260739'],
+                ['use' => 'official', 'value' => '3509010'],
+                ['use' => 'usual', 'value' => '1329R001'],
+            ],
+            'meta' => [
+                'lastUpdated' => '2026-10-31T08:12:53.949689+00:00',
+                'versionId' => 'MTc5MzQzNDM3Mzk0OTY4OTAwMA',
+            ],
+            'name' => 'RS Umum Daerah Dr. Soebandi Jember',
+            'resourceType' => 'Organization',
+            'type' => [
+                [
+                    'coding' => [
+                        [
+                            'code' => '104',
+                            'display' => 'Rumah Sakit',
+                            'system' => 'http://terminology.kemkes.go.id/CodeSystem/organization-type',
+                        ],
+                    ],
+                ],
+            ],
+        ];
         $rawJsonString = json_encode($fhirJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
         return view('satusehat.organization', compact('organization', 'units', 'rawJsonString', 'apiKey'));

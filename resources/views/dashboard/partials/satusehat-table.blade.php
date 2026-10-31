@@ -9,7 +9,7 @@
         background: var(--surface);
         box-shadow: var(--shadow);
         overflow: hidden;
-        padding: 16px 20px 20px;
+        padding: 20px 24px;
     "
 >
     {{-- Header --}}

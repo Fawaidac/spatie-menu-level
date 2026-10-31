@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<header class="head" style="margin: 20px 24px 0;">
+    <div class="head__lead">
+        <div>
+            <p class="head__eyebrow">Encounter</p>
+            <h1 class="head__title">Encounter <em>— IGD</em></h1>
+        </div>
+    </div>
+</header>
+
+
 <section
     class="card"
     id="enc-igd"
@@ -11,7 +21,7 @@
         background: var(--surface);
         box-shadow: var(--shadow);
         overflow: hidden;
-        padding: 16px 20px 20px;
+        padding: 20px 24px;
     "
 >
     {{-- ── Header ──────────────────────────────────────── --}}

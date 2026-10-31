@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<header class="head" style="margin: 20px 24px 0;">
+    <div class="head__lead">
+        <div>
+            <p class="head__eyebrow">Satu Sehat ReST API</p>
+            <h1 class="head__title">Tenaga Medis <em>Praktisi (Practitioner)</em></h1>
+        </div>
+    </div>
+</header>
+
+
 <section
     class="card td-satusehat"
     id="td-satusehat-practitioner"
@@ -12,7 +22,7 @@
         background: var(--surface);
         box-shadow: var(--shadow);
         overflow: hidden;
-        padding: 16px 20px 20px;
+        padding: 20px 24px;
     "
 >
     {{-- Header --}}

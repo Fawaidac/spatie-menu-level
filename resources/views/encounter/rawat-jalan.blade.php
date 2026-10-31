@@ -11,6 +11,16 @@
     $routeCurrent = 'encounter.rawat-jalan';
 @endphp
 
+<header class="head" style="margin: 20px 24px 0;">
+    <div class="head__lead">
+        <div>
+            <p class="head__eyebrow">Encounter</p>
+            <h1 class="head__title">Encounter <em>— Rawat Jalan</em></h1>
+        </div>
+    </div>
+</header>
+
+
 <section
     class="card"
     id="{{ $pageId }}"
@@ -21,7 +31,7 @@
         background: var(--surface);
         box-shadow: var(--shadow);
         overflow: hidden;
-        padding: 16px 20px 20px;
+        padding: 20px 24px;
     "
 >
     {{-- ── Header ──────────────────────────────────────── --}}
