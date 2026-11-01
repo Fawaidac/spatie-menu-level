@@ -37,18 +37,31 @@
     <!-- Global Tend Shell CSS -->
     <link rel="stylesheet" href="{{ asset('tend/assets/index-C_0VME2I.css') }}" />
     <style>
-        /* Section entrance animation */
-        section.card {
-            opacity: 0;
-            transform: translateY(12px);
+        /* Smooth Page & Section entrance animation across all pages */
+        @keyframes pageFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        section.card.animate {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+
+        .main {
+            animation: pageFadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            will-change: opacity, transform;
+        }
+
+        .mgmt-page,
+        section.view,
+        section.card,
+        .head {
+            animation: pageFadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            will-change: opacity, transform;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('tend/assets/index-C_0VME2I.css') }}" />
 
     <!-- Page CSS Stylesheets (scoped by [data-view]) -->
     <link rel="stylesheet" href="{{ asset('tend/assets/today-rY2azoiN.css') }}" />
@@ -364,12 +377,5 @@
     <script type="module" crossorigin src="{{ asset('tend/assets/index-DwjwKIcQ.js') }}"></script>
 
     @stack ('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('section.card').forEach(function (sec) {
-                sec.classList.add('animate');
-            });
-        });
-    </script>
 </body>
 </html>

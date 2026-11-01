@@ -47,7 +47,7 @@
     <section
         class="view is-active"
         data-view="dynamic-{{ $menu->kode_menu }}"
-        style="display: block; opacity: 1; padding: 24px 32px 64px"
+        style="display: block; opacity: 1"
     >
         <div class="mgmt-page">
             {{-- ── Header ─────────────────────────────────────────── --}}

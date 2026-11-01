@@ -34,7 +34,9 @@
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
         </button>
-        <button type="button" class="ibtn ibtn--glass" id="btn-theme" aria-label="Switch to dark theme"></button>
+        <button type="button" class="ibtn ibtn--glass" id="btn-theme" aria-label="Switch to dark theme">
+            <svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
         <button
             type="button"
             class="ibtn ibtn--glass"
