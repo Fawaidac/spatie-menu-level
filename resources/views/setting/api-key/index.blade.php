@@ -9,15 +9,6 @@
                     <h1 class="head__title">Kredensial <em>API Key</em></h1>
                 </div>
             </div>
-            <div class="head__actions">
-                <button type="submit" form="form-api-key" class="btn btn--primary">
-                    <svg class="ico" viewBox="0 0 24 24">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                        <polyline points="17 21 17 13 7 13 7 21" />
-                        <polyline points="7 3 7 8 15 8" />
-                    </svg>
-                    <span>Simpan Perubahan</span>
-                </button>
             </div>
         </header>
 
@@ -526,27 +517,6 @@
                     </div>
                 </div>
 
-                {{-- Action Footer --}}
-                <div
-                    style="
-                        padding: 16px 28px;
-                        background: rgba(0, 0, 0, 0.015);
-                        border-top: 1px solid var(--line);
-                        display: flex;
-                        justify-content: flex-end;
-                        gap: 12px;
-                        align-items: center;
-                    "
-                >
-                    <button type="submit" class="btn btn--primary">
-                        <svg class="ico" viewBox="0 0 24 24" style="width:16px;height:16px;">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                            <polyline points="17 21 17 13 7 13 7 21" />
-                            <polyline points="7 3 7 8 15 8" />
-                        </svg>
-                        <span>Simpan Kredensial</span>
-                    </button>
-                </div>
             </div>
         </form>
     </div>

@@ -1,11 +1,7 @@
 {{--
     View: kartu "Pengiriman Data Satu Sehat"
-    Variabel dari DashboardController@index:
-      $daftarTerkirim       Collection of {tanggal: 'Y-m-d', encounter, diagnosa}
-      $totalEncounter       int (jumlah dari 60 hari terakhir)
-      $totalDiagnosa        int (jumlah dari 60 hari terakhir)
-      $hariTercatat         int
-      $sinkronisasiTerakhir string
+    Data diisi via AJAX dari route dashboard.data setelah halaman render,
+    sehingga halaman langsung muncul dengan stats 0 dan tabel loading.
 --}}
 <section
     class="card td-satusehat"
@@ -77,16 +73,14 @@
                             padding: 2px 8px;
                             border-radius: 999px;
                         "
-                        >Sync Otomatis</span
-                    >
+                    >Sync Otomatis</span>
                 </h2>
-                <p
-                    style="font-size: 12.5px; color: var(--muted); margin: 2px 0 0 0"
-                >Monitoring integrasi data Encounter dan Diagnosa SIMRS ke Platform SATUSEHAT Kemenkes</p>
+                <p style="font-size: 12.5px; color: var(--muted); margin: 2px 0 0 0">
+                    Monitoring integrasi data Encounter dan Diagnosa SIMRS ke Platform SATUSEHAT Kemenkes
+                </p>
             </div>
         </div>
         <div style="display: flex; align-items: center; gap: 8px">
-            {{-- Fallback ke '#' kalau route belum didaftarkan, supaya halaman tidak error --}}
             <a
                 href="{{ Route::has('setting.api-key.index') ? route('setting.api-key.index') : '#' }}"
                 class="btn btn--ghost"
@@ -128,8 +122,9 @@
         </div>
     </div>
 
-    {{-- Ringkasan Metrics Card --}}
+    {{-- Ringkasan Metrics Card (awal 0, di-animate via JS) --}}
     <div
+        id="stats-card"
         style="
             display: flex;
             gap: 0;
@@ -141,402 +136,246 @@
         "
     >
         <div style="flex: 1; padding: 14px 18px; border-right: 1px solid var(--line)">
-            <div
-                style="
-                    font-size: 10.5px;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    color: var(--muted);
-                    letter-spacing: 0.5px;
-                    margin-bottom: 6px;
-                "
-            >
-                Encounter · 60 Hari
-            </div>
-            <div
-                style="
-                    font-size: 22px;
-                    font-weight: 800;
-                    color: var(--text);
-                    display: flex;
-                    align-items: baseline;
-                    gap: 5px;
-                "
-            >
-                <span class="tnum">{{ number_format((int) $totalEncounter) }}</span>
+            <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 6px">Encounter · 60 Hari</div>
+            <div style="font-size: 22px; font-weight: 800; color: var(--text); display: flex; align-items: baseline; gap: 5px">
+                <span class="tnum counter" id="stat-encounter">0</span>
                 <small style="font-size: 11px; font-weight: 600; color: #1e7e34">Rekam</small>
             </div>
         </div>
         <div style="flex: 1; padding: 14px 18px; border-right: 1px solid var(--line)">
-            <div
-                style="
-                    font-size: 10.5px;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    color: var(--muted);
-                    letter-spacing: 0.5px;
-                    margin-bottom: 6px;
-                "
-            >
-                Diagnosa · 60 Hari
-            </div>
-            <div
-                style="
-                    font-size: 22px;
-                    font-weight: 800;
-                    color: var(--text);
-                    display: flex;
-                    align-items: baseline;
-                    gap: 5px;
-                "
-            >
-                <span class="tnum">{{ number_format((int) $totalDiagnosa) }}</span>
+            <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 6px">Diagnosa · 60 Hari</div>
+            <div style="font-size: 22px; font-weight: 800; color: var(--text); display: flex; align-items: baseline; gap: 5px">
+                <span class="tnum counter" id="stat-diagnosa">0</span>
                 <small style="font-size: 11px; font-weight: 600; color: #1e7e34">ICD-10</small>
             </div>
         </div>
         <div style="flex: 1; padding: 14px 18px; border-right: 1px solid var(--line)">
-            <div
-                style="
-                    font-size: 10.5px;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    color: var(--muted);
-                    letter-spacing: 0.5px;
-                    margin-bottom: 6px;
-                "
-            >
-                Hari Tercatat
-            </div>
-            <div
-                style="
-                    font-size: 22px;
-                    font-weight: 800;
-                    color: var(--text);
-                    display: flex;
-                    align-items: baseline;
-                    gap: 5px;
-                "
-            >
-                <span class="tnum">{{ number_format((int) $hariTercatat) }}</span>
+            <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 6px">Hari Tercatat</div>
+            <div style="font-size: 22px; font-weight: 800; color: var(--text); display: flex; align-items: baseline; gap: 5px">
+                <span class="tnum counter" id="stat-hari">0</span>
                 <small style="font-size: 11px; font-weight: 500; color: var(--muted)">Hari</small>
             </div>
         </div>
         <div style="flex: 1; padding: 14px 18px">
-            <div
-                style="
-                    font-size: 10.5px;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    color: var(--muted);
-                    letter-spacing: 0.5px;
-                    margin-bottom: 6px;
-                "
-            >
-                Sinkronisasi Terakhir
-            </div>
-            <div
-                style="
-                    font-size: 15px;
-                    font-weight: 700;
-                    color: var(--text);
-                    display: flex;
-                    align-items: center;
-                    gap: 7px;
-                    margin-top: 3px;
-                "
-            >
-                <span
-                    style="
-                        width: 8px;
-                        height: 8px;
-                        border-radius: 50%;
-                        background: #34c759;
-                        box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.2);
-                        flex-shrink: 0;
-                    "
-                ></span>
-                {{ $sinkronisasiTerakhir }}
+            <div style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 6px">Sinkronisasi Terakhir</div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 7px; margin-top: 3px">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #34c759; box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.2); flex-shrink: 0"></span>
+                <span id="stat-sync">-</span>
             </div>
         </div>
     </div>
 
     {{-- Meta bar --}}
-    <div
-        class="pt-meta"
-        style="
-            min-height: 40px;
-            color: var(--muted);
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            padding: 4px 6px 8px;
-            font-size: 12.5px;
-            display: flex;
-        "
-    >
-        <span data-shown="">
-            Daftar Terkirim · Menampilkan <b>{{ $daftarTerkirim->count() }}</b> dari
-            <b>{{ $daftarTerkirim->count() }}</b> log
-        </span>
-        <button
-            type="button"
-            class="btn btn--xs btn--ghost"
-            onclick="toggleSelectAllRows(this)"
-            style="display: inline-flex; align-items: center; gap: 6px"
-        >
-            <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px">
-                <path d="m5 12.5 4.5 4.5L19 7.5"></path>
-            </svg>
+    <div class="pt-meta" style="min-height: 40px; color: var(--muted); justify-content: space-between; align-items: center; gap: 10px; padding: 4px 6px 8px; font-size: 12.5px; display: flex">
+        <span id="meta-count">Daftar Terkirim · Menampilkan <b>0</b> dari <b>0</b> log</span>
+        <button type="button" class="btn btn--xs btn--ghost" onclick="toggleSelectAllRows()" style="display: inline-flex; align-items: center; gap: 6px">
+            <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
             <span>Pilih semua baris</span>
         </button>
     </div>
 
     {{-- Tabel Pengiriman Data --}}
-    <div class="table-wrap pt-wrap" style="overflow-x: auto">
-        <table class="table pt-table">
+    <div id="table-container" style="overflow-x: auto">
+        {{-- Loading --}}
+        <div id="table-loading" style="padding: 40px 16px; text-align: center">
+            <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid color-mix(in srgb, var(--primary) 25%, transparent); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px"></div>
+            <p style="color: var(--muted); font-size: 14px; font-weight: 600; margin: 0">Memuat data pengiriman...</p>
+            <p style="color: var(--muted); font-size: 12px; margin-top: 6px; opacity: .8">Mohon tunggu sebentar</p>
+        </div>
+
+        {{-- Tabel (disembunyikan dulu, tampil setelah data siap) --}}
+        <table id="pt-table" class="table pt-table" style="display: none">
             <thead>
                 <tr>
                     <th scope="col" class="c-ck" style="width: 44px; padding-right: 0">
-                        <input
-                            type="checkbox"
-                            class="check"
-                            id="satusehat-check-all"
-                            onchange="selectAllSatuRows(this)"
-                            aria-label="Pilih semua baris"
-                        />
+                        <input type="checkbox" class="check" id="satusehat-check-all" onchange="selectAllSatuRows(this)" aria-label="Pilih semua baris" />
                     </th>
                     <th scope="col" style="min-width: 220px">
-                        <button
-                            type="button"
-                            style="
-                                color: inherit;
-                                align-items: center;
-                                gap: 6px;
-                                font-weight: 650;
-                                display: inline-flex;
-                            "
-                        >
+                        <button type="button" style="color: inherit; align-items: center; gap: 6px; font-weight: 650; display: inline-flex">
                             Tanggal
-                            <span class="pt-sorti is-on" style="display: inline-grid">
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px">
-                                    <path d="m6 9.5 6 6 6-6"></path>
-                                </svg>
-                            </span>
+                            <span class="pt-sorti is-on" style="display: inline-grid"><svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px"><path d="m6 9.5 6 6 6-6"></path></svg></span>
                         </button>
                     </th>
-                    <th scope="col" style="min-width: 200px">
-                        <button
-                            type="button"
-                            style="
-                                color: inherit;
-                                align-items: center;
-                                gap: 6px;
-                                font-weight: 650;
-                                display: inline-flex;
-                            "
-                        >
-                            Encounter
-                            <span class="pt-sorti" style="display: inline-grid; opacity: 0.5">
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px">
-                                    <path d="m6 9.5 6 6 6-6"></path>
-                                </svg>
-                            </span>
-                        </button>
-                    </th>
-                    <th scope="col" style="min-width: 200px">
-                        <button
-                            type="button"
-                            style="
-                                color: inherit;
-                                align-items: center;
-                                gap: 6px;
-                                font-weight: 650;
-                                display: inline-flex;
-                            "
-                        >
-                            Diagnosa
-                            <span class="pt-sorti" style="display: inline-grid; opacity: 0.5">
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px">
-                                    <path d="m6 9.5 6 6 6-6"></path>
-                                </svg>
-                            </span>
-                        </button>
-                    </th>
-                    <th scope="col" style="min-width: 150px">Status Sinkron</th>
+                    <th scope="col" style="min-width: 200px">Jumlah Encounter</th>
+                    <th scope="col" style="min-width: 180px">Jumlah Diagnosa</th>
+                    <th scope="col" style="width: 170px">Status</th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse ($daftarTerkirim as $log)
-                    @php
-                        // Dari query builder, nilai ini berupa string. Ubah sekali di sini.
-                        $tgl = \Carbon\Carbon::parse($log->tanggal)->locale('id');
-                        $tglStr = $tgl->translatedFormat('d F Y'); // Output: 26 Oktober 2026
-                        $encounter = (int) $log->encounter;
-                        $diagnosa = (int) $log->diagnosa;
-                    @endphp
-                    <tr style="cursor: pointer" onclick="toggleRowSelect(this, event)">
-                        <td class="c-ck" style="width: 44px; padding-right: 0">
-                            <input
-                                type="checkbox"
-                                class="check satusehat-row-check"
-                                onclick="event.stopPropagation()"
-                            />
-                        </td>
-                        <td>
-                            <div class="cell-person" style="align-items: center; gap: 10px; display: flex">
-                                <span
-                                    class="av av--md"
-                                    style="
-                                        width: 34px;
-                                        height: 34px;
-                                        border-radius: 10px;
-                                        background: rgba(184, 51, 106, 0.09);
-                                        color: var(--primary);
-                                        font-size: 12px;
-                                        font-weight: 700;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        flex-shrink: 0;
-                                    "
-                                >
-                                    {{ $tgl->format('d') }}
-                                </span>
-                                <div>
-                                    <b
-                                        style="
-                                            font-weight: 650;
-                                            color: var(--text);
-                                            font-family: monospace;
-                                            font-size: 13.5px;
-                                        "
-                                    >
-                                        {{ $tglStr }}
-                                        @if ($tgl->isToday())
-                                            <span
-                                                class="badge"
-                                                style="
-                                                    background: rgba(184, 51, 106, 0.12);
-                                                    color: var(--primary);
-                                                    font-size: 10.5px;
-                                                    font-weight: 600;
-                                                    padding: 1px 7px;
-                                                    border-radius: 999px;
-                                                    margin-left: 6px;
-                                                    font-family: var(--font);
-                                                "
-                                                >Hari ini</span
-                                            >
-                                        @endif
-                                    </b>
-                                    <small style="color: var(--muted); font-size: 12px">
-                                        {{ $tgl->copy()->locale('id')->isoFormat('dddd') }}
-                                    </small>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div style="display: flex; align-items: baseline; gap: 8px">
-                                <b class="tnum" style="font-size: 14px; font-weight: 700; color: var(--text)">
-                                    {{ number_format($encounter) }}
-                                </b>
-                            </div>
-                        </td>
-                        <td>
-                            <div style="display: flex; align-items: baseline; gap: 8px">
-                                <b class="tnum" style="font-size: 14px; font-weight: 700; color: var(--text)">
-                                    {{ number_format($diagnosa) }}
-                                </b>
-                            </div>
-                        </td>
-                        <td>
-                            <span
-                                class="consent consent--opted-in"
-                                style="
-                                    white-space: nowrap;
-                                    align-items: center;
-                                    gap: 6px;
-                                    font-size: 12px;
-                                    font-weight: 650;
-                                    display: inline-flex;
-                                    color: #1e7e34;
-                                "
-                            >
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 15px; height: 15px; stroke: #1e7e34">
-                                    <polyline points="20 6 9 17 4 12" />
-                                </svg>
-                                <span>Terkirim (200 OK)</span>
-                            </span>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" style="padding: 36px 16px; text-align: center; color: var(--muted)">
-                            Belum ada riwayat pengiriman data SatuSehat.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
+            <tbody id="pt-table-body"></tbody>
         </table>
+
+        {{-- Empty / error state --}}
+        <div id="table-empty" style="padding: 40px 16px; text-align: center; display: none">
+            <p style="color: var(--muted); font-size: 14px; margin: 0">Belum ada riwayat pengiriman data SatuSehat.</p>
+        </div>
     </div>
 </section>
 
-@push ('scripts')
-    <script>
-        function syncSatuSehatNow(btn) {
-            const originalText = btn.innerHTML;
-            btn.disabled = true;
+@push('scripts')
+<script>
+    function syncSatuSehatNow(btn) {
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML =
+            '<svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px; animation: spin 1s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span>Menghubungkan...</span>';
+
+        // Masih simulasi. Ganti dengan fetch() ke endpoint sinkronisasi yang sebenarnya.
+        setTimeout(() => {
             btn.innerHTML =
-                '<svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px; animation: spin 1s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span>Menghubungkan...</span>';
-
-            // Masih simulasi. Ganti dengan fetch() ke endpoint sinkronisasi yang sebenarnya.
+                '<svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="20 6 9 17 4 12"/></svg><span>Sinkron Selesai!</span>';
             setTimeout(() => {
-                btn.innerHTML =
-                    '<svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="20 6 9 17 4 12"/></svg><span>Sinkron Selesai!</span>';
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, 2500);
-            }, 1500);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2500);
+        }, 1500);
+    }
+
+    function selectAllSatuRows(master) {
+        document.querySelectorAll('.satusehat-row-check').forEach((c) => {
+            c.checked = master.checked;
+            const tr = c.closest('tr');
+            if (tr) tr.classList.toggle('is-sel', master.checked);
+        });
+    }
+
+    function toggleSelectAllRows() {
+        const master = document.getElementById('satusehat-check-all');
+        if (master) {
+            master.checked = !master.checked;
+            selectAllSatuRows(master);
+        }
+    }
+
+    function toggleRowSelect(tr, event) {
+        if (event.target.tagName === 'INPUT' || event.target.closest('button')) return;
+        const ck = tr.querySelector('.satusehat-row-check');
+        if (ck) {
+            ck.checked = !ck.checked;
+            tr.classList.toggle('is-sel', ck.checked);
+        }
+    }
+
+    // --- Helper ---
+    function formatNumber(n) {
+        return Number(n).toLocaleString('id-ID'); // 12345 -> 12.345
+    }
+
+    function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, (c) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+    }
+
+    function animateCounter(el, target, duration = 1200) {
+        target = Number(target) || 0;
+        const startTime = performance.now();
+
+        function step(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = formatNumber(Math.floor(target * ease));
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = formatNumber(target);
         }
 
-        function selectAllSatuRows(master) {
-            document.querySelectorAll('.satusehat-row-check').forEach((c) => {
-                c.checked = master.checked;
-                const tr = c.closest('tr');
-                if (tr) tr.classList.toggle('is-sel', master.checked);
+        requestAnimationFrame(step);
+    }
+
+    function renderRows(rows) {
+        return rows.map((row, i) => {
+            const encounter = Number(row.encounter) || 0;   // cast: SUM() dari MySQL bisa berupa string
+            const diagnosa  = Number(row.diagnosa) || 0;
+            const statusLabel = (encounter + diagnosa) > 0 ? 'Terkirim' : 'Pending';
+            const delay = Math.min(i, 14) * 30;
+
+            return `
+                <tr class="satusehat-row" style="cursor: pointer; animation-delay: ${delay}ms" onclick="toggleRowSelect(this, event)">
+                    <td class="c-ck" style="padding-right: 0">
+                        <input type="checkbox" class="check satusehat-row-check" onclick="event.stopPropagation()" />
+                    </td>
+                    <td style="font-weight: 600; color: var(--text); font-family: monospace">${escapeHtml(row.tanggal)}</td>
+                    <td class="tnum" style="color: var(--text); font-weight: 700">${formatNumber(encounter)}</td>
+                    <td class="tnum" style="color: var(--text); font-weight: 700">${formatNumber(diagnosa)}</td>
+                    <td>
+                        <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 650; color: #1e7e34">
+                            <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px; stroke: #1e7e34"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>${statusLabel}</span>
+                        </span>
+                    </td>
+                </tr>`;
+        }).join('');
+    }
+
+    async function loadDashboardData() {
+        const loading = document.getElementById('table-loading');
+        const table   = document.getElementById('pt-table');
+        const empty   = document.getElementById('table-empty');
+        const tbody   = document.getElementById('pt-table-body');
+        const meta    = document.getElementById('meta-count');
+
+        try {
+            const response = await fetch(@json(route('dashboard.data')), {
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin',
             });
-        }
 
-        function toggleSelectAllRows() {
-            const master = document.getElementById('satusehat-check-all');
-            if (master) {
-                master.checked = !master.checked;
-                selectAllSatuRows(master);
-            }
-        }
+            if (!response.ok) throw new Error('HTTP ' + response.status);
 
-        function toggleRowSelect(tr, event) {
-            if (event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON' || event.target.closest('button'))
-                return;
-            const ck = tr.querySelector('.satusehat-row-check');
-            if (ck) {
-                ck.checked = !ck.checked;
-                tr.classList.toggle('is-sel', ck.checked);
+            const data = await response.json();
+            const rows = data.daftar_terkirim || [];
+
+            animateCounter(document.getElementById('stat-encounter'), data.total_encounter);
+            animateCounter(document.getElementById('stat-diagnosa'), data.total_diagnosa);
+            animateCounter(document.getElementById('stat-hari'), data.hari_tercatat);
+            document.getElementById('stat-sync').textContent = data.sinkronisasi_terakhir || '-';
+
+            meta.innerHTML = 'Daftar Terkirim · Menampilkan <b>' + rows.length + '</b> dari <b>' + rows.length + '</b> log';
+
+            loading.style.display = 'none';
+
+            if (rows.length > 0) {
+                tbody.innerHTML = renderRows(rows);
+                empty.style.display = 'none';
+                table.style.display = 'table';
+            } else {
+                table.style.display = 'none';
+                empty.style.display = 'block';
             }
+        } catch (err) {
+            console.error('Gagal memuat data dashboard:', err);
+            loading.style.display = 'none';
+            table.style.display = 'none';
+            empty.style.display = 'block';
+            empty.innerHTML = '<p style="color: #d93025; font-size: 14px; font-weight: 600; margin: 0">Gagal memuat data. Silakan muat ulang halaman.</p>';
         }
-    </script>
-    <style>
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        .table tbody tr.is-sel {
-            background: color-mix(in srgb, var(--primary) 7%, transparent) !important;
-        }
-        .table tbody tr.is-sel:hover {
-            background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
-        }
-    </style>
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    } else {
+        loadDashboardData();
+    }
+</script>
+
+<style>
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes rowIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: none; }
+    }
+    .satusehat-row {
+        animation: rowIn .4s ease-out both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .satusehat-row { animation: none; }
+    }
+    .table tbody tr.is-sel {
+        background: color-mix(in srgb, var(--primary) 7%, transparent) !important;
+    }
+    .table tbody tr.is-sel:hover {
+        background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
+    }
+</style>
 @endpush

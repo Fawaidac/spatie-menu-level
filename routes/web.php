@@ -25,6 +25,7 @@ Route::get('/', function () {
 Route::middleware('session.auth')->group(function () {
     // ─── Dashboard (Today) ───────────────────────────────────────────────────────
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/data', [DashboardController::class, 'data'])->name('dashboard.data');
 
     // ─── Setting Level & Menu & API Key ──────────────────────────────────────────
     Route::prefix('setting')
@@ -97,19 +98,12 @@ Route::middleware('session.auth')->group(function () {
             Route::get('/token', [\App\Http\Controllers\Satusehat\TokenController::class, 'index'])->name(
                 'token.index',
             );
-            Route::post('/token/generate', [\App\Http\Controllers\Satusehat\TokenController::class, 'generate'])->name(
-                'token.generate',
-            );
             Route::get('/patient', [\App\Http\Controllers\Satusehat\PatientController::class, 'index'])->name(
                 'patient.index',
             );
             Route::get('/organization', [\App\Http\Controllers\Satusehat\OrganizationController::class, 'index'])->name(
                 'organization.index',
             );
-            Route::post('/organization/sync', [
-                \App\Http\Controllers\Satusehat\OrganizationController::class,
-                'sync',
-            ])->name('organization.sync');
             Route::get('/location', [\App\Http\Controllers\Satusehat\LocationController::class, 'index'])->name(
                 'location.index',
             );

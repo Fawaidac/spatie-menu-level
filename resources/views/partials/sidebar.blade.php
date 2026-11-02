@@ -96,10 +96,13 @@
             @if ($topSingles->isNotEmpty())
                 @foreach ($topSingles as $m)
                     @php
-                        $cleanUrl = trim($m->url, '/');
+                        $cleanUrl = trim($m->url, '\/');
                         if ($cleanUrl === 'dashboard') {
                             continue;
-                        } // Cegah duplikasi jika ada di DB
+                        }
+                        if ($m->url === '#') {
+                            continue;
+                        } // Sembunyikan menu tanpa URL (placeholder kategori)
 
                         $urlMap = [
                             'msmenu' => route('setting.menu.index'),
