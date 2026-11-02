@@ -335,7 +335,7 @@
                                         </svg>
                                         <span>Edit</span>
                                     </button>
-                                    @if ($user->id !== auth()->id())
+                                    @if ($user->id !== session('user_id'))
                                         <form
                                             method="POST"
                                             action="{{ route('management.users.destroy', $user) }}"
@@ -411,7 +411,7 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
                     <label class="field">
                         <span class="field__label">Email</span>
-                        <input type="email" name="email" placeholder="nama@tend.clinic" required />
+                        <input type="email" name="email" placeholder="nama@soebandi.jatimprov.go.id" required />
                     </label>
                     <label class="field">
                         <span class="field__label">Nomor WhatsApp</span>

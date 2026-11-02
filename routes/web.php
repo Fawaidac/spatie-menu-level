@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
@@ -10,20 +11,18 @@ use App\Http\Controllers\DashboardController;
 |--------------------------------------------------------------------------
 */
 
-// Auth Routes (Login & Register)
+// Auth Routes — Login only (tidak ada register, sesuai sistem lama)
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Root (/) → redirect ke dashboard jika sudah login, ke login jika belum
 Route::get('/', function () {
-    return auth()->check() ? redirect()->route('dashboard.index') : redirect()->route('login');
+    return Session::has('user_id') ? redirect()->route('dashboard.index') : redirect()->route('login');
 });
 
 // ─── Protected Routes (harus login) ─────────────────────────────────────────
-Route::middleware('auth')->group(function () {
+Route::middleware('session.auth')->group(function () {
     // ─── Dashboard (Today) ───────────────────────────────────────────────────────
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -46,6 +45,18 @@ Route::middleware('auth')->group(function () {
                 'api-key.update',
             );
         });
+
+    // ─── URL Alias sesuai Database Lama (ms_menu: msmenu, level, user, kode_api) ───
+    Route::get('/msmenu', fn() => redirect()->route('setting.menu.index'))->name('msmenu');
+    Route::get('/level', fn() => redirect()->route('setting.level.index'))->name('level');
+    Route::get('/user', fn() => redirect()->route('management.users.index'))->name('user');
+    Route::get('/kode_api', fn() => redirect()->route('setting.api-key.index'))->name('kode_api');
+    Route::get('/api/token', fn() => redirect()->route('satusehat.token.index'));
+    Route::get('/api/patient/patient', fn() => redirect()->route('satusehat.patient.index'));
+    Route::get('/api/organization', fn() => redirect()->route('satusehat.organization.index'));
+    Route::get('/api/location/location', fn() => redirect()->route('satusehat.location.index'));
+    Route::get('/api/practitioner/practitioner', fn() => redirect()->route('satusehat.practitioner.index'));
+    Route::get('/api/medication/medication', fn() => redirect()->route('satusehat.medication.index'));
 
     // ─── Management User ─────────────────────────────────────────────────────────
     Route::prefix('management')
@@ -123,7 +134,7 @@ Route::middleware('auth')->group(function () {
         })->first();
 
         if ($menu) {
-            if (!auth()->user()->canMenu($menu->kode_menu, 'view')) {
+            if (!session_user()?->canMenu($menu->kode_menu, 'view')) {
                 abort(403, 'Anda tidak memiliki hak akses untuk melihat menu ini.');
             }
 

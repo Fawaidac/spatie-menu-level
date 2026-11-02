@@ -4,28 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Level extends Model
 {
-    protected $fillable = ['nama', 'is_system'];
-    protected $casts = ['is_system' => 'boolean'];
+    protected $table = 'ms_level';
+    protected $primaryKey = 'id_level';
+    public $timestamps = false;
 
-    public function users()
+    protected $fillable = ['nama_level', 'id_menu', 'act'];
+
+    // Accessor nama -> nama_level
+    public function getNamaAttribute(): ?string
     {
-        return $this->hasMany(User::class);
+        return $this->nama_level;
     }
 
-    public function menus()
+    public function setNamaAttribute($value): void
     {
-        return $this->belongsToMany(Menu::class, 'level_menu')->withPivot('can_view', 'can_add', 'can_edit', 'can_del');
+        $this->nama_level = $value;
     }
 
-    /** Hapus cache hak akses satu level, atau semua level. */
-    public static function forgetAccess(?int $id = null): void
+    // Accessor is_system
+    public function getIsSystemAttribute(): bool
     {
-        $ids = $id ? [$id] : static::pluck('id')->all();
-        foreach ($ids as $i) {
-            Cache::forget("level_access_{$i}");
-        }
+        return strtolower($this->nama_level ?? '') === 'superuser';
+    }
+
+    public static function forgetAccess(?string $levelName = null): void
+    {
+        Cache::flush();
     }
 }

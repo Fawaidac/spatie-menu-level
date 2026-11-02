@@ -9,6 +9,8 @@ class SatusehatLog extends Model
 {
     use HasFactory;
 
+    protected $connection = 'sqlite';
+
     protected $fillable = [
         'tanggal',
         'encounter',

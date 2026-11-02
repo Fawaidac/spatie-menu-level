@@ -1,3 +1,12 @@
+{{--
+    View: kartu "Pengiriman Data Satu Sehat"
+    Variabel dari DashboardController@index:
+      $daftarTerkirim       Collection of {tanggal: 'Y-m-d', encounter, diagnosa}
+      $totalEncounter       int (jumlah dari 60 hari terakhir)
+      $totalDiagnosa        int (jumlah dari 60 hari terakhir)
+      $hariTercatat         int
+      $sinkronisasiTerakhir string
+--}}
 <section
     class="card td-satusehat"
     id="td-satusehat"
@@ -39,7 +48,9 @@
                     flex-shrink: 0;
                 "
             >
-                <svg class="ico" viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: #1e7e34;"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
+                <svg class="ico" viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: #1e7e34">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg>
             </div>
             <div>
                 <h2
@@ -69,16 +80,15 @@
                         >Sync Otomatis</span
                     >
                 </h2>
-                <p style="
-                        font-size: 12.5px;
-                        color: var(--muted);
-                        margin: 2px 0 0 0;
-                    ">Monitoring integrasi data Encounter dan Diagnosa SIMRS ke Platform SATUSEHAT Kemenkes</p>
+                <p
+                    style="font-size: 12.5px; color: var(--muted); margin: 2px 0 0 0"
+                >Monitoring integrasi data Encounter dan Diagnosa SIMRS ke Platform SATUSEHAT Kemenkes</p>
             </div>
         </div>
         <div style="display: flex; align-items: center; gap: 8px">
+            {{-- Fallback ke '#' kalau route belum didaftarkan, supaya halaman tidak error --}}
             <a
-                href="{{ route('setting.api-key.index') }}"
+                href="{{ Route::has('setting.api-key.index') ? route('setting.api-key.index') : '#' }}"
                 class="btn btn--ghost"
                 style="
                     font-size: 12.5px;
@@ -90,7 +100,9 @@
                     gap: 6px;
                 "
             >
-                <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path d="m21 2-2 2m-1.5 1.5 1.5 1.5-2 2-1.5-1.5M15.5 7.5 14 9l2 2 1.5-1.5M10.5 13.5a5 5 0 1 1-7-7 5 5 0 0 1 7 7Z" /></svg>
+                <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px">
+                    <path d="m21 2-2 2m-1.5 1.5 1.5 1.5-2 2-1.5-1.5M15.5 7.5 14 9l2 2 1.5-1.5M10.5 13.5a5 5 0 1 1-7-7 5 5 0 0 1 7 7Z" />
+                </svg>
                 <span>Konfigurasi API</span>
             </a>
             <button
@@ -107,7 +119,7 @@
                     gap: 6px;
                 "
             >
-                <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+                <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px">
                     <polyline points="23 4 23 10 17 10" />
                     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
                 </svg>
@@ -139,7 +151,7 @@
                     margin-bottom: 6px;
                 "
             >
-                Total Encounter
+                Encounter · 60 Hari
             </div>
             <div
                 style="
@@ -151,11 +163,7 @@
                     gap: 5px;
                 "
             >
-                <span class="tnum">{{
-                    number_format(
-                        $satusehatSummary['total_encounter'] ?? 0,
-                    )
-                }}</span>
+                <span class="tnum">{{ number_format((int) $totalEncounter) }}</span>
                 <small style="font-size: 11px; font-weight: 600; color: #1e7e34">Rekam</small>
             </div>
         </div>
@@ -170,7 +178,7 @@
                     margin-bottom: 6px;
                 "
             >
-                Total Diagnosa
+                Diagnosa · 60 Hari
             </div>
             <div
                 style="
@@ -182,11 +190,7 @@
                     gap: 5px;
                 "
             >
-                <span class="tnum">{{
-                    number_format(
-                        $satusehatSummary['total_diagnosa'] ?? 0,
-                    )
-                }}</span>
+                <span class="tnum">{{ number_format((int) $totalDiagnosa) }}</span>
                 <small style="font-size: 11px; font-weight: 600; color: #1e7e34">ICD-10</small>
             </div>
         </div>
@@ -213,7 +217,7 @@
                     gap: 5px;
                 "
             >
-                <span class="tnum">{{ $satusehatSummary['days_count'] ?? 16 }}</span>
+                <span class="tnum">{{ number_format((int) $hariTercatat) }}</span>
                 <small style="font-size: 11px; font-weight: 500; color: var(--muted)">Hari</small>
             </div>
         </div>
@@ -251,12 +255,12 @@
                         flex-shrink: 0;
                     "
                 ></span>
-                {{ $satusehatSummary['last_sync'] ?? date('d M Y') }}
+                {{ $sinkronisasiTerakhir }}
             </div>
         </div>
     </div>
 
-    {{-- Meta bar persis seperti patients table --}}
+    {{-- Meta bar --}}
     <div
         class="pt-meta"
         style="
@@ -270,22 +274,24 @@
             display: flex;
         "
     >
-        <span data-shown=""
-            >Daftar Terkirim · Menampilkan <b>{{ $satusehatLogs->count() }}</b> dari
-            <b>{{ $satusehatLogs->count() }}</b> log</span
-        >
+        <span data-shown="">
+            Daftar Terkirim · Menampilkan <b>{{ $daftarTerkirim->count() }}</b> dari
+            <b>{{ $daftarTerkirim->count() }}</b> log
+        </span>
         <button
             type="button"
             class="btn btn--xs btn--ghost"
             onclick="toggleSelectAllRows(this)"
             style="display: inline-flex; align-items: center; gap: 6px"
         >
-            <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+            <svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px">
+                <path d="m5 12.5 4.5 4.5L19 7.5"></path>
+            </svg>
             <span>Pilih semua baris</span>
         </button>
     </div>
 
-    {{-- Tabel Pengiriman Data Menggunakan Format Table Patients --}}
+    {{-- Tabel Pengiriman Data --}}
     <div class="table-wrap pt-wrap" style="overflow-x: auto">
         <table class="table pt-table">
             <thead>
@@ -312,7 +318,9 @@
                         >
                             Tanggal
                             <span class="pt-sorti is-on" style="display: inline-grid">
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path d="m6 9.5 6 6 6-6"></path></svg>
+                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px">
+                                    <path d="m6 9.5 6 6 6-6"></path>
+                                </svg>
                             </span>
                         </button>
                     </th>
@@ -329,7 +337,9 @@
                         >
                             Encounter
                             <span class="pt-sorti" style="display: inline-grid; opacity: 0.5">
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path d="m6 9.5 6 6 6-6"></path></svg>
+                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px">
+                                    <path d="m6 9.5 6 6 6-6"></path>
+                                </svg>
                             </span>
                         </button>
                     </th>
@@ -346,20 +356,23 @@
                         >
                             Diagnosa
                             <span class="pt-sorti" style="display: inline-grid; opacity: 0.5">
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path d="m6 9.5 6 6 6-6"></path></svg>
+                                <svg class="ico" viewBox="0 0 24 24" style="width: 13px; height: 13px">
+                                    <path d="m6 9.5 6 6 6-6"></path>
+                                </svg>
                             </span>
                         </button>
                     </th>
                     <th scope="col" style="min-width: 150px">Status Sinkron</th>
-                    <th scope="col" style="text-align: right; width: 88px; padding-left: 0">
-                        <span class="sr">Aksi</span>
-                    </th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($satusehatLogs as $log)
+                @forelse ($daftarTerkirim as $log)
                     @php
-                        $isWeekend = in_array($log->tanggal->dayOfWeek, [0, 6]);
+                        // Dari query builder, nilai ini berupa string. Ubah sekali di sini.
+                        $tgl = \Carbon\Carbon::parse($log->tanggal)->locale('id');
+                        $tglStr = $tgl->translatedFormat('d F Y'); // Output: 26 Oktober 2026
+                        $encounter = (int) $log->encounter;
+                        $diagnosa = (int) $log->diagnosa;
                     @endphp
                     <tr style="cursor: pointer" onclick="toggleRowSelect(this, event)">
                         <td class="c-ck" style="width: 44px; padding-right: 0">
@@ -387,7 +400,7 @@
                                         flex-shrink: 0;
                                     "
                                 >
-                                    {{ $log->tanggal->format('d') }}
+                                    {{ $tgl->format('d') }}
                                 </span>
                                 <div>
                                     <b
@@ -398,8 +411,8 @@
                                             font-size: 13.5px;
                                         "
                                     >
-                                        {{ $log->tanggal->format('Y-m-d') }}
-                                        @if ($log->tanggal->isToday())
+                                        {{ $tglStr }}
+                                        @if ($tgl->isToday())
                                             <span
                                                 class="badge"
                                                 style="
@@ -416,63 +429,24 @@
                                             >
                                         @endif
                                     </b>
-                                    <small
-                                        style="color: var(--muted); font-size: 12px"
-                                        >{{ $log->tanggal->locale('id')->isoFormat('dddd') }}</small
-                                    >
+                                    <small style="color: var(--muted); font-size: 12px">
+                                        {{ $tgl->copy()->locale('id')->isoFormat('dddd') }}
+                                    </small>
                                 </div>
                             </div>
                         </td>
                         <td>
                             <div style="display: flex; align-items: baseline; gap: 8px">
-                                <b
-                                    class="tnum"
-                                    style="font-size: 14px; font-weight: 700; color: var(--text)"
-                                    >{{ number_format($log->encounter) }}</b
-                                >
-                                @if ($log->encounter > 500)
-                                    <span
-                                        class="spill spill--booked"
-                                        style="
-                                            background: rgba(52, 199, 89, 0.12);
-                                            color: #1e7e34;
-                                            font-size: 11px;
-                                            font-weight: 600;
-                                            padding: 2px 8px;
-                                            border-radius: 999px;
-                                        "
-                                    >
-                                        Optimal
-                                    </span>
-                                @elseif ($isWeekend)
-                                    <span style="color: var(--muted); font-size: 11.5px">(Akhir Pekan)</span>
-                                @endif
+                                <b class="tnum" style="font-size: 14px; font-weight: 700; color: var(--text)">
+                                    {{ number_format($encounter) }}
+                                </b>
                             </div>
                         </td>
                         <td>
                             <div style="display: flex; align-items: baseline; gap: 8px">
-                                <b
-                                    class="tnum"
-                                    style="font-size: 14px; font-weight: 700; color: var(--text)"
-                                    >{{ number_format($log->diagnosa) }}</b
-                                >
-                                @if ($log->diagnosa > 1000)
-                                    <span
-                                        class="spill spill--booked"
-                                        style="
-                                            background: rgba(52, 199, 89, 0.12);
-                                            color: #1e7e34;
-                                            font-size: 11px;
-                                            font-weight: 600;
-                                            padding: 2px 8px;
-                                            border-radius: 999px;
-                                        "
-                                    >
-                                        Lengkap
-                                    </span>
-                                @elseif ($isWeekend)
-                                    <span style="color: var(--muted); font-size: 11.5px">(Akhir Pekan)</span>
-                                @endif
+                                <b class="tnum" style="font-size: 14px; font-weight: 700; color: var(--text)">
+                                    {{ number_format($diagnosa) }}
+                                </b>
                             </div>
                         </td>
                         <td>
@@ -488,35 +462,10 @@
                                     color: #1e7e34;
                                 "
                             >
-                                <svg class="ico" viewBox="0 0 24 24" style="width: 15px; height: 15px; stroke: #1e7e34;"><polyline points="20 6 9 17 4 12" /></svg>
+                                <svg class="ico" viewBox="0 0 24 24" style="width: 15px; height: 15px; stroke: #1e7e34">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
                                 <span>Terkirim (200 OK)</span>
-                            </span>
-                        </td>
-                        <td style="text-align: right; width: 88px; padding-left: 0">
-                            <span class="pt-acts" style="gap: 2px; display: inline-flex">
-                                <button
-                                    type="button"
-                                    class="ibtn ibtn--sm ibtn--plain"
-                                    title="Kirim ulang tanggal ini"
-                                    onclick="event.stopPropagation(); alert('Mengirim ulang data tanggal {{ $log->tanggal->format('Y-m-d') }} ke SatuSehat...')"
-                                >
-                                    <svg class="ico" viewBox="0 0 24 24" style="width: 15px; height: 15px;">
-                                        <polyline points="23 4 23 10 17 10" />
-                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-                                    </svg>
-                                </button>
-                                <button
-                                    type="button"
-                                    class="ibtn ibtn--sm ibtn--plain"
-                                    title="Detail log"
-                                    onclick="event.stopPropagation(); alert('Detail log tanggal {{ $log->tanggal->format('Y-m-d') }}:\nEncounter: {{ $log->encounter }}\nDiagnosa: {{ $log->diagnosa }}')"
-                                >
-                                    <svg class="ico" viewBox="0 0 24 24" style="width: 15px; height: 15px;">
-                                        <circle cx="12" cy="12" r="1.5" />
-                                        <circle cx="19" cy="12" r="1.5" />
-                                        <circle cx="5" cy="12" r="1.5" />
-                                    </svg>
-                                </button>
                             </span>
                         </td>
                     </tr>
@@ -540,6 +489,7 @@
             btn.innerHTML =
                 '<svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px; animation: spin 1s linear infinite;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span>Menghubungkan...</span>';
 
+            // Masih simulasi. Ganti dengan fetch() ke endpoint sinkronisasi yang sebenarnya.
             setTimeout(() => {
                 btn.innerHTML =
                     '<svg class="ico" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="20 6 9 17 4 12"/></svg><span>Sinkron Selesai!</span>';
@@ -551,18 +501,14 @@
         }
 
         function selectAllSatuRows(master) {
-            const checks = document.querySelectorAll('.satusehat-row-check');
-            checks.forEach((c) => {
+            document.querySelectorAll('.satusehat-row-check').forEach((c) => {
                 c.checked = master.checked;
                 const tr = c.closest('tr');
-                if (tr) {
-                    if (master.checked) tr.classList.add('is-sel');
-                    else tr.classList.remove('is-sel');
-                }
+                if (tr) tr.classList.toggle('is-sel', master.checked);
             });
         }
 
-        function toggleSelectAllRows(btn) {
+        function toggleSelectAllRows() {
             const master = document.getElementById('satusehat-check-all');
             if (master) {
                 master.checked = !master.checked;
@@ -576,8 +522,7 @@
             const ck = tr.querySelector('.satusehat-row-check');
             if (ck) {
                 ck.checked = !ck.checked;
-                if (ck.checked) tr.classList.add('is-sel');
-                else tr.classList.remove('is-sel');
+                tr.classList.toggle('is-sel', ck.checked);
             }
         }
     </script>

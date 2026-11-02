@@ -1,4 +1,4 @@
-<dialog class="finder" id="finder" aria-label="Search Tend">
+<dialog class="finder" id="finder" aria-label="Cari Satu Sehat">
     <div class="finder__bar">
         <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="11" cy="11" r="6.5"></circle>

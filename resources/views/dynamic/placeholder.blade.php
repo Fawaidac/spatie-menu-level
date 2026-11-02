@@ -38,7 +38,7 @@
             };
         };
 
-        $user = auth()->user();
+        $user = session_user();
         $canAdd = $user?->canMenu($menu->kode_menu, 'add');
         $canEdit = $user?->canMenu($menu->kode_menu, 'edit');
         $canDel = $user?->canMenu($menu->kode_menu, 'del');

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\View;
 use App\Models\Menu;
+use App\Support\SessionUser;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,32 +22,29 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function ($user, $ability) {
-            $parts = explode('.', $ability, 2);
-            if (count($parts) === 2 && in_array($parts[1], Menu::ACTIONS, true)) {
-                return $user->canMenu($parts[0], $parts[1]);
-            }
-            return null; // ability lain diproses seperti biasa
-        });
-
+        // Sidebar View Composer — menggunakan session_user()
         View::composer(['partials.sidebar', 'layouts.sidebar'], function ($view) {
-            $user = auth()->user();
-            if (!$user) {
+            $sessionUser = session_user();
+
+            if (! $sessionUser) {
+                $view->with('sidebarMenus', collect());
                 return;
             }
 
-            $filter = function ($menus) use (&$filter, $user) {
-                return $menus->filter(function ($m) use (&$filter, $user) {
+            $filter = function ($menus) use (&$filter, $sessionUser) {
+                return $menus->filter(function ($m) use (&$filter, $sessionUser) {
                     if ($m->childrenRecursive->isEmpty()) {
-                        return $user->canMenu($m->kode_menu, 'view');
+                        return $sessionUser->canMenu($m->kode_menu, 'view') || $sessionUser->canMenu((string) $m->id, 'view');
                     }
                     $m->setRelation('childrenRecursive', $filter($m->childrenRecursive));
-                    return $m->childrenRecursive->isNotEmpty(); // grup tampil jika ada anak yang boleh
+                    return $m->childrenRecursive->isNotEmpty();
                 });
             };
 
             $view->with('sidebarMenus', $filter(
-                Menu::whereNull('parent_id')->with('childrenRecursive')->orderBy('urutan')->get()
+                Menu::where(function ($q) {
+                    $q->whereNull('parent_id')->orWhere('parent_id', 0);
+                })->with('childrenRecursive')->orderBy('kdmenu')->get()
             ));
         });
     }

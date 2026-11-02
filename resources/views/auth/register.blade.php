@@ -16,7 +16,7 @@
     <!-- Header Section -->
     <div class="auth-form__head">
         <h1 class="auth-form__title">Daftar Akun Baru</h1>
-        <p class="auth-form__sub">Bergabung dengan tim medis Tend Northside Clinic.</p>
+        <p class="auth-form__sub">Bergabung dengan sistem medis RSUD dr. Soebandi.</p>
     </div>
 
     <!-- Register Form -->
@@ -60,7 +60,7 @@
                             id="reg-email" 
                             name="email" 
                             class="auth-input" 
-                            placeholder="budi@tend.clinic" 
+                            placeholder="budi@soebandi.jatimprov.go.id" 
                             value="{{ old('email') }}" 
                             required 
                             autocomplete="email"
@@ -193,14 +193,14 @@
             <label class="auth-check" style="align-items: flex-start;">
                 <input type="checkbox" name="terms" id="terms" style="margin-top: 2px;" required />
                 <span style="font-size: 0.8rem; line-height: 1.4;">
-                    Saya menyetujui <a href="javascript:void(0)" class="auth-link">Syarat & Kebijakan Privasi</a> Rekam Medis Klinik Tend.
+                    Saya menyetujui <a href="javascript:void(0)" class="auth-link">Syarat & Kebijakan Privasi</a> Rekam Medis RSUD dr. Soebandi.
                 </span>
             </label>
         </div>
 
         <!-- Submit Button -->
         <button type="submit" class="auth-submit-btn" id="btn-reg-submit">
-            <span>Daftar Akun Klinik</span>
+            <span>Daftar Akun SIMRS</span>
             <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.2;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
         </button>
 

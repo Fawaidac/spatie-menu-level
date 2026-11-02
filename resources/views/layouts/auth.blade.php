@@ -8,9 +8,9 @@
 
     <title>
         @yield ('title', 'Autentikasi')
-        · Tend Clinic OS
+        · Satu Sehat
     </title>
-    <meta name="description" content="Tend Clinic OS — Sistem Manajemen Rumah Sakit & CRM WhatsApp Pasien." />
+    <meta name="description" content="Satu Sehat — Sistem Manajemen Rumah Sakit & CRM WhatsApp Pasien." />
     <meta name="theme-color" content="#fdf0f4" />
 
     <!-- Fonts -->
@@ -23,7 +23,6 @@
 
     <!-- Tend CSS & App Brand Overrides -->
     <link rel="stylesheet" crossorigin href="{{ asset('tend/assets/today-rY2azoiN.css') }}" />
-    <link rel="stylesheet" crossorigin href="{{ asset('tend/assets/settings-BZ16vYlf.css') }}" />
     @vite (['resources/css/app.css'])
 
     <!-- Favicon -->
@@ -973,7 +972,7 @@
                         <path d="M8.5 12.5h2l1-2 1.6 4 1-2h1.4" />
                     </svg>
                 </span>
-                <span class="auth-brand__title">tend<span>.</span><small>Northside Clinic</small></span>
+                <span class="auth-brand__title">Satu Sehat<small>RSUD dr. Soebandi</small></span>
             </a>
 
             <div class="auth-header__actions">
@@ -984,10 +983,10 @@
                     </svg>
                     <svg id="theme-ico-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
                 </button>
-                <a href="{{ route('dashboard.index') }}" class="auth-header-btn">
+                <!-- <a href="{{ route('dashboard.index') }}" class="auth-header-btn">
                     <span>Dashboard Demo</span>
                     <svg class="ico" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                </a>
+                </a> -->
             </div>
         </header>
 
@@ -999,7 +998,7 @@
                     <div class="auth-showcase__content">
                         <div class="auth-pill-badge">
                             <span class="pulse-dot"></span>
-                            <span>Tend Clinic OS & WhatsApp CRM</span>
+                            <span>Satu Sehat & SIMRS RSUD dr. Soebandi</span>
                         </div>
 
                         <h2 class="auth-showcase__title">Kelola Pasien & Klinik Lebih Cerdas.</h2>
@@ -1057,7 +1056,7 @@
                     </div>
 
                     <div class="auth-showcase__foot">
-                        <span>© 2026 Tend Health. Hak cipta dilindungi.</span>
+                        <span>© 2026 RSUD dr. Soebandi Jember. Hak cipta dilindungi.</span>
                         <span>SATUSEHAT Ready · 256-Bit SSL</span>
                     </div>
                 </div>
@@ -1107,7 +1106,7 @@
         </main>
 
         <footer class="auth-footer">
-            Tend Health Clinic CRM · Dibangun dengan nuansa PaleVioletRed & Sistem Autentikasi Aman
+            Satu Sehat SIMRS · RSUD dr. Soebandi Jember
         </footer>
     </div>
 

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Level;
 use App\Models\Menu;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -11,40 +11,44 @@ class MenuService
 {
     public function create(array $data, ?Menu $parent = null): Menu
     {
-        if ($parent && $parent->parent_id !== null) {
+        if ($parent && $parent->parent_id != 0 && $parent->parent_id !== null) {
             throw ValidationException::withMessages([
                 'parent_id' => 'Struktur menu dibatasi maksimal 2 tingkat (Menu Utama dan Sub-Menu).',
             ]);
         }
 
-        return DB::transaction(function () use ($data, $parent) {
+        return DB::connection('mysql')->transaction(function () use ($data, $parent) {
             if ($parent) {
-                $parent->update(['url' => '#']); // punya anak, jadi url wajib '#'
-                $parent->levels()->detach(); // parent jadi grup, hak aksesnya dibuang
+                $parent->update(['url' => '#']); // punya anak, jadi url '#'
             }
+
+            $parentId = $parent ? $parent->id : 0;
+            $levelDepth = $parent ? 1 : 0;
+            $kodeMenu = $this->generateKode($parent);
 
             $menu = Menu::create([
-                'parent_id' => $parent?->id,
-                'kode_menu' => $this->generateKode($parent),
-                'nama' => $data['nama'],
-                'url' => !empty($data['url']) ? $data['url'] : '#',
-                'icon' => $data['icon'] ?? null,
-                'urutan' => Menu::where('parent_id', $parent?->id)->max('urutan') + 1,
+                'parent_id' => $parentId,
+                'kdmenu'    => $kodeMenu,
+                'nmmenu'    => $data['nama'],
+                'url'       => ! empty($data['url']) ? $data['url'] : '#',
+                'icon'      => $data['icon'] ?? null,
+                'level'     => $levelDepth,
+                'aktif'     => '1',
             ]);
 
-            // Level admin otomatis dapat akses penuh ke menu baru
-            if ($admin = Level::where('nama', 'admin')->first()) {
-                $admin->menus()->syncWithoutDetaching([
-                    $menu->id => [
-                        'can_view' => true,
-                        'can_add' => true,
-                        'can_edit' => true,
-                        'can_del' => true,
-                    ],
-                ]);
+            // Level Superuser otomatis dapat hak akses penuh ke menu baru
+            $acts = [1, 2, 3, 4]; // view, add, edit, del
+            $perms = [];
+            foreach ($acts as $act) {
+                $perms[] = [
+                    'nama_level' => 'Superuser',
+                    'id_menu'    => $menu->id,
+                    'act'        => $act,
+                ];
             }
+            DB::connection('mysql')->table('ms_level')->insert($perms);
 
-            Level::forgetAccess();
+            Cache::flush();
 
             return $menu;
         });
@@ -58,22 +62,35 @@ class MenuService
             ]);
         }
 
-        $menu->delete(); // baris level_menu ikut terhapus (cascade)
-        Level::forgetAccess();
+        DB::connection('mysql')->transaction(function () use ($menu) {
+            // Hapus hak akses terkait di ms_level
+            DB::connection('mysql')->table('ms_level')->where('id_menu', $menu->id)->delete();
+            $menu->delete();
+        });
+
+        Cache::flush();
     }
 
     private function generateKode(?Menu $parent): string
     {
-        if (!$parent) {
-            $last = Menu::whereNull('parent_id')->orderByDesc('kode_menu')->value('kode_menu');
-            return $last ? chr(ord($last) + 1) : 'A'; // A, B, C, ... (sampai Z)
+        if (! $parent) {
+            $last = Menu::where(function ($q) {
+                $q->whereNull('parent_id')->orWhere('parent_id', 0);
+            })->orderByDesc('kdmenu')->value('kdmenu');
+
+            return $last ? chr(ord($last) + 1) : 'A';
         }
 
-        $prefix = $parent->kode_menu;
-        $n = $parent->children()->pluck('kode_menu')->map(fn($k) => (int) substr($k, strlen($prefix)))->max() + 1;
+        $prefix = $parent->kdmenu;
+        $maxNum = $parent->children()
+            ->pluck('kdmenu')
+            ->map(fn ($k) => (int) substr($k, strlen($prefix)))
+            ->max();
 
-        while (Menu::where('kode_menu', $prefix . $n)->exists()) {
-            $n++; // hindari bentrok, misalnya D1+1 dengan D11
+        $n = ($maxNum ?? 0) + 1;
+
+        while (Menu::where('kdmenu', $prefix . $n)->exists()) {
+            $n++;
         }
 
         return $prefix . $n;

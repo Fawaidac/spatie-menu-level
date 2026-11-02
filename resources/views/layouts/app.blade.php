@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <title>Satu Sehat — RSUD dr. Soebandi</title>
-    <meta name="description" content="Tend is a clinic CRM dashboard with WhatsApp built in." />
+    <meta name="description" content="Satu Sehat — Sistem Informasi Manajemen Rumah Sakit RSUD dr. Soebandi Jember." />
     <meta name="theme-color" content="#fdf0f4" />
 
     <!-- Fonts -->
@@ -65,12 +65,6 @@
 
     <!-- Page CSS Stylesheets (scoped by [data-view]) -->
     <link rel="stylesheet" href="{{ asset('tend/assets/today-rY2azoiN.css') }}" />
-    <link rel="stylesheet" href="{{ asset('tend/assets/inbox-uSRulYbE.css') }}" />
-    <link rel="stylesheet" href="{{ asset('tend/assets/patients-B1Ct_RWM.css') }}" />
-    <link rel="stylesheet" href="{{ asset('tend/assets/schedule-SZWs3o6S.css') }}" />
-    <link rel="stylesheet" href="{{ asset('tend/assets/campaigns-2hk80XtZ.css') }}" />
-    <link rel="stylesheet" href="{{ asset('tend/assets/reports-9hIUbvIF.css') }}" />
-    <link rel="stylesheet" href="{{ asset('tend/assets/settings-BZ16vYlf.css') }}" />
 
     {{-- Brand Override: PaleVioletRed #DB7093 --}}
     @vite (['resources/css/app.css'])
@@ -97,6 +91,9 @@
             </main>
         </div>
     </div>
+
+    <!-- Mobile Navigation Drawer -->
+    @include ('partials.mobile-drawer')
 
     <!-- Scrim & Pop layer -->
     <div class="scrim" id="scrim" aria-hidden="true"></div>
@@ -132,18 +129,16 @@
     >
         <div style="padding: 10px 16px 8px; border-bottom: 1px solid var(--line)">
             <div style="font-weight: 700; font-size: 14px; color: var(--text)">
-                {{ auth()->user()->name ?? 'User' }}
+                {{ session('name', 'User') }}
             </div>
             <div style="font-size: 12px; color: var(--muted)">
                 {{
-                    auth()->user()->level?->nama
-                        ? ucfirst(auth()->user()->level->nama)
-                        : 'Level User'
+                    'Level User'
                 }}
             </div>
         </div>
         <div style="padding: 4px 0">
-            @if (auth()->user() && (auth()->user()->canMenu('G4', 'view') || auth()->user()->level?->nama === 'admin'))
+            @if (session()->has('user_id'))
                 <a
                     href="{{ url('settings') }}"
                     class="menu__item"
@@ -164,7 +159,7 @@
                     <span>Pengaturan Klinik</span>
                 </a>
             @endif
-            @if (auth()->user() && (auth()->user()->canMenu('G1', 'view') || auth()->user()->level?->nama === 'admin'))
+            @if (session_user()?->canMenu('G1', 'view') || session_user()?->levelName() === 'admin' || session_user()?->levelName() === 'Superuser')
                 <a
                     href="{{ route('setting.menu.index') }}"
                     class="menu__item"
@@ -189,7 +184,7 @@
                     <span>Pengaturan Menu</span>
                 </a>
             @endif
-            @if (auth()->user() && (auth()->user()->canMenu('G2', 'view') || auth()->user()->level?->nama === 'admin'))
+            @if (session_user()?->canMenu('G2', 'view') || session_user()?->levelName() === 'admin' || session_user()?->levelName() === 'Superuser')
                 <a
                     href="{{ route('setting.level.index') }}"
                     class="menu__item"
@@ -207,7 +202,7 @@
                     <span>Pengaturan Level</span>
                 </a>
             @endif
-            @if (auth()->user() && (auth()->user()->canMenu('G3', 'view') || auth()->user()->level?->nama === 'admin'))
+            @if (session_user()?->canMenu('G3', 'view') || session_user()?->levelName() === 'admin' || session_user()?->levelName() === 'Superuser')
                 <a
                     href="{{ route('management.users.index') }}"
                     class="menu__item"
@@ -229,7 +224,7 @@
                     <span>Manajemen User</span>
                 </a>
             @endif
-            @if (auth()->user() && (auth()->user()->canMenu('G5', 'view') || auth()->user()->level?->nama === 'admin'))
+            @if (session_user()?->canMenu('G5', 'view') || session_user()?->levelName() === 'admin' || session_user()?->levelName() === 'Superuser')
                 <a
                     href="{{ route('setting.api-key.index') }}"
                     class="menu__item"
@@ -285,32 +280,98 @@
     <!-- Tend Core Shell UI Scripts -->
     <script>
         (function () {
-            // ── 1. Theme Switcher (Dark / Light) ──
-            var themeBtn = document.getElementById('btn-theme');
-            function updateThemeBtn() {
-                if (!themeBtn) return;
-                var currentTheme = document.documentElement.dataset.theme || 'light';
-                themeBtn.setAttribute(
-                    'aria-label',
-                    currentTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
-                );
-                themeBtn.innerHTML =
-                    currentTheme === 'dark'
-                        ? '<svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>'
-                        : '<svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+            // ── 1. Bulletproof Theme Switcher (Dark / Light) ──
+            var sunSvg = '<svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+            var moonSvg = '<svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>';
+
+            function getStoredTheme() {
+                try {
+                    return JSON.parse(localStorage.getItem('tend:theme')) || 'light';
+                } catch (e) {
+                    return document.documentElement.dataset.theme || 'light';
+                }
             }
-            if (themeBtn) {
-                updateThemeBtn();
-                themeBtn.addEventListener('click', function () {
-                    var current = document.documentElement.dataset.theme || 'light';
-                    var next = current === 'dark' ? 'light' : 'dark';
-                    document.documentElement.dataset.theme = next;
-                    localStorage.setItem('tend:theme', JSON.stringify(next));
-                    updateThemeBtn();
+
+            function applyTheme(theme) {
+                document.documentElement.dataset.theme = theme;
+                try {
+                    localStorage.setItem('tend:theme', JSON.stringify(theme));
+                } catch (e) {}
+
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) {
+                    meta.content = theme === 'dark' ? '#0b1312' : '#fdf0f4';
+                }
+
+                document.querySelectorAll('#btn-theme, .btn-theme-toggle').forEach(function (btn) {
+                    btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+                    btn.setAttribute('title', theme === 'dark' ? 'Mode Terang' : 'Mode Gelap');
+                    btn.innerHTML = theme === 'dark' ? sunSvg : moonSvg;
                 });
             }
 
-            // ── 2. User Account Menu (#btn-me) ──
+            function handleThemeToggle(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                }
+                var current = document.documentElement.dataset.theme || getStoredTheme();
+                var next = current === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+            }
+
+            // Capture phase intercept on document to prevent bundle double-toggle
+            document.addEventListener('click', function (e) {
+                var btn = e.target.closest('#btn-theme, .btn-theme-toggle');
+                if (btn) {
+                    handleThemeToggle(e);
+                }
+            }, true);
+
+            // Sync theme icons on DOM ready
+            applyTheme(document.documentElement.dataset.theme || getStoredTheme());
+
+            // ── 2. Mobile Navigation Drawer Controller ──
+            var mobileDrawer = document.getElementById('mobile-drawer');
+            var mobileBackdrop = document.getElementById('mobile-drawer-backdrop');
+            var btnCloseDrawer = document.getElementById('btn-close-mobile-drawer');
+
+            function openMobileDrawer() {
+                if (!mobileDrawer) return;
+                mobileDrawer.classList.add('is-open');
+                if (mobileBackdrop) mobileBackdrop.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileDrawer() {
+                if (!mobileDrawer) return;
+                mobileDrawer.classList.remove('is-open');
+                if (mobileBackdrop) mobileBackdrop.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('#btn-mobile-nav, #btn-nav-more')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openMobileDrawer();
+                } else if (e.target.closest('#btn-close-mobile-drawer') || e.target === mobileBackdrop) {
+                    e.preventDefault();
+                    closeMobileDrawer();
+                } else if (e.target.closest('.mobile-drawer__link, .mobile-drawer__sublink')) {
+                    // Smooth close on link navigation
+                    closeMobileDrawer();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('is-open')) {
+                    closeMobileDrawer();
+                }
+            });
+
+            // ── 3. User Account Menu (#btn-me) ──
             var btnMe = document.getElementById('btn-me');
             var mePop = document.getElementById('menu-me-pop');
             if (btnMe && mePop) {
@@ -329,7 +390,7 @@
                 });
             }
 
-            // ── 3. Clinic Clock ──
+            // ── 4. Clinic Clock ──
             var clockTime = document.getElementById('clock-time');
             var clockNote = document.getElementById('clock-note');
             function tickClock() {
@@ -343,7 +404,7 @@
             tickClock();
             setInterval(tickClock, 10000);
 
-            // ── 4. Finder Dialog (⌘K) ──
+            // ── 5. Finder Dialog (⌘K) ──
             var btnFind = document.getElementById('btn-find');
             var finder = document.getElementById('finder');
             if (btnFind && finder) {
@@ -358,7 +419,7 @@
                 });
             }
 
-            // ── 5. Toast Auto-Dismiss ──
+            // ── 6. Toast Notification Handler ──
             var toast = document.querySelector('.toast');
             if (toast) {
                 setTimeout(function () {
@@ -366,7 +427,7 @@
                     toast.style.transform = 'translateY(12px)';
                     toast.style.transition = 'all 0.3s ease';
                     setTimeout(function () {
-                        toast.remove();
+                        toast.style.display = 'none';
                     }, 350);
                 }, 4000);
             }

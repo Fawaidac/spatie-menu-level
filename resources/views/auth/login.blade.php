@@ -3,49 +3,41 @@
 @section('title', 'Masuk Akun')
 
 @section('content')
-    <!-- Auth Tabs (Login ⇄ Register) -->
-    <div class="auth-tabs">
-        <a href="{{ route('login') }}" class="auth-tab is-active">
-            Masuk
-        </a>
-        <a href="{{ route('register') }}" class="auth-tab">
-            Daftar Akun
-        </a>
-    </div>
-
-    <!-- Header Section -->
+    {{-- Header Section --}}
     <div class="auth-form__head">
         <h1 class="auth-form__title">Selamat Datang</h1>
-        <p class="auth-form__sub">Masuk untuk mengakses antrean, rekam medis, dan chat WhatsApp klinik.</p>
+        <p class="auth-form__sub">Masuk untuk mengakses Satu Sehat RSUD Soebandi.</p>
     </div>
 
-    <!-- Login Form -->
     <form action="{{ route('login.post') }}" method="POST" id="form-login">
         @csrf
 
         <div class="auth-field-group">
-            <!-- Email / WhatsApp -->
-            <label class="auth-label" for="login-email">
-                <span>Email atau Nomor WhatsApp</span>
+            {{-- Username --}}
+            <label class="auth-label" for="login-username">
+                <span>Username</span>
                 <div class="auth-input-wrap">
                     <svg class="ico-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
                     </svg>
-                    <input 
-                        type="text" 
-                        id="login-email" 
-                        name="email" 
-                        class="auth-input" 
-                        placeholder="contoh: dokter@tend.clinic atau 08123456789" 
-                        value="{{ old('email') }}" 
-                        required 
+                    <input
+                        type="text"
+                        id="login-username"
+                        name="username"
+                        class="auth-input @error('username') is-invalid @enderror"
+                        placeholder="Masukkan username..."
+                        value="{{ old('username') }}"
+                        required
                         autocomplete="username"
                     />
                 </div>
+                @error('username')
+                    <span class="auth-error">{{ $message }}</span>
+                @enderror
             </label>
 
-            <!-- Password -->
+            {{-- Password --}}
             <label class="auth-label" for="login-password">
                 <span>Kata Sandi</span>
                 <div class="auth-input-wrap">
@@ -71,18 +63,18 @@
             </label>
         </div>
 
-        <!-- Remember Me & Forgot Password -->
+        {{-- Remember Me & Lupa Sandi --}}
         <div class="auth-row-extra">
             <label class="auth-check">
                 <input type="checkbox" name="remember" id="remember" checked />
                 <span>Ingat saya di perangkat ini</span>
             </label>
-            <a href="javascript:void(0)" onclick="alert('Demo: Silakan hubungi Super Admin klinik untuk mereset kata sandi Anda.')" class="auth-link">
+            <a href="javascript:void(0)" onclick="alert('Silakan hubungi Administrator untuk mereset kata sandi Anda.')" class="auth-link">
                 Lupa sandi?
             </a>
         </div>
 
-        <!-- Captcha Verification Widget (User Request) -->
+        {{-- Captcha Verification Widget --}}
         <div class="auth-captcha-card">
             <div class="auth-captcha-head">
                 <span style="display: inline-flex; align-items: center; gap: 6px;">
@@ -134,9 +126,9 @@
 <script>
     // Toggle Password Visibility
     (function () {
-        var btn = document.getElementById('btn-toggle-pwd');
+        var btn   = document.getElementById('btn-toggle-pwd');
         var input = document.getElementById('login-password');
-        var eye = document.querySelector('.ico-pwd-eye');
+        var eye   = document.querySelector('.ico-pwd-eye');
         var eyeOff = document.querySelector('.ico-pwd-off');
 
         if (btn && input) {

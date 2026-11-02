@@ -11,7 +11,7 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $byParent = Menu::orderBy('urutan')->orderBy('kode_menu')->get()->groupBy(fn($m) => $m->parent_id ?? 0);
+        $byParent = Menu::orderBy('kdmenu')->get()->groupBy(fn ($m) => $m->parent_id ?? 0);
 
         $rows = collect();
         $walk = function ($parentId, $depth) use (&$walk, $byParent, &$rows) {
@@ -30,13 +30,13 @@ class MenuController extends Controller
     public function store(Request $request, MenuService $service)
     {
         $data = $request->validate([
-            'parent_id' => 'nullable|exists:menus,id',
-            'nama' => 'required|string|max:100',
-            'url' => 'nullable|string|max:255',
-            'icon' => 'nullable|string|max:50',
+            'parent_id' => 'nullable|integer',
+            'nama'      => 'required|string|max:100',
+            'url'       => 'nullable|string|max:255',
+            'icon'      => 'nullable|string|max:50',
         ]);
 
-        $parent = $data['parent_id'] ? Menu::find($data['parent_id']) : null;
+        $parent = (! empty($data['parent_id']) && $data['parent_id'] != 0) ? Menu::find($data['parent_id']) : null;
         $service->create($data, $parent);
 
         return back()->with('success', 'Menu berhasil ditambahkan.');
@@ -46,20 +46,26 @@ class MenuController extends Controller
     {
         $data = $request->validate([
             'nama' => 'required|string|max:100',
-            'url' => 'nullable|string|max:255',
+            'url'  => 'nullable|string|max:255',
             'icon' => 'nullable|string|max:50',
         ]);
 
-        // kode_menu tidak pernah diubah; menu yang punya anak url-nya selalu '#'
-        $data['url'] = $menu->children()->exists() ? '#' : ($data['url'] ?: '#');
-        $menu->update($data);
+        $url = $menu->children()->exists() ? '#' : ($data['url'] ?: '#');
+
+        $menu->update([
+            'nmmenu' => $data['nama'],
+            'url'    => $url,
+            'icon'   => $data['icon'] ?? null,
+        ]);
+
+        \Illuminate\Support\Facades\Cache::flush();
 
         return back()->with('success', 'Menu berhasil diperbarui.');
     }
 
     public function destroy(Menu $menu, MenuService $service)
     {
-        $service->delete($menu); // ValidationException otomatis kembali dengan error
+        $service->delete($menu);
 
         return back()->with('success', 'Menu berhasil dihapus.');
     }

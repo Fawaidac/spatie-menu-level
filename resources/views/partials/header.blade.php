@@ -1,12 +1,12 @@
 <header class="top">
-    <a class="top__brand" href="{{ route('dashboard.index') }}" aria-label="Tend — today">
+    <a class="top__brand" href="{{ route('dashboard.index') }}" aria-label="Satu Sehat — Dashboard">
         <span class="brand__mark" aria-hidden="true">
             <svg viewBox="0 0 24 24">
                 <path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2Z" />
                 <path d="M8.5 12.5h2l1-2 1.6 4 1-2h1.4" />
             </svg>
         </span>
-        tend
+        Satu Sehat
     </a>
     <button type="button" class="finder-btn" id="btn-find" aria-label="Search (⌘K)">
         <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
@@ -23,18 +23,24 @@
         </span>
         <button
             type="button"
-            class="ibtn ibtn--glass top__mgmt-btn"
-            id="btn-mgmt-mobile"
-            aria-label="Manajemen User"
-            title="Manajemen User"
+            class="ibtn ibtn--glass mobile-menu-btn"
+            id="btn-mobile-nav"
+            aria-label="Buka Menu Navigasi"
+            title="Buka Menu"
         >
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="17" x2="20" y2="17" />
             </svg>
         </button>
-        <button type="button" class="ibtn ibtn--glass" id="btn-theme" aria-label="Switch to dark theme">
+        <button
+            type="button"
+            class="ibtn ibtn--glass btn-theme-toggle"
+            id="btn-theme"
+            aria-label="Toggle Mode Gelap/Terang"
+            title="Ubah Tema"
+        >
             <svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
         <button

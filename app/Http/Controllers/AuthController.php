@@ -2,107 +2,161 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
     /**
-     * Tampilkan halaman Login
+     * Tampilkan halaman Login.
+     * Jika sudah login (session user_id ada), langsung ke dashboard.
      */
     public function showLogin()
     {
-        if (Auth::check()) {
+        if (Session::has('user_id')) {
             return redirect()->route('dashboard.index');
         }
+
         return view('auth.login');
     }
 
     /**
-     * Proses Login menggunakan database
+     * Proses Login — autentikasi via DB Billing (b_ms_user),
+     * sesuai sistem lama yang menggunakan MySQL PASSWORD() function.
      */
     public function login(Request $request)
     {
         $request->validate([
-            'email'    => 'required|string',
+            'username' => 'required|string',
             'password' => 'required|string',
         ], [
-            'email.required'    => 'Email wajib diisi.',
+            'username.required' => 'Username wajib diisi.',
             'password.required' => 'Kata sandi wajib diisi.',
         ]);
 
-        $credentials = [
-            'email'    => $request->email,
-            'password' => $request->password,
-        ];
+        $username = $request->input('username');
+        $password = $request->input('password');
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('dashboard.index'))
-                ->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
+        // 1. Autentikasi ke DB Billing — sesuai query sistem lama (login.php)
+        //    Menggunakan MySQL PASSWORD() function persis seperti sistem PHP native
+        $userData = DB::connection('billing')
+            ->table('b_ms_user as mu')
+            ->select([
+                'p.nama as ppa',
+                'p.ppa_id',
+                'p.telp',
+                'p.nama',
+                'mu.id',
+                'mu.username',
+                'mu.userpwd',
+                'mu.pegawai_id',
+                'mu.group_id',
+                'mu.akses',
+                'mu.akses_satu_sehat',
+                DB::raw("GROUP_CONCAT(pu.ms_unit_id) as unit_id"),
+            ])
+            ->join('b_ms_user_unit_akses as pu', 'pu.ms_user_id', '=', 'mu.id')
+            ->join('b_ms_pegawai as p', 'p.id', '=', 'mu.pegawai_id')
+            ->leftJoin('b_ms_reference as ref', 'ref.id', '=', 'p.ppa_id')
+            ->where('mu.username', $username)
+            ->whereRaw("mu.userpwd = PASSWORD(?)", [$password])
+            ->where('mu.aktif', '1')
+            ->groupBy(
+                'p.nama',
+                'p.ppa_id',
+                'p.telp',
+                'mu.id',
+                'mu.username',
+                'mu.userpwd',
+                'mu.pegawai_id',
+                'mu.group_id',
+                'mu.akses',
+                'mu.akses_satu_sehat'
+            )
+            ->first();
+
+        if (! $userData) {
+            return back()
+                ->withInput($request->only('username'))
+                ->withErrors(['username' => 'Username atau kata sandi yang Anda masukkan salah.']);
         }
 
-        return back()
-            ->withInput($request->only('email', 'remember'))
-            ->withErrors(['email' => 'Email atau kata sandi yang Anda masukkan salah.']);
-    }
-
-    /**
-     * Tampilkan halaman Register
-     */
-    public function showRegister()
-    {
-        if (Auth::check()) {
-            return redirect()->route('dashboard.index');
-        }
-        return view('auth.register');
-    }
-
-    /**
-     * Proses Pendaftaran menggunakan database
-     */
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name'                  => 'required|string|max:255',
-            'email'                 => 'required|email|max:255|unique:users,email',
-            'phone'                 => 'required|string|max:20',
-            'password'              => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()],
-            'terms'                 => 'accepted',
-        ], [
-            'name.required'         => 'Nama lengkap wajib diisi.',
-            'email.required'        => 'Alamat email wajib diisi.',
-            'email.email'           => 'Format email tidak valid.',
-            'email.unique'          => 'Email ini sudah terdaftar. Silakan gunakan email lain.',
-            'phone.required'        => 'Nomor WhatsApp wajib diisi.',
-            'password.required'     => 'Kata sandi wajib diisi.',
-            'password.confirmed'    => 'Konfirmasi kata sandi tidak cocok.',
-            'terms.accepted'        => 'Anda harus menyetujui syarat & ketentuan.',
-        ]);
-
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'phone'    => $request->phone,
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::login($user);
+        // 2. Regenerate session untuk keamanan (cegah session fixation)
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard.index')
-            ->with('success', 'Akun berhasil dibuat. Selamat datang, ' . $user->name . '!');
+        // 3. Ambil profil API dari DB Utama (satu_sehat) — sesuai sistem lama
+        $profil = DB::connection('mysql')
+            ->table('ms_profil')
+            ->where('id', '1')
+            ->first();
+
+        if ($profil) {
+            Session::put('client_id',     $profil->client_id);
+            Session::put('client_secret', $profil->client_secret);
+            Session::put('auth_url',      $profil->auth_url);
+            Session::put('base_url',      $profil->base_url);
+            Session::put('consent_url',   $profil->consent_url);
+            Session::put('organisasi_id', $profil->organisasi_id);
+        }
+
+        // 4. Set session user — sesuai $_SESSION sistem lama (login.php)
+        Session::put('user_id',          $userData->id);
+        Session::put('id',               $userData->id);
+        Session::put('pas',              $userData->userpwd);
+        Session::put('name',             $userData->nama);
+        Session::put('username',         $userData->username);
+        Session::put('idname',           $userData->username);
+        Session::put('unit_id',          $userData->unit_id);
+        Session::put('group_id',         $userData->group_id);
+        Session::put('akses',            $userData->akses);
+        Session::put('akses_satu_sehat', $userData->akses_satu_sehat);
+        Session::put('android',          '');
+        Session::put('root',             public_path('satu_sehat/'));
+        Session::put('loggedAt',         time());
+
+        // 5. Generate server token & catat history log — sesuai sistem lama
+        $server  = Str::random(8);
+        $date    = now()->format('Y-m-d H:i:s');
+        $remarks = 'has logged in the system at ';
+
+        DB::connection('mysql')->table('history_log')->insert([
+            'user_id' => $userData->id,
+            'action'  => $remarks,
+            'date'    => $date,
+        ]);
+
+        DB::connection('mysql')
+            ->table('ms_user')
+            ->where('username', $userData->username)
+            ->update(['server' => $server]);
+
+        Session::put('server', $server);
+
+        return redirect()->intended(route('dashboard.index'))
+            ->with('success', 'Selamat datang, ' . $userData->username . '!');
     }
 
     /**
-     * Keluar dari sesi
+     * Logout — hapus semua session dan redirect ke halaman login.
+     * Catat history logout sesuai sistem lama (auth.php).
      */
     public function logout(Request $request)
     {
-        Auth::logout();
+        // Catat history log logout jika masih ada session
+        if (Session::has('user_id')) {
+            try {
+                DB::connection('mysql')->table('history_log')->insert([
+                    'user_id' => Session::get('user_id'),
+                    'action'  => 'has logged out the system at ',
+                    'date'    => now()->format('Y-m-d H:i:s'),
+                ]);
+            } catch (\Exception $e) {
+                // Jangan gagalkan logout hanya karena logging error
+            }
+        }
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
