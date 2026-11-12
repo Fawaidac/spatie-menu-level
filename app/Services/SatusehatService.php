@@ -172,4 +172,204 @@ class SatusehatService
 
         return null;
     }
+
+    /**
+     * Ambil ID Organisasi dari ms_profil.
+     */
+    public function getOrganizationId(): ?string
+    {
+        $profil = DB::connection('mysql')
+            ->table('ms_profil')
+            ->where('id', 1)
+            ->first();
+
+        return $profil?->organisasi_id;
+    }
+
+    /**
+     * Ambil Base URL SatuSehat dari ms_profil.
+     */
+    public function getBaseUrl(): ?string
+    {
+        $profil = DB::connection('mysql')
+            ->table('ms_profil')
+            ->where('id', 1)
+            ->first();
+
+        return $profil ? rtrim($profil->base_url, '/') : null;
+    }
+
+    /**
+     * Ambil data Practitioner berdasarkan NIK.
+     * GET {base_url}/Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|{nik}
+     */
+    public function getPractitionerByNik(string $nik): ?array
+    {
+        $token = $this->getToken();
+        $baseUrl = $this->getBaseUrl();
+
+        if (! $token || ! $baseUrl) {
+            return null;
+        }
+
+        try {
+            $url = $baseUrl . '/Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|' . trim($nik);
+            $response = Http::timeout(self::TIMEOUT)
+                ->withToken($token)
+                ->get($url);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+        } catch (\Exception $e) {
+            // Biarkan null
+        }
+
+        return null;
+    }
+
+    /**
+     * Ambil data Practitioner berdasarkan IHS ID (no_ihs / SSID).
+     * GET {base_url}/Practitioner/{ihsNumber}
+     */
+    public function getPractitionerById(string $ihsNumber): ?array
+    {
+        $token = $this->getToken();
+        $baseUrl = $this->getBaseUrl();
+
+        if (! $token || ! $baseUrl) {
+            return null;
+        }
+
+        try {
+            $url = $baseUrl . '/Practitioner/' . trim($ihsNumber);
+            $response = Http::timeout(self::TIMEOUT)
+                ->withToken($token)
+                ->get($url);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+        } catch (\Exception $e) {
+            // Biarkan null
+        }
+
+        return null;
+    }
+
+    /**
+     * Kirim/Update Medication ke FHIR SatuSehat.
+     * POST {base_url}/Medication
+     */
+    public function postMedication(array $payload): ?array
+    {
+        $token = $this->getToken();
+        $baseUrl = $this->getBaseUrl();
+
+        if (! $token || ! $baseUrl) {
+            return null;
+        }
+
+        try {
+            $response = Http::timeout(self::TIMEOUT)
+                ->withToken($token)
+                ->withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($baseUrl . '/Medication', $payload);
+
+            return $response->json();
+        } catch (\Exception $e) {
+            // Biarkan null
+        }
+
+        return null;
+    }
+
+    /**
+     * Kirim Encounter ke FHIR SatuSehat.
+     * POST {base_url}/Encounter
+     */
+    public function postEncounter(array $payload): ?array
+    {
+        $token = $this->getToken();
+        $baseUrl = $this->getBaseUrl();
+
+        if (! $token || ! $baseUrl) {
+            return null;
+        }
+
+        try {
+            $response = Http::timeout(self::TIMEOUT)
+                ->withToken($token)
+                ->withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($baseUrl . '/Encounter', $payload);
+
+            return $response->json();
+        } catch (\Exception $e) {
+            // Biarkan null
+        }
+
+        return null;
+    }
+
+    /**
+     * Kirim Condition (Diagnosa) ke FHIR SatuSehat.
+     * POST {base_url}/Condition
+     */
+    public function postCondition(array $payload): ?array
+    {
+        $token = $this->getToken();
+        $baseUrl = $this->getBaseUrl();
+
+        if (! $token || ! $baseUrl) {
+            return null;
+        }
+
+        try {
+            $response = Http::timeout(self::TIMEOUT)
+                ->withToken($token)
+                ->withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($baseUrl . '/Condition', $payload);
+
+            return $response->json();
+        } catch (\Exception $e) {
+            // Biarkan null
+        }
+
+        return null;
+    }
+
+    /**
+     * Kirim Procedure (Tindakan) ke FHIR SatuSehat.
+     * POST {base_url}/Procedure
+     */
+    public function postProcedure(array $payload): ?array
+    {
+        $token = $this->getToken();
+        $baseUrl = $this->getBaseUrl();
+
+        if (! $token || ! $baseUrl) {
+            return null;
+        }
+
+        try {
+            $response = Http::timeout(self::TIMEOUT)
+                ->withToken($token)
+                ->withHeaders([
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($baseUrl . '/Procedure', $payload);
+
+            return $response->json();
+        } catch (\Exception $e) {
+            // Biarkan null
+        }
+
+        return null;
+    }
 }

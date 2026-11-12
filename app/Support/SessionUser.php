@@ -97,16 +97,7 @@ class SessionUser
                 ->where('ml.act', $actCode)
                 ->exists();
 
-            if ($hasAccess) {
-                return true;
-            }
-
-            // Fallback: Jika user Superuser / superadmin atau tabel level_menu Laravel
-            if (strtolower($this->levelName()) === 'superuser' || strtolower($this->levelName()) === 'admin') {
-                return true;
-            }
-
-            return false;
+            return $hasAccess;
         });
     }
 }

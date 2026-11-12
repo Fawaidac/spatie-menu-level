@@ -10,7 +10,7 @@
         @yield ('title', 'Autentikasi')
         · Satu Sehat
     </title>
-    <meta name="description" content="Satu Sehat — Sistem Manajemen Rumah Sakit & CRM WhatsApp Pasien." />
+    <meta name="description" content="Satu Sehat — Platform Integrasi SIMRS RSUD dr. Soebandi dengan Satu Sehat Kemenkes RI (HL7 FHIR)." />
     <meta name="theme-color" content="#fdf0f4" />
 
     <!-- Fonts -->
@@ -335,7 +335,7 @@
             color: rgba(255, 255, 255, 0.78);
         }
 
-        /* WhatsApp Chat Preview Card */
+        /* Satu Sehat Live Indicator Preview Card */
         .auth-wa-bubble {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
@@ -1001,63 +1001,68 @@
                             <span>Satu Sehat & SIMRS RSUD dr. Soebandi</span>
                         </div>
 
-                        <h2 class="auth-showcase__title">Kelola Pasien & Klinik Lebih Cerdas.</h2>
-                        <p class="auth-showcase__desc">Satu platform terintegrasi: jadwal dokter, rekam medis cepat, serta pengingat dan konfirmasi otomatis melalui WhatsApp resmi.</p>
+                        <h2 class="auth-showcase__title">Interoperabilitas Layanan Kesehatan Nasional.</h2>
+                        <p class="auth-showcase__desc">Platform integrasi Satu Sehat ReST API untuk RSUD dr. Soebandi Jember: sinkronisasi data master, encounter pelayanan rawat jalan, rawat inap, dan IGD berstandar HL7 FHIR.</p>
 
                         <div class="auth-features">
                             <div class="auth-feature-item">
                                 <div class="auth-feature-icon">
-                                    <svg viewBox="0 0 24 24">
-                                        <path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.6 18.8z" />
-                                        <path d="M9.5 9c.3 2.3 2.2 4.4 5.2 5.5l1-1.4-1.6-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-1.6z" />
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                                     </svg>
                                 </div>
                                 <div class="auth-feature-text">
-                                    <b>WhatsApp CRM Otomatis</b>
-                                    <span>Reminder kehadiran dan konfirmasi janji temu tanpa ketik manual.</span>
+                                    <b>Integrasi FHIR & SATUSEHAT Kemenkes</b>
+                                    <span>Pertukaran data kesehatan terstandarisasi HL7 FHIR R4 langsung ke platform Satu Sehat Kemenkes RI.</span>
                                 </div>
                             </div>
 
                             <div class="auth-feature-item">
                                 <div class="auth-feature-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
                                 </div>
                                 <div class="auth-feature-text">
-                                    <b>Akses Terproteksi & Autentikasi Aman</b>
-                                    <span>Hak akses terkelola untuk Dokter, Perawat, Loket, hingga Farmasi.</span>
+                                    <b>Encounter Pelayanan Terpadu</b>
+                                    <span>Sinkronisasi otomatis kunjungan Rawat Jalan, Rawat Inap, dan IGD lengkap dengan riwayat status pelayanan.</span>
                                 </div>
                             </div>
 
                             <div class="auth-feature-item">
                                 <div class="auth-feature-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6" /></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    </svg>
                                 </div>
                                 <div class="auth-feature-text">
-                                    <b>Alur Pasien Real-Time</b>
-                                    <span>Pantau pasien menunggu, diperiksa, hingga selesai dalam satu layar.</span>
+                                    <b>Standardisasi Kode Klinis & KFA</b>
+                                    <span>Pemetaan kode ICD-10 (Diagnosa), ICD-9 CM (Prosedur/Tindakan), SNOMED CT, serta Kamus Farmasi (KFA).</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- WhatsApp Live Snippet -->
+                        <!-- Satu Sehat Live Indicator -->
                         <div class="auth-wa-bubble">
                             <div class="auth-wa-bubble__header">
                                 <span class="auth-wa-bubble__tag">
-                                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10 10 10 0 0 1-10-10 10 10 0 0 1 10-10z" /></svg>
-                                    WhatsApp Reminder · Otomatis
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+                                    SATUSEHAT ReST API · Terhubung
                                 </span>
-                                <small style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.7)">09:15 WIB</small>
+                                <small style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.75)">HL7 FHIR R4</small>
                             </div>
                             <div class="auth-wa-bubble__msg">
-                                "Halo Ibu Ana, jadwal konsultasi Anda dengan dr. Hendra Spesialis Penyakit Dalam telah
-                                dijadwalkan besok pukul 09.30 WIB. Balas <b>1</b> untuk Konfirmasi Hadir."
+                                "Sistem terintegrasi aktif dengan platform Satu Sehat Kementerian Kesehatan RI. Data Patient (IHS), Practitioner, Location, Medication, dan Encounter RSUD dr. Soebandi tersinkronisasi secara aman."
                             </div>
                         </div>
                     </div>
 
                     <div class="auth-showcase__foot">
                         <span>© 2026 RSUD dr. Soebandi Jember. Hak cipta dilindungi.</span>
-                        <span>SATUSEHAT Ready · 256-Bit SSL</span>
+                        <span>SATUSEHAT Ready · OAuth 2.0 & 256-Bit SSL</span>
                     </div>
                 </div>
 

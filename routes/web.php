@@ -89,6 +89,9 @@ Route::middleware('session.auth')->group(function () {
             Route::get('/rawat-inap', [\App\Http\Controllers\Encounter\EncounterController::class, 'rawatInap'])->name(
                 'rawat-inap',
             );
+            Route::get('/detail/{id}', [\App\Http\Controllers\Encounter\EncounterController::class, 'detail'])->name('detail');
+            Route::post('/send', [\App\Http\Controllers\Encounter\EncounterController::class, 'send'])->name('send');
+            Route::post('/condition/send', [\App\Http\Controllers\Encounter\EncounterController::class, 'sendCondition'])->name('condition.send');
         });
 
     // ─── Satu Sehat REST API ──────────────────────────────────────────────────────
@@ -107,11 +110,20 @@ Route::middleware('session.auth')->group(function () {
             Route::get('/location', [\App\Http\Controllers\Satusehat\LocationController::class, 'index'])->name(
                 'location.index',
             );
+            Route::get('/location/data', [\App\Http\Controllers\Satusehat\LocationController::class, 'data'])->name(
+                'location.data',
+            );
             Route::get('/practitioner', [\App\Http\Controllers\Satusehat\PractitionerController::class, 'index'])->name(
                 'practitioner.index',
             );
+            Route::post('/practitioner/sync', [\App\Http\Controllers\Satusehat\PractitionerController::class, 'sync'])->name(
+                'practitioner.sync',
+            );
             Route::get('/medication', [\App\Http\Controllers\Satusehat\MedicationController::class, 'index'])->name(
                 'medication.index',
+            );
+            Route::post('/medication/sync', [\App\Http\Controllers\Satusehat\MedicationController::class, 'sync'])->name(
+                'medication.sync',
             );
         });
 

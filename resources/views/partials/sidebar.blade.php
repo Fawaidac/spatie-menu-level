@@ -118,12 +118,24 @@
                             'api/location/location' => route('satusehat.location.index'),
                             'api/practitioner/practitioner' => route('satusehat.practitioner.index'),
                             'api/medication/medication' => route('satusehat.medication.index'),
+                            'modul&hal=pelayanan/pelayanan&jenis=jalan&id=1&page=214' => route('encounter.rawat-jalan'),
+                            'modul&hal=pelayanan/pelayanan&jenis=igd&id=44&page=215' => route('encounter.igd'),
+                            'modul&hal=pelayanan/pelayanan&jenis=inap&id=27&page=216' => route('encounter.rawat-inap'),
+                            'encounter/rawat-jalan' => route('encounter.rawat-jalan'),
+                            'encounter/igd' => route('encounter.igd'),
+                            'encounter/rawat-inap' => route('encounter.rawat-inap'),
                         ];
 
                         if ($m->url === '#') {
                             $href = '#';
                         } elseif (isset($urlMap[$cleanUrl])) {
                             $href = $urlMap[$cleanUrl];
+                        } elseif (str_contains($cleanUrl, 'jenis=jalan')) {
+                            $href = route('encounter.rawat-jalan');
+                        } elseif (str_contains($cleanUrl, 'jenis=igd')) {
+                            $href = route('encounter.igd');
+                        } elseif (str_contains($cleanUrl, 'jenis=inap')) {
+                            $href = route('encounter.rawat-inap');
                         } elseif (str_starts_with($m->url, 'http')) {
                             $href = $m->url;
                         } else {
@@ -136,6 +148,12 @@
                             if ($mappedPath && request()->is($mappedPath . '*')) {
                                 $isCurrent = true;
                             }
+                        } elseif (str_contains($cleanUrl, 'jenis=jalan') && request()->is('encounter/rawat-jalan*')) {
+                            $isCurrent = true;
+                        } elseif (str_contains($cleanUrl, 'jenis=igd') && request()->is('encounter/igd*')) {
+                            $isCurrent = true;
+                        } elseif (str_contains($cleanUrl, 'jenis=inap') && request()->is('encounter/rawat-inap*')) {
+                            $isCurrent = true;
                         }
                         $routeData = $cleanUrl;
                     @endphp
@@ -213,7 +231,10 @@
                     $isGroupActive = $group->childrenRecursive->contains(function ($c) {
                         $cClean = trim($c->url, '/');
                         $isUser = in_array($cClean, ['setting/user', 'management/users', 'users'], true);
-                        return request()->is($cClean . '*') || ($isUser && request()->is('management/users*'));
+                        $isJalan = str_contains($cClean, 'jenis=jalan') && request()->is('encounter/rawat-jalan*');
+                        $isIgd = str_contains($cClean, 'jenis=igd') && request()->is('encounter/igd*');
+                        $isInap = str_contains($cClean, 'jenis=inap') && request()->is('encounter/rawat-inap*');
+                        return request()->is($cClean . '*') || ($isUser && request()->is('management/users*')) || $isJalan || $isIgd || $isInap;
                     });
                 @endphp
                 <p
@@ -256,12 +277,24 @@
                                         'api/location/location' => route('satusehat.location.index'),
                                         'api/practitioner/practitioner' => route('satusehat.practitioner.index'),
                                         'api/medication/medication' => route('satusehat.medication.index'),
+                                        'modul&hal=pelayanan/pelayanan&jenis=jalan&id=1&page=214' => route('encounter.rawat-jalan'),
+                                        'modul&hal=pelayanan/pelayanan&jenis=igd&id=44&page=215' => route('encounter.igd'),
+                                        'modul&hal=pelayanan/pelayanan&jenis=inap&id=27&page=216' => route('encounter.rawat-inap'),
+                                        'encounter/rawat-jalan' => route('encounter.rawat-jalan'),
+                                        'encounter/igd' => route('encounter.igd'),
+                                        'encounter/rawat-inap' => route('encounter.rawat-inap'),
                                     ];
 
                                     if ($sub->url === '#') {
                                         $subHref = '#';
                                     } elseif (isset($subUrlMap[$subClean])) {
                                         $subHref = $subUrlMap[$subClean];
+                                    } elseif (str_contains($subClean, 'jenis=jalan')) {
+                                        $subHref = route('encounter.rawat-jalan');
+                                    } elseif (str_contains($subClean, 'jenis=igd')) {
+                                        $subHref = route('encounter.igd');
+                                    } elseif (str_contains($subClean, 'jenis=inap')) {
+                                        $subHref = route('encounter.rawat-inap');
                                     } elseif (str_starts_with($sub->url, 'http')) {
                                         $subHref = $sub->url;
                                     } else {
@@ -274,6 +307,12 @@
                                         if ($mappedSubPath && request()->is($mappedSubPath . '*')) {
                                             $isSubActive = true;
                                         }
+                                    } elseif (str_contains($subClean, 'jenis=jalan') && request()->is('encounter/rawat-jalan*')) {
+                                        $isSubActive = true;
+                                    } elseif (str_contains($subClean, 'jenis=igd') && request()->is('encounter/igd*')) {
+                                        $isSubActive = true;
+                                    } elseif (str_contains($subClean, 'jenis=inap') && request()->is('encounter/rawat-inap*')) {
+                                        $isSubActive = true;
                                     }
                                     $routeData = $subClean;
                                 @endphp

@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Support\SessionUser;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,8 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::defaultView('partials.pagination');
+        Paginator::defaultSimpleView('partials.pagination');
+
         // Sidebar View Composer — menggunakan session_user()
-        View::composer(['partials.sidebar', 'layouts.sidebar'], function ($view) {
+        View::composer(['partials.sidebar', 'layouts.sidebar', 'partials.mobile-drawer'], function ($view) {
             $sessionUser = session_user();
 
             if (! $sessionUser) {
@@ -34,7 +38,9 @@ class AppServiceProvider extends ServiceProvider
             $filter = function ($menus) use (&$filter, $sessionUser) {
                 return $menus->filter(function ($m) use (&$filter, $sessionUser) {
                     if ($m->childrenRecursive->isEmpty()) {
-                        return $sessionUser->canMenu($m->kode_menu, 'view') || $sessionUser->canMenu((string) $m->id, 'view');
+                        return $sessionUser->canMenu($m->kode_menu, 'view')
+                            || $sessionUser->canMenu((string) $m->id, 'view')
+                            || $sessionUser->canMenu((string) $m->url, 'view');
                     }
                     $m->setRelation('childrenRecursive', $filter($m->childrenRecursive));
                     return $m->childrenRecursive->isNotEmpty();
